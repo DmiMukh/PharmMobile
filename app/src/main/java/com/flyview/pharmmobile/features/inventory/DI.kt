@@ -4,6 +4,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.flyview.pharmmobile.core.ComponentFactory
 import com.flyview.pharmmobile.features.inventory.ui.InventoryRootComponent
 import com.flyview.pharmmobile.features.inventory.ui.RealInventoryRootComponent
+import com.flyview.pharmmobile.features.inventory.ui.list.InventoryDocumentListComponent
+import com.flyview.pharmmobile.features.inventory.ui.list.RealInventoryDocumentListComponent
 import com.flyview.pharmmobile.features.inventory.ui.main.InventoryMainComponent
 import com.flyview.pharmmobile.features.inventory.ui.main.RealInventoryMainComponent
 import org.koin.core.component.get
@@ -28,5 +30,15 @@ fun ComponentFactory.createInventoryFeatureMainComponent(
         componentContext = componentContext,
         onBackClick = onBackClick,
         onDocumentsClick = onDocumentsClick
+    )
+}
+
+fun ComponentFactory.createInventoryFeatureDocumentListComponent(
+    componentContext: ComponentContext,
+    onBackClick: () -> Unit
+): InventoryDocumentListComponent {
+    return RealInventoryDocumentListComponent(
+        componentContext = componentContext,
+        onBackClick = onBackClick
     )
 }
