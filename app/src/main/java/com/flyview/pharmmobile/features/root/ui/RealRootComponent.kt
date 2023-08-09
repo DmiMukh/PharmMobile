@@ -40,6 +40,7 @@ class RealRootComponent(
             component = this.componentFactory.createHomeComponent(
                 componentContext = componentContext,
                 onBarcodeReaderClick = { TODO("Добавить нафигация на экран USB-устройств") },
+                onSettingsClick = { navigation.push(ChildConfig.Settings) },
                 onInventoryClick = { navigation.push(ChildConfig.InventoryRoot) }
             )
         )
