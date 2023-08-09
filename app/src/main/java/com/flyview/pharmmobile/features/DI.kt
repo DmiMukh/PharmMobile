@@ -11,10 +11,12 @@ import com.flyview.pharmmobile.features.splash.SplashComponent
 
 fun ComponentFactory.createHomeComponent(
     componentContext: ComponentContext,
+    onBarcodeReaderClick: () -> Unit,
     onInventoryClick: () -> Unit
 ): HomeComponent {
     return RealHomeComponent(
         componentContext = componentContext,
+        onBarcodeReaderClick = onBarcodeReaderClick,
         onInventoryClick = onInventoryClick
     )
 }
