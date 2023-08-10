@@ -1,7 +1,7 @@
 package com.flyview.inventory_feature.ui.list
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.inventory_feature.data.InventoryRepository
+import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.ui.list.toolbar.RealDocumentListToolbarComponent
 

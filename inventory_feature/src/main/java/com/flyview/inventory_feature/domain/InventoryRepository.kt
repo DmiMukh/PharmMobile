@@ -1,4 +1,4 @@
-package com.flyview.inventory_feature.data
+package com.flyview.inventory_feature.domain
 
 import androidx.paging.PagingData
 import com.flyview.inventory_feature.domain.Document

@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.ui.list.FakeDocumentListComponent
 import kotlinx.coroutines.flow.Flow
 import java.io.IOException

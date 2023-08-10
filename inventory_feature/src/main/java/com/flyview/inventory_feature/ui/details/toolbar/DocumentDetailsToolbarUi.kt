@@ -11,16 +11,21 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
 import com.flyview.core.utils.ICON_SIZE
+import com.flyview.core.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
+
+    val connected = component.usbDeviceConnected.collectAsState()
+
     TopAppBar(
         title = {
             Row {
@@ -39,7 +44,7 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
                     modifier = Modifier.size(ICON_SIZE)
                 )
             }
-        }/*,
+        },
         actions = {
             IconButton(onClick = component::onUsbDeviceConnectionClick) {
                 Icon(
@@ -48,11 +53,10 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
                         else R.drawable.ic_usb_off
                     ),
                     contentDescription = "usb_device_connection",
-                    modifier = Modifier.size(DEFAULT_ICON_SIZE)
+                    modifier = Modifier.size(ICON_SIZE)
                 )
             }
         }
-        */
     )
 }
 

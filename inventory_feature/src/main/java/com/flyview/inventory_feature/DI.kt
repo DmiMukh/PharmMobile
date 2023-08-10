@@ -3,7 +3,7 @@ package com.flyview.inventory_feature
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.inventory_feature.data.RealInventoryRepository
-import com.flyview.inventory_feature.data.InventoryRepository
+import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
 import com.flyview.inventory_feature.ui.details.DocumentDetailsComponent
