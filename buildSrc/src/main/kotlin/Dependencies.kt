@@ -32,4 +32,9 @@ object Libs {
         // optional - Jetpack Compose integration
         const val compose = "androidx.paging:paging-compose:1.0.0-alpha18"
     }
+
+    object UsbSerial {
+        private const val version = "3.5.1"
+        const val android = "com.github.mik3y:usb-serial-for-android:$version"
+    }
 }

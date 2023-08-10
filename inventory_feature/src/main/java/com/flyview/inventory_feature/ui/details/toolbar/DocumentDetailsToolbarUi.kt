@@ -24,7 +24,7 @@ import com.flyview.core.R
 @Composable
 fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
 
-    val connected = component.usbDeviceConnected.collectAsState()
+    val connected = component.barcodeReaderConnected.collectAsState()
 
     TopAppBar(
         title = {

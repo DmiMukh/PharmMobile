@@ -9,6 +9,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.core.utils.toStateFlow
 import com.flyview.inventory_feature.InventoryComponentFactory
+import com.flyview.inventory_feature.createInventoryDetailsComponent
 import com.flyview.inventory_feature.createInventoryListComponent
 import com.flyview.inventory_feature.createInventoryMainComponent
 import com.flyview.inventory_feature.ui.details.RealDocumentDetailsComponent
@@ -37,7 +38,7 @@ class RealInventoryRootComponent(
     ): InventoryRootComponent.Child = when (config) {
 
         ChildConfig.Details -> InventoryRootComponent.Child.Details(
-            component = RealDocumentDetailsComponent(
+            component = this.componentFactory.createInventoryDetailsComponent(
                 componentContext = componentContext,
                 onBack = { navigation.pop() }
             )

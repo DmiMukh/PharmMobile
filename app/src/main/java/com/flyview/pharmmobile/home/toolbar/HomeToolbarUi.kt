@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.flyview.core.theme.AppTheme
 import com.flyview.core.utils.ICON_SIZE
-import com.flyview.pharmmobile.R
+import com.flyview.core.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -2,6 +2,7 @@ package com.flyview.pharmmobile
 
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
+import com.flyview.core.coreModule
 import com.flyview.inventory_feature.inventoryModule
 import com.flyview.pharmmobile.home.HomeComponent
 import com.flyview.pharmmobile.home.RealHomeComponent
@@ -11,6 +12,7 @@ import com.flyview.pharmmobile.splash.RealSplashComponent
 import com.flyview.pharmmobile.splash.SplashComponent
 
 val allModules = listOf(
+    coreModule,
     inventoryModule
 )
 

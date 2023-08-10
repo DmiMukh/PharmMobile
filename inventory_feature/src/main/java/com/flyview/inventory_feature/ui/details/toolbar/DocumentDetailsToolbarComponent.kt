@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface DocumentDetailsToolbarComponent {
 
-    val usbDeviceConnected: StateFlow<Boolean>
+    val barcodeReaderConnected: StateFlow<Boolean>
     fun onBackClick()
     fun onUsbDeviceConnectionClick()
 }

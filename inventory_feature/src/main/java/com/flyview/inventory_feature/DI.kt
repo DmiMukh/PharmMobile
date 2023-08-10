@@ -37,7 +37,8 @@ fun InventoryComponentFactory.createInventoryDetailsComponent(
 ): DocumentDetailsComponent {
     return RealDocumentDetailsComponent(
         componentContext = componentContext,
-        onBack = onBack
+        onBack = onBack,
+        barcodeReader = get()
     )
 }
 

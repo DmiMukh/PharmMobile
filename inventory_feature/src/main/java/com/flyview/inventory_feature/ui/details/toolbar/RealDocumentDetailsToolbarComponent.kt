@@ -1,17 +1,15 @@
 package com.flyview.inventory_feature.ui.details.toolbar
 
 import com.arkivanov.decompose.ComponentContext
-import kotlinx.coroutines.flow.StateFlow
+import com.flyview.core.domain.BarcodeReader
 
 class RealDocumentDetailsToolbarComponent(
     componentContext: ComponentContext,
-    private val onBack: () -> Unit
+    private val onBack: () -> Unit,
+    private val barcodeReader: BarcodeReader
 ) : ComponentContext by componentContext, DocumentDetailsToolbarComponent {
-    override val usbDeviceConnected: StateFlow<Boolean>
-        get() = TODO("Not yet implemented")
 
+    override val barcodeReaderConnected = barcodeReader.connected
     override fun onBackClick() = this.onBack.invoke()
-    override fun onUsbDeviceConnectionClick() {
-        TODO("Not yet implemented")
-    }
+    override fun onUsbDeviceConnectionClick() = this.barcodeReader.switchConnection()
 }
