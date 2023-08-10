@@ -1,4 +1,4 @@
-package com.flyview.inventory_feature.ui.main
+package com.flyview.pharmmobile.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,44 +12,48 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
-import com.flyview.inventory_feature.ui.main.toolbar.MainToolbarUi
+import com.flyview.pharmmobile.home.toolbar.HomeToolbarUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainUi(component: MainComponent) {
-    Scaffold(
-        topBar = { MainToolbarUi(component.toolbarComponent) }
+fun HomeUi(component: HomeComponent) {
+    Scaffold (
+        topBar = { HomeToolbarUi(component.toolbarComponent) }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
+        Column (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(paddingValues)
         ) {
             Button(
-                onClick = component::onDocumentsClick,
+                onClick = component::onInventoryClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
             ) {
-                Text(text = "Ведомости")
+                Text(text = "Инвентаризация")
             }
         }
     }
 }
 
 @Composable
-fun MainUiPreview(darkTheme: Boolean) {
-    AppTheme(darkTheme = darkTheme) {
-        MainUi(FakeMainComponent())
+fun HomeUiPreview(darkTheme: Boolean) {
+    AppTheme(
+        darkTheme = darkTheme
+    ) {
+        HomeUi(FakeHomeComponent())
     }
 }
 
 @Preview(name = "light")
 @Composable
-fun MainUiPreviewLight() {
-    MainUiPreview(darkTheme = false)
+fun HomeUiPreviewLight() {
+    HomeUiPreview(darkTheme = false)
 }
 
-@Preview(name = "Dark")
+@Preview(name = "dark")
 @Composable
-fun MainUiPreviewDark() {
-    MainUiPreview(darkTheme = true)
+fun HomeUiPreviewDark() {
+    HomeUiPreview(darkTheme = true)
 }

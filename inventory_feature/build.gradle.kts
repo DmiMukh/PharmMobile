@@ -78,4 +78,8 @@ dependencies {
     implementation(Libs.Koin.core)
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.compose)
+
+    // Paging
+    implementation(Libs.Paging.core)
+    implementation(Libs.Paging.compose)
 }

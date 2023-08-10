@@ -23,4 +23,13 @@ object Libs {
         const val android = "io.insert-koin:koin-android:$version"
         const val compose = "io.insert-koin:koin-androidx-compose:$version"
     }
+
+    object Paging {
+        private const val version = "3.1.1"
+
+        const val core = "androidx.paging:paging-runtime:$version"
+
+        // optional - Jetpack Compose integration
+        const val compose = "androidx.paging:paging-compose:1.0.0-alpha18"
+    }
 }
