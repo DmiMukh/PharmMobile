@@ -8,12 +8,12 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.essenty.parcelable.Parcelable
-import com.flyview.pharmmobile.core.ComponentFactory
-import com.flyview.pharmmobile.core.utils.toStateFlow
+import com.flyview.core.ComponentFactory
+import com.flyview.core.utils.toStateFlow
+import com.flyview.inventory_feature.createInventoryComponent
 import com.flyview.pharmmobile.features.createHomeComponent
 import com.flyview.pharmmobile.features.createSettingsComponent
 import com.flyview.pharmmobile.features.createSplashComponent
-import com.flyview.pharmmobile.features.inventory.createInventoryFeatureRootComponent
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
@@ -46,9 +46,9 @@ class RealRootComponent(
         )
 
         ChildConfig.InventoryRoot -> RootComponent.Child.InventoryRoot(
-            component = this.componentFactory.createInventoryFeatureRootComponent(
+            component = this.componentFactory.createInventoryComponent(
                 componentContext = componentContext,
-                onBackClick = { navigation.pop() }
+                onBack = { navigation.pop() }
             )
         )
 

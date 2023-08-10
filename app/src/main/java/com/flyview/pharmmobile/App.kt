@@ -2,8 +2,8 @@ package com.flyview.pharmmobile
 
 import android.app.Application
 import android.content.Context
-import com.flyview.pharmmobile.core.ComponentFactory
-import com.flyview.pharmmobile.core.KoinProvider
+import com.flyview.core.ComponentFactory
+import com.flyview.core.KoinProvider
 import org.koin.core.Koin
 import org.koin.core.module.Module
 

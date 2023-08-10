@@ -11,8 +11,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.flyview.pharmmobile.core.utils.ICON_SIZE
-import com.flyview.pharmmobile.ui.theme.PharmMobileTheme
+import com.flyview.core.theme.AppTheme
+import com.flyview.core.utils.ICON_SIZE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,7 @@ fun SettingsToolbarUi(component: SettingsToolbarComponent) {
 
 @Composable
 fun SettingsToolbarUiPreview(darkTheme: Boolean) {
-    PharmMobileTheme(darkTheme = darkTheme) {
+    AppTheme(darkTheme = darkTheme) {
         SettingsToolbarUi(FakeSettingsToolbarComponent())
     }
 }

@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.flyview.core.theme.AppTheme
 import com.flyview.pharmmobile.features.home.toolbar.HomeToolbarUi
-import com.flyview.pharmmobile.ui.theme.PharmMobileTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +39,7 @@ fun HomeUi(component: HomeComponent) {
 
 @Composable
 fun HomeUiPreview(darkTheme: Boolean) {
-    PharmMobileTheme(
+    AppTheme(
         darkTheme = darkTheme
     ) {
         HomeUi(FakeHomeComponent())

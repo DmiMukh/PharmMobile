@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PharmMobile"
 include(":app")
- 
+include(":core")
+include(":inventory_feature")

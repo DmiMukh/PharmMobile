@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.flyview.core.theme.AppTheme
+import com.flyview.core.utils.ICON_SIZE
 import com.flyview.pharmmobile.R
-import com.flyview.pharmmobile.core.utils.ICON_SIZE
-import com.flyview.pharmmobile.ui.theme.PharmMobileTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +43,7 @@ fun HomeToolbarUi(component: HomeToolbarComponent) {
 
 @Composable
 fun HomeToolbarUiPreview(darkTheme: Boolean) {
-    PharmMobileTheme(darkTheme = darkTheme) {
+    AppTheme(darkTheme = darkTheme) {
         HomeToolbarUi(FakeHomeToolbarComponent())
     }
 }

@@ -1,7 +1,7 @@
 package com.flyview.pharmmobile.features
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.pharmmobile.core.ComponentFactory
+import com.flyview.core.ComponentFactory
 import com.flyview.pharmmobile.features.home.HomeComponent
 import com.flyview.pharmmobile.features.home.RealHomeComponent
 import com.flyview.pharmmobile.features.settings.RealSettingsComponent

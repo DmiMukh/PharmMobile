@@ -52,6 +52,10 @@ android {
 
 dependencies {
 
+    // Modules
+    implementation(project(":core"))
+    implementation(project(":inventory_feature"))
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")

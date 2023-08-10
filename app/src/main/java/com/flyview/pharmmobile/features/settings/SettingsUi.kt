@@ -7,8 +7,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.flyview.core.theme.AppTheme
 import com.flyview.pharmmobile.features.settings.toolbar.SettingsToolbarUi
-import com.flyview.pharmmobile.ui.theme.PharmMobileTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +25,7 @@ fun SettingsUi(component: SettingsComponent) {
 
 @Composable
 fun SettingsUiPreview(darkTheme: Boolean) {
-    PharmMobileTheme(darkTheme = darkTheme) {
+    AppTheme(darkTheme = darkTheme) {
         SettingsUi(FakeSettingsComponent())
     }
 }
