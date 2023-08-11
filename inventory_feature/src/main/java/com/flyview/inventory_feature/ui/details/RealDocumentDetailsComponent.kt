@@ -29,8 +29,12 @@ class RealDocumentDetailsComponent(
         barcodeReader = this.barcodeReader
     )
 
-    private fun onReadBarcode(code: String){
-        TODO("Добавить обработку сканирования кодов")
+    private fun onReadBarcode(code: String) {
+        when (code.length) {
+            13 -> TODO("Добавить обработку кода с длиной 13")
+            85 -> TODO("Добавить обработку кода с длиной 85")
+            else -> TODO("Добавить отображение ошибки некорректного кода")
+        }
     }
 
     override fun onItemClick(product: Product) {
