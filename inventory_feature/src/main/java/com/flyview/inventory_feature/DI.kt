@@ -3,6 +3,7 @@ package com.flyview.inventory_feature
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.inventory_feature.data.RealInventoryRepository
+import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
@@ -21,8 +22,7 @@ val inventoryModule = module {
 
 fun ComponentFactory.createInventoryComponent(
     componentContext: ComponentContext,
-    onBack: () -> Unit,
-    componentFactory: ComponentFactory
+    onBack: () -> Unit
 ): InventoryRootComponent {
     return RealInventoryRootComponent(
         componentContext = componentContext,
@@ -33,11 +33,14 @@ fun ComponentFactory.createInventoryComponent(
 
 fun InventoryComponentFactory.createInventoryDetailsComponent(
     componentContext: ComponentContext,
+    document: Document,
     onBack: () -> Unit
 ): DocumentDetailsComponent {
     return RealDocumentDetailsComponent(
         componentContext = componentContext,
+        document = document,
         onBack = onBack,
+        repository = get(),
         barcodeReader = get()
     )
 }
@@ -45,13 +48,13 @@ fun InventoryComponentFactory.createInventoryDetailsComponent(
 fun InventoryComponentFactory.createInventoryListComponent(
     componentContext: ComponentContext,
     onBack: () -> Unit,
-    onDocumentClick: () -> Unit
+    onDocumentDetails: (Document) -> Unit
 ): DocumentListComponent {
     return RealDocumentListComponent(
         componentContext = componentContext,
         onBack = onBack,
-        onDocumentClick = onDocumentClick,
-        inventoryRepository = get()
+        onDocumentDetails = onDocumentDetails,
+        repository = get()
     )
 }
 

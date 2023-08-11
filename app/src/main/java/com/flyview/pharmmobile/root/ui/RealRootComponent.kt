@@ -48,8 +48,7 @@ class RealRootComponent(
         ChildConfig.InventoryRoot -> RootComponent.Child.InventoryRoot(
             component = this.componentFactory.createInventoryComponent(
                 componentContext = componentContext,
-                onBack = { navigation.pop() },
-                componentFactory = componentFactory
+                onBack = { navigation.pop() }
             )
         )
 

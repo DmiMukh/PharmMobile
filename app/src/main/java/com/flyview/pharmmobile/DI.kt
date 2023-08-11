@@ -36,7 +36,7 @@ fun ComponentFactory.createSettingsComponent(
 ): SettingsComponent {
     return RealSettingsComponent(
         componentContext = componentContext,
-        onBackClick = onBackClick
+        onBack = onBackClick
     )
 }
 

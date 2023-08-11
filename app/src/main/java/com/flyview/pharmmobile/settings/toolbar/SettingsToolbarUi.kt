@@ -10,20 +10,31 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.flyview.core.theme.AppTheme
 import com.flyview.core.utils.ICON_SIZE
+import com.flyview.core.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsToolbarUi(component: SettingsToolbarComponent) {
     TopAppBar(
-        title = { Text(text = "Инвентаризация") },
+        title = { Text(text = "Настройки") },
         navigationIcon = {
             IconButton(onClick = component::onBackClick) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "arrow_back",
+                    modifier = Modifier.size(ICON_SIZE)
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = component::onSaveClick) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_save),
+                    contentDescription = "save",
                     modifier = Modifier.size(ICON_SIZE)
                 )
             }

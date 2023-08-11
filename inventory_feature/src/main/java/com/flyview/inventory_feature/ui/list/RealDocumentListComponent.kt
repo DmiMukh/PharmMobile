@@ -1,18 +1,22 @@
 package com.flyview.inventory_feature.ui.list
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.ui.list.toolbar.RealDocumentListToolbarComponent
+import kotlinx.coroutines.launch
 
 class RealDocumentListComponent(
     componentContext: ComponentContext,
     private val onBack: () -> Unit,
-    private val onDocumentClick: () -> Unit,
-    private val inventoryRepository: InventoryRepository
+    private val onDocumentDetails: (Document) -> Unit,
+    private val repository: InventoryRepository
 ) : ComponentContext by componentContext, DocumentListComponent {
 
-    override val documentsPager = inventoryRepository.documentsPager()
+    private val coroutineScope = componentCoroutineScope()
+
+    override val documentsPager = repository.getDocumentsPager()
 
     override val toolbarComponent = RealDocumentListToolbarComponent(
         componentContext = componentContext,
@@ -22,9 +26,11 @@ class RealDocumentListComponent(
     override fun onBackClick() = this.onBack.invoke()
 
     override fun onCreateDocumentClick() {
-        TODO("Добавить создание документа")
-        this.onDocumentClick.invoke()
+        coroutineScope.launch {
+            val document = repository.createDocument()
+            onDocumentDetails.invoke(document)
+        }
     }
 
-    override fun onItemClick(document: Document) = this.onDocumentClick.invoke()
+    override fun onItemClick(document: Document) = this.onDocumentDetails.invoke(document)
 }

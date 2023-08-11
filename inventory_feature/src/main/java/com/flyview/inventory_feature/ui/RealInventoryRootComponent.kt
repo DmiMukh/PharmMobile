@@ -12,9 +12,7 @@ import com.flyview.inventory_feature.InventoryComponentFactory
 import com.flyview.inventory_feature.createInventoryDetailsComponent
 import com.flyview.inventory_feature.createInventoryListComponent
 import com.flyview.inventory_feature.createInventoryMainComponent
-import com.flyview.inventory_feature.ui.details.RealDocumentDetailsComponent
-import com.flyview.inventory_feature.ui.list.RealDocumentListComponent
-import com.flyview.inventory_feature.ui.main.RealMainComponent
+import com.flyview.inventory_feature.domain.Document
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
@@ -37,22 +35,25 @@ class RealInventoryRootComponent(
         componentContext: ComponentContext
     ): InventoryRootComponent.Child = when (config) {
 
-        ChildConfig.Details -> InventoryRootComponent.Child.Details(
+        is ChildConfig.Details -> InventoryRootComponent.Child.Details(
             component = this.componentFactory.createInventoryDetailsComponent(
                 componentContext = componentContext,
+                document = config.document,
                 onBack = { navigation.pop() }
             )
         )
 
-        ChildConfig.List -> InventoryRootComponent.Child.List(
+        is ChildConfig.List -> InventoryRootComponent.Child.List(
             component = this.componentFactory.createInventoryListComponent(
                 componentContext = componentContext,
                 onBack = { navigation.pop() },
-                onDocumentClick = { navigation.push(ChildConfig.Details) }
+                onDocumentDetails = { document ->
+                    navigation.push(ChildConfig.Details(document))
+                }
             )
         )
 
-        ChildConfig.Main -> InventoryRootComponent.Child.Main(
+        is ChildConfig.Main -> InventoryRootComponent.Child.Main(
             this.componentFactory.createInventoryMainComponent(
                 componentContext = componentContext,
                 onBack = this.onBack,
@@ -64,7 +65,7 @@ class RealInventoryRootComponent(
     sealed interface ChildConfig : Parcelable {
 
         @Parcelize
-        object Details : ChildConfig
+        class Details(val document: Document) : ChildConfig
 
         @Parcelize
         object List : ChildConfig
