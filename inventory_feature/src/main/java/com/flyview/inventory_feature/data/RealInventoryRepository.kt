@@ -7,9 +7,12 @@ import androidx.paging.PagingState
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Product
+import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import java.io.IOException
 
-class RealInventoryRepository : InventoryRepository {
+class RealInventoryRepository(
+    private val db: InventoryDatabase
+): InventoryRepository {
     override suspend fun addProduct(product: Product, documentId: Long) {
         TODO("Not yet implemented")
     }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id(Libs.SQLDelight.plugin) version Libs.SQLDelight.version
 }
 
 android {
@@ -82,4 +83,17 @@ dependencies {
     // Paging
     implementation(Libs.Paging.core)
     implementation(Libs.Paging.compose)
+
+    // SQLDelight
+    implementation(Libs.SQLDelight.android)
+    implementation(Libs.SQLDelight.coroutines)
+    implementation(Libs.SQLDelight.paging)
+}
+
+sqldelight {
+    databases {
+        create("InventoryDatabase") {
+            packageName.set("com.flyview.pharmmobile.inventory_feature")
+        }
+    }
 }

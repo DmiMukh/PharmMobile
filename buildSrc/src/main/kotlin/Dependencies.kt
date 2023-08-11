@@ -33,6 +33,19 @@ object Libs {
         const val compose = "androidx.paging:paging-compose:1.0.0-alpha18"
     }
 
+    object SQLDelight {
+
+        const val version = "2.0.0"
+
+        const val android = "app.cash.sqldelight:android-driver:$version"
+
+        const val plugin = "app.cash.sqldelight"
+
+        const val coroutines = "app.cash.sqldelight:coroutines-extensions:$version"
+
+        const val paging = "app.cash.sqldelight:androidx-paging3-extensions:$version"
+    }
+
     object UsbSerial {
         private const val version = "3.5.1"
         const val android = "com.github.mik3y:usb-serial-for-android:$version"

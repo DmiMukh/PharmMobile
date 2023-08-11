@@ -17,7 +17,9 @@ import org.koin.core.component.get
 import org.koin.dsl.module
 
 val inventoryModule = module {
-    single<InventoryRepository> { RealInventoryRepository() }
+    single<InventoryRepository> {
+        RealInventoryRepository(db = get())
+    }
 }
 
 fun ComponentFactory.createInventoryComponent(
