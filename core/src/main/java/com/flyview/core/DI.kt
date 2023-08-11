@@ -3,9 +3,9 @@ package com.flyview.core
 import android.content.Context
 import android.hardware.usb.UsbManager
 import com.flyview.core.data.RealMediaPlayer
-import com.flyview.core.data.UsbBarcodeReader
+import com.flyview.core.data.barcode.UsbBarcodeReader
 import com.flyview.core.domain.AudioPlayer
-import com.flyview.core.domain.BarcodeReader
+import com.flyview.core.domain.barcode.BarcodeReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module

@@ -12,10 +12,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
 import com.flyview.core.ComponentFactory
-import com.flyview.core.domain.BarcodeReader
+import com.flyview.core.domain.barcode.BarcodeReader
 import com.flyview.core.koin
 import com.flyview.core.theme.AppTheme
-import com.flyview.inventory_feature.InventoryComponentFactory
 import com.flyview.pharmmobile.root.ui.RootContent
 import com.flyview.pharmmobile.root.createRootComponent
 

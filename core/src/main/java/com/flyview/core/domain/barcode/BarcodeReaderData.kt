@@ -1,4 +1,4 @@
-package com.flyview.core.domain
+package com.flyview.core.domain.barcode
 
 import kotlinx.coroutines.flow.MutableStateFlow
 
