@@ -1,0 +1,17 @@
+CREATE TABLE barcodeEntity (
+    barcode TEXT NOT NULL,
+    articul INTEGER NOT NULL REFERENCES articulEntity(id),
+    PRIMARY KEY (
+        barcode ASC,
+        articul ASC
+    )
+);
+
+CREATE INDEX barcodeEntity_barcode ON barcodeEntity(barcode);
+
+insert:
+INSERT INTO barcodeEntity
+VALUES ?;
+
+deleteAll:
+DELETE FROM barcodeEntity;

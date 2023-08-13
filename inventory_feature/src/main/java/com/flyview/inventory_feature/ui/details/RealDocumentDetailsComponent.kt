@@ -3,6 +3,7 @@ package com.flyview.inventory_feature.ui.details
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.domain.barcode.BarcodeReader
 import com.flyview.core.domain.barcode.BarcodeReaderData
+import com.flyview.core.utils.GS1
 import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
@@ -32,8 +33,25 @@ class RealDocumentDetailsComponent(
 
     private fun onReadBarcode(code: String) = coroutineScope.launch {
         when (code.length) {
-            13 -> TODO("Добавить обработку кода с длиной 13")
-            85 -> TODO("Добавить обработку кода с длиной 85")
+            13 -> {
+                val regex = Regex("[0-9]{13}")
+
+                if (regex.matches(code)) {
+
+                    val product = repository.getProduct(code)
+
+                }
+            }
+            85 -> {
+                val regex = Regex("01".plus("[0-9]{14}").plus("21").plus("\\S{13}")
+                        .plus(GS1).plus("91").plus("\\S{4}").plus(GS1).plus("92")
+                        .plus("\\S{44}")
+                )
+
+                if (regex.matches(code)) {
+                    val product = repository.getProduct(code)
+                }
+            }
             else -> TODO("Добавить отображение ошибки некорректного кода")
         }
 
@@ -50,7 +68,6 @@ class RealDocumentDetailsComponent(
         TODO("1. Если товар есть в документе, то выдаем ошибку")
         TODO("2. Если товара нет в документе, то добавляем и ставим количество 1 или меньше")
 
-        val product = repository.getProduct(code)
     }
 
     override fun onItemClick(product: Product) {

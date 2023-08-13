@@ -1,0 +1,11 @@
+CREATE TABLE documentEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    number TEXT NOT NULL
+);
+
+insert:
+INSERT INTO articulEntity
+VALUES ?;
+
+deleteAll:
+DELETE FROM articulEntity;

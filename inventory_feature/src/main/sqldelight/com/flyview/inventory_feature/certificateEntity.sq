@@ -1,0 +1,13 @@
+CREATE TABLE certificateEntity (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    marked INTEGER NOT NULL,
+    articul INTEGER NOT NULL REFERENCES articulEntity(id)
+);
+
+insert:
+INSERT INTO certificateEntity
+VALUES ?;
+
+deleteAll:
+DELETE FROM certificateEntity;

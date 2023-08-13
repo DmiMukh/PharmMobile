@@ -88,6 +88,7 @@ dependencies {
     implementation(Libs.SQLDelight.android)
     implementation(Libs.SQLDelight.coroutines)
     implementation(Libs.SQLDelight.paging)
+
 }
 
 sqldelight {

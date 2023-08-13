@@ -1,0 +1,3 @@
+CREATE TABLE goodEntity (
+    certificate INTEGER NOT NULL
+);
