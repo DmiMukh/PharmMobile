@@ -4,6 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
+import com.flyview.core.data.barcode.Barcode
+import com.flyview.inventory_feature.domain.Articul
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Product
@@ -28,8 +30,25 @@ class RealInventoryRepository(
         }
     }
 
-    override suspend fun getProduct(code: String): Product {
-        TODO("Not yet implemented")
+    override suspend fun getProduct(code: String, codeType: Barcode, documentId: Long): Product {
+        if (codeType is Barcode.EAN13) {
+            db.transactionWithResult {
+                db.productEntityQueries
+                    .selectByBarcode(document = documentId, barcode = code)
+                    .executeAsOneOrNull()
+            }?.let {
+                return it.toDomain("")
+            }
+        } else {
+            db.transactionWithResult {
+                db.productEntityQueries.selectBySgtin(document = documentId, sgtin = code)
+                    .executeAsOneOrNull()
+            }?.let {
+                return it.toDomain(code)
+            }
+        }
+
+        return Product()
     }
 
     override suspend fun upsertProduct(product: Product, documentId: Long) {

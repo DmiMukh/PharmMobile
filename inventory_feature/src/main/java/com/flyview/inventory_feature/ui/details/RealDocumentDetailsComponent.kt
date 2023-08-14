@@ -3,14 +3,16 @@ package com.flyview.inventory_feature.ui.details
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.data.barcode.Barcode
 import com.flyview.core.data.barcode.InvBarcodeBinder
+import com.flyview.core.data.barcode.InvBarcodeExtractor
 import com.flyview.core.domain.barcode.BarcodeBinder
+import com.flyview.core.domain.barcode.BarcodeExtractor
 import com.flyview.core.domain.barcode.BarcodeReader
 import com.flyview.core.domain.barcode.BarcodeReaderData
-import com.flyview.core.utils.GS1
 import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Product
+import com.flyview.inventory_feature.domain.isValid
 import com.flyview.inventory_feature.ui.details.toolbar.RealDocumentDetailsToolbarComponent
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +29,7 @@ class RealDocumentDetailsComponent(
     private val coroutineScope = componentCoroutineScope()
 
     private val barcodeBinder: BarcodeBinder = InvBarcodeBinder()
+    private val barcodeExtractor: BarcodeExtractor = InvBarcodeExtractor()
 
     override val productsPager = this.repository.getProductsPager(this.document.id)
 
@@ -38,15 +41,24 @@ class RealDocumentDetailsComponent(
 
     private fun onReadBarcode(code: String) = coroutineScope.launch {
 
-        val barcodeType = barcodeBinder.CreateBarcode(data = code)
+        val barcodeType = barcodeBinder.createBarcode(data = code)
 
-        if (barcodeType is Barcode.Unknown) TODO("Некорректный код")
+        if (barcodeType is Barcode.Unknown) TODO("Некорректный код!")
 
-        /*
-        when (barcodeType) {
-            Barcode.DataMatrix85 -> TODO()
-            Barcode.EAN13 -> TODO()
-        }*/
+        val shortCode = barcodeExtractor.getShortCode(code = code, codeType = barcodeType)
+
+        val product: Product = repository.getProduct(
+            code = shortCode,
+            codeType = barcodeType,
+            documentId = document.id
+        )
+
+        if (!product.isValid()) TODO("Товар не найден!")
+
+        repository.upsertProduct(
+            product = product,
+            documentId = document.id
+        )
     }
 
     override fun onItemClick(product: Product) {

@@ -1,0 +1,48 @@
+
+
+
+selectByBarcode:
+SELECT
+    ae.id AS articulId,
+    ae.name AS articulName,
+    ae.producer,
+    ae.divisibility,
+    ce.id AS certificateId,
+    ce.name AS certificateName,
+    ce.marked,
+    COALESCE((
+        SELECT ge.quantity
+        FROM goodEntity ge
+        WHERE
+            ge.certificate = ce.id
+            AND ge.document = ?
+            AND ge.sgtin = ""
+    ), 0) AS quantity
+FROM barcodeEntity be
+JOIN certificateEntity ce ON ce.id = be.certificate
+JOIN articulEntity ae ON ae.id = ce.articul
+WHERE
+    be.barcode = ?;
+
+selectBySgtin:
+SELECT
+    ae.id AS articulId,
+    ae.name AS articulName,
+    ae.producer,
+    ae.divisibility,
+    ce.id AS certificateId,
+    ce.name AS certificateName,
+    ce.marked,
+    COALESCE((
+        SELECT ge.quantity
+        FROM goodEntity ge
+        WHERE
+            ge.certificate = ce.id
+            AND ge.document = ?
+            AND ge.sgtin = ""
+    ), 0) AS quantity
+FROM markEntity me
+JOIN certificateEntity ce ON ce.id = me.certificate
+JOIN articulEntity ae ON ae.id = ce.articul
+WHERE
+    me.sgtin = ?;
