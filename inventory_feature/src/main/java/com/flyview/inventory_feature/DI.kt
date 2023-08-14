@@ -16,6 +16,8 @@ import com.flyview.inventory_feature.ui.list.DocumentListComponent
 import com.flyview.inventory_feature.ui.list.RealDocumentListComponent
 import com.flyview.inventory_feature.ui.main.MainComponent
 import com.flyview.inventory_feature.ui.main.RealMainComponent
+import com.flyview.inventory_feature.ui.product_edit.ProductEditComponent
+import com.flyview.inventory_feature.ui.product_edit.RealProductEditComponent
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import org.koin.core.component.get
 import org.koin.dsl.module
@@ -84,5 +86,13 @@ fun InventoryComponentFactory.createInventoryMainComponent(
         componentContext = componentContext,
         onBack = onBack,
         onDocumentsClick = onDocumentsClick
+    )
+}
+
+fun InventoryComponentFactory.createOnventoryEditComponent(
+    componentContext: ComponentContext
+): ProductEditComponent {
+    return RealProductEditComponent(
+        componentContext = componentContext
     )
 }

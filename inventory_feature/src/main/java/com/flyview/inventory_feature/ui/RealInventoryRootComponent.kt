@@ -12,7 +12,9 @@ import com.flyview.inventory_feature.InventoryComponentFactory
 import com.flyview.inventory_feature.createInventoryDetailsComponent
 import com.flyview.inventory_feature.createInventoryListComponent
 import com.flyview.inventory_feature.createInventoryMainComponent
+import com.flyview.inventory_feature.createOnventoryEditComponent
 import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.Product
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
@@ -43,6 +45,12 @@ class RealInventoryRootComponent(
             )
         )
 
+        is ChildConfig.Edit -> InventoryRootComponent.Child.Edit(
+            component = this.componentFactory.createOnventoryEditComponent(
+                componentContext = componentContext
+            )
+        )
+
         is ChildConfig.List -> InventoryRootComponent.Child.List(
             component = this.componentFactory.createInventoryListComponent(
                 componentContext = componentContext,
@@ -66,6 +74,9 @@ class RealInventoryRootComponent(
 
         @Parcelize
         class Details(val document: Document) : ChildConfig
+
+        @Parcelize
+        class Edit(val product: Product) : ChildConfig
 
         @Parcelize
         object List : ChildConfig

@@ -5,7 +5,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.flyview.core.data.barcode.Barcode
-import com.flyview.inventory_feature.domain.Articul
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Product
@@ -75,19 +74,18 @@ class RealInventoryRepository(
         )
     }.flow.map { it.map { document -> document.toDomain() } }
 
-    override fun getProductsPager(documentId: Long) =
-        Pager(PagingConfig(pageSize = 10)) {
-            QueryPagingSource(
-                countQuery = db.goodEntityQueries.countGoods(document = documentId),
-                transacter = db.goodEntityQueries,
-                context = Dispatchers.IO,
-                queryProvider = { limit, offset ->
-                    db.goodEntityQueries.goods(
-                        document = documentId,
-                        limit = limit,
-                        offset = offset
-                    )
-                }
-            )
-        }.flow.map { it.map { good -> Product() } }
+    override fun getProductsPager(documentId: Long) = Pager(PagingConfig(pageSize = 10)) {
+        QueryPagingSource(
+            countQuery = db.goodEntityQueries.countGoods(document = documentId),
+            transacter = db.goodEntityQueries,
+            context = Dispatchers.IO,
+            queryProvider = { limit, offset ->
+                db.goodEntityQueries.goods(
+                    document = documentId,
+                    limit = limit,
+                    offset = offset
+                )
+            }
+        )
+    }.flow.map { it.map { good -> Product() } }
 }

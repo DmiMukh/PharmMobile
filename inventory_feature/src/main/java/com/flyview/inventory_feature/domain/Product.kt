@@ -1,15 +1,18 @@
 package com.flyview.inventory_feature.domain
 
+import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventoryfeature.GoodEntity
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Product(
     val articul: Articul,
     val certificate: Certificate,
     val sgtin: String,
     val quantity: Double
-) {
+) : Parcelable {
     constructor() : this(
         articul = Articul(),
         certificate = Certificate(),

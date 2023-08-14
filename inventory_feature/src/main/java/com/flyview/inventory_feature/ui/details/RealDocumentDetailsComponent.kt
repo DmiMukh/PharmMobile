@@ -43,7 +43,10 @@ class RealDocumentDetailsComponent(
 
         val barcodeType = barcodeBinder.createBarcode(data = code)
 
-        if (barcodeType is Barcode.Unknown) TODO("Некорректный код!")
+        if (barcodeType is Barcode.Unknown) {
+            return@launch
+            TODO("Некорректный код!")
+        }
 
         val shortCode = barcodeExtractor.getShortCode(code = code, codeType = barcodeType)
 
@@ -53,7 +56,10 @@ class RealDocumentDetailsComponent(
             documentId = document.id
         )
 
-        if (!product.isValid()) TODO("Товар не найден!")
+        if (!product.isValid()) {
+            return@launch
+            TODO("Товар не найден!")
+        }
 
         repository.upsertProduct(
             product = product,
@@ -62,6 +68,10 @@ class RealDocumentDetailsComponent(
     }
 
     override fun onItemClick(product: Product) {
+        TODO("Изменение кол-ва")
+    }
+
+    init {
         BarcodeReaderData.data.onEach {
             if (it.isNotEmpty()) onReadBarcode(it)
         }.launchIn(coroutineScope)

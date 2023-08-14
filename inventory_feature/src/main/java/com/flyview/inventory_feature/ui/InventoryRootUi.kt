@@ -11,6 +11,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackA
 import com.flyview.inventory_feature.ui.details.DocumentDetailsUi
 import com.flyview.inventory_feature.ui.list.DocumentListUi
 import com.flyview.inventory_feature.ui.main.MainUi
+import com.flyview.inventory_feature.ui.product_edit.ProductEditUi
 
 @Composable
 fun InventoryRootUi(
@@ -26,6 +27,7 @@ fun InventoryRootUi(
     ) {
         when (val child = it.instance) {
             is InventoryRootComponent.Child.Details -> DocumentDetailsUi(child.component)
+            is InventoryRootComponent.Child.Edit -> ProductEditUi(child.component)
             is InventoryRootComponent.Child.List -> DocumentListUi(child.component)
             is InventoryRootComponent.Child.Main -> MainUi(child.component)
         }

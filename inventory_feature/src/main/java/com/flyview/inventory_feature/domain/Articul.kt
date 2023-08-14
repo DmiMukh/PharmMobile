@@ -1,14 +1,17 @@
 package com.flyview.inventory_feature.domain
 
+import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Articul(
     val id: Long,
     val name: String,
     val producer: String,
     val divisibility: Int
-) {
+) : Parcelable {
     constructor() : this(
         id = 0,
         name = "",
