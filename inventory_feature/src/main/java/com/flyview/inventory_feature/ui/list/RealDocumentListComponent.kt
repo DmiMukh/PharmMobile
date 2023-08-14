@@ -1,6 +1,7 @@
 package com.flyview.inventory_feature.ui.list
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.data.barcode.Barcode
 import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Document

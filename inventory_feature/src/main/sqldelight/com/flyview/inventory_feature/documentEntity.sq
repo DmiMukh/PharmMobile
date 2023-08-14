@@ -4,8 +4,26 @@ CREATE TABLE documentEntity (
 );
 
 insert:
-INSERT INTO articulEntity
-VALUES ?;
+INSERT INTO documentEntity (number)
+VALUES (?);
 
 deleteAll:
-DELETE FROM articulEntity;
+DELETE FROM documentEntity;
+
+countDocuments:
+SELECT count(*)
+FROM documentEntity;
+
+document:
+SELECT *
+FROM documentEntity
+WHERE
+    id = ?;
+
+documents:
+SELECT *
+FROM documentEntity
+LIMIT :limit OFFSET :offset;
+
+lastInsertRowId:
+SELECT last_insert_rowid();

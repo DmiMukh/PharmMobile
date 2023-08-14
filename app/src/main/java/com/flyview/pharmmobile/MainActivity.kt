@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
 import com.flyview.core.ComponentFactory
+import com.flyview.core.domain.AndroidIntent
 import com.flyview.core.domain.barcode.BarcodeReader
 import com.flyview.core.koin
 import com.flyview.core.theme.AppTheme
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         val componentFactory = application.koin.get<ComponentFactory>()
         val rootComponent = componentFactory.createRootComponent(defaultComponentContext())
 
-        val barcodeReader: BarcodeReader = application.koin.get()
+        val barcodeReader = (application.koin.get<BarcodeReader>() as AndroidIntent)
         // Регистрируем событие
         barcodeReaderReciever = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {

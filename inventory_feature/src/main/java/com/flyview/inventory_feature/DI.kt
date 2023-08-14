@@ -1,5 +1,8 @@
 package com.flyview.inventory_feature
 
+import android.app.Application
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.inventory_feature.data.RealInventoryRepository
@@ -13,13 +16,25 @@ import com.flyview.inventory_feature.ui.list.DocumentListComponent
 import com.flyview.inventory_feature.ui.list.RealDocumentListComponent
 import com.flyview.inventory_feature.ui.main.MainComponent
 import com.flyview.inventory_feature.ui.main.RealMainComponent
+import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import org.koin.core.component.get
 import org.koin.dsl.module
 
 val inventoryModule = module {
-    single<InventoryRepository> {
-        RealInventoryRepository(db = get())
-    }
+    single<InventoryDatabase> { provideInventoryDatabase(provideInventorySqlDriver(get())) }
+    single<InventoryRepository> { RealInventoryRepository(db = get()) }
+}
+
+fun provideInventorySqlDriver(app: Application): SqlDriver {
+    return AndroidSqliteDriver(
+        schema = InventoryDatabase.Schema,
+        context = app,
+        name = "inventory.db"
+    )
+}
+
+fun provideInventoryDatabase(driver: SqlDriver): InventoryDatabase {
+    return InventoryDatabase(driver)
 }
 
 fun ComponentFactory.createInventoryComponent(

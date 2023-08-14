@@ -1,3 +1,36 @@
 CREATE TABLE goodEntity (
-    certificate INTEGER NOT NULL
+    certificate INTEGER NOT NULL,
+    sgtin TEXT NOT NULL,
+    document INTEGER NOT NULL REFERENCES documentEntity(id),
+    quantity REAL NOT NULL,
+    PRIMARY KEY (
+        certificate ASC,
+        sgtin ASC,
+        document ASC
+    )
 );
+
+countGoods:
+SELECT count(*)
+FROM goodEntity
+WHERE
+    document = ?;
+
+goods:
+SELECT *
+FROM goodEntity
+WHERE
+    document = ?
+LIMIT :limit OFFSET :offset;
+
+insertOrIgnore:
+INSERT OR IGNORE INTO goodEntity
+VALUES ?;
+
+update:
+UPDATE goodEntity
+SET quantity = ?
+WHERE
+    certificate = ?
+    AND sgtin = ?
+    AND document = ?;

@@ -1,6 +1,9 @@
 package com.flyview.inventory_feature.ui.details
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.data.barcode.Barcode
+import com.flyview.core.data.barcode.InvBarcodeBinder
+import com.flyview.core.domain.barcode.BarcodeBinder
 import com.flyview.core.domain.barcode.BarcodeReader
 import com.flyview.core.domain.barcode.BarcodeReaderData
 import com.flyview.core.utils.GS1
@@ -23,6 +26,8 @@ class RealDocumentDetailsComponent(
 
     private val coroutineScope = componentCoroutineScope()
 
+    private val barcodeBinder: BarcodeBinder = InvBarcodeBinder()
+
     override val productsPager = this.repository.getProductsPager(this.document.id)
 
     override val toolbarComponent = RealDocumentDetailsToolbarComponent(
@@ -32,42 +37,16 @@ class RealDocumentDetailsComponent(
     )
 
     private fun onReadBarcode(code: String) = coroutineScope.launch {
-        when (code.length) {
-            13 -> {
-                val regex = Regex("[0-9]{13}")
 
-                if (regex.matches(code)) {
+        val barcodeType = barcodeBinder.CreateBarcode(data = code)
 
-                    val product = repository.getProduct(code)
+        if (barcodeType is Barcode.Unknown) TODO("Некорректный код")
 
-                }
-            }
-            85 -> {
-                val regex = Regex("01".plus("[0-9]{14}").plus("21").plus("\\S{13}")
-                        .plus(GS1).plus("91").plus("\\S{4}").plus(GS1).plus("92")
-                        .plus("\\S{44}")
-                )
-
-                if (regex.matches(code)) {
-                    val product = repository.getProduct(code)
-                }
-            }
-            else -> TODO("Добавить отображение ошибки некорректного кода")
-        }
-
-        TODO("Проверяем, добавлена ли позиция в документ")
-        TODO("Ищем товар по коду")
-
-        TODO("Если товар не найден, то выдаем сообщение")
-
-        TODO("Обработка увеличения кол-ва по обычному коду")
-        TODO("1. Если товар есть в документе, то увеличиваем кол-во на 1")
-        TODO("2. Если товара нет в документе, то добавляем и ставим количество 1 или меньше")
-
-        TODO("Обработка добавления новой позиции")
-        TODO("1. Если товар есть в документе, то выдаем ошибку")
-        TODO("2. Если товара нет в документе, то добавляем и ставим количество 1 или меньше")
-
+        /*
+        when (barcodeType) {
+            Barcode.DataMatrix85 -> TODO()
+            Barcode.EAN13 -> TODO()
+        }*/
     }
 
     override fun onItemClick(product: Product) {

@@ -1,6 +1,7 @@
 CREATE TABLE articulEntity (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
-    product TEXT NOT NULL
+    product TEXT NOT NULL,
+    divisibility INTEGER NOT NULL
 );
 

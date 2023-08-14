@@ -8,6 +8,7 @@ import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.os.Build
+import com.flyview.core.domain.AndroidIntent
 import com.flyview.core.domain.AppSound
 import com.flyview.core.domain.AudioPlayer
 import com.flyview.core.domain.barcode.BarcodeReader
@@ -29,7 +30,7 @@ class UsbBarcodeReader(
     private val appScope: CoroutineScope,
     private val usbManager: UsbManager,
     private val audioPlayer: AudioPlayer
-) : BarcodeReader {
+) : BarcodeReader, AndroidIntent {
 
     @Suppress("PrivatePropertyName")
     private val READ_WAIT_MILLIS = 100L

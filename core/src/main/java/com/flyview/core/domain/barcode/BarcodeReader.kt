@@ -8,11 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface BarcodeReader {
 
     val connected: StateFlow<Boolean>
-
-    val intentFilter: IntentFilter
     fun onConnect()
     fun onDisconnect()
-    fun onBroadcastReceive(context: Context?, intent: Intent?)
-
     fun switchConnection()
 }

@@ -86,6 +86,7 @@ fun ProductItemPreview(darkTheme: Boolean) {
             id = 0,
             name = "123456&0"
         ),
+        sgtin = "",
         quantity = 1.250
     )
 

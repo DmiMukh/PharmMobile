@@ -1,0 +1,8 @@
+CREATE TABLE markEntity (
+    sgtin TEXT UNIQUE,
+    certificate INTEGER NOT NULL,
+    PRIMARY KEY (
+        sgtin ASC,
+        certificate ASC
+    )
+);

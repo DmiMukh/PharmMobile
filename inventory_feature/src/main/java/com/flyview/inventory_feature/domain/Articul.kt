@@ -5,4 +5,11 @@ data class Articul(
     val name: String,
     val producer: String,
     val divisibility: Int
-)
+) {
+    constructor() : this(
+        id = 0,
+        name = "",
+        producer = "",
+        divisibility = 1
+    )
+}
