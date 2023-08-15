@@ -3,10 +3,10 @@ package com.flyview.core
 import android.content.Context
 import android.hardware.usb.UsbManager
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.core.data.RealMediaPlayer
-import com.flyview.core.data.barcode.UsbBarcodeReader
-import com.flyview.core.domain.AudioPlayer
-import com.flyview.core.domain.barcode.BarcodeReader
+import com.flyview.core.media.AudioPlayerImpl
+import com.flyview.core.barcode_reader.data.UsbBarcodeReader
+import com.flyview.core.media.AudioPlayer
+import com.flyview.core.barcode_reader.domain.BarcodeReader
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.data.MessageServiceImpl
 import com.flyview.core.message.ui.MessageComponent
@@ -21,7 +21,7 @@ val coreModule = module {
     single<CoroutineScope> { provideAppScope() }
     single<UsbManager> { provideUsbManager(context = get()) }
     single<MessageService> { MessageServiceImpl() }
-    single<AudioPlayer> { RealMediaPlayer(context = get()) }
+    single<AudioPlayer> { AudioPlayerImpl(context = get()) }
     single<BarcodeReader> {
         UsbBarcodeReader(
             context = get(),

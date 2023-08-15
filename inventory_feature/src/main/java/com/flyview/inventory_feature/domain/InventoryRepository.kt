@@ -1,7 +1,6 @@
 package com.flyview.inventory_feature.domain
 
 import androidx.paging.PagingData
-import com.flyview.core.data.barcode.Barcode
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {

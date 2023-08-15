@@ -1,6 +1,4 @@
-package com.flyview.core.domain.barcode
-
-import com.flyview.core.data.barcode.Barcode
+package com.flyview.core.barcode_reader.domain
 
 interface BarcodeExtractor {
     fun getEAN(code: String): String

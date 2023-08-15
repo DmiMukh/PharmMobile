@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
-import com.flyview.core.data.barcode.Barcode
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.Product

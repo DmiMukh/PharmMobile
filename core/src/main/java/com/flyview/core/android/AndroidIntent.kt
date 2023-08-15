@@ -1,4 +1,4 @@
-package com.flyview.core.domain
+package com.flyview.core.android
 
 import android.content.Context
 import android.content.Intent

@@ -1,12 +1,10 @@
-package com.flyview.core.data
+package com.flyview.core.media
 
 import android.content.Context
 import android.media.MediaPlayer
 import com.flyview.core.R
-import com.flyview.core.domain.AppSound
-import com.flyview.core.domain.AudioPlayer
 
-class RealMediaPlayer(
+class AudioPlayerImpl(
     private val context: Context
 ) : AudioPlayer {
     private val mpBeep: MediaPlayer = MediaPlayer.create(this.context, R.raw.beep)

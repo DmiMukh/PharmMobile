@@ -1,12 +1,12 @@
 package com.flyview.inventory_feature.ui.details
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.core.data.barcode.InvBarcodeBinder
-import com.flyview.core.data.barcode.code.EAN13
-import com.flyview.core.data.barcode.code.UnknownBarcode
-import com.flyview.core.domain.barcode.BarcodeBinder
-import com.flyview.core.domain.barcode.BarcodeReader
-import com.flyview.core.domain.barcode.BarcodeReaderData
+import com.flyview.inventory_feature.data.InvBarcodeBinder
+import com.flyview.core.barcode_reader.data.code.EAN13
+import com.flyview.core.barcode_reader.data.code.UnknownBarcode
+import com.flyview.core.barcode_reader.domain.BarcodeBinder
+import com.flyview.core.barcode_reader.domain.BarcodeReader
+import com.flyview.core.barcode_reader.data.BarcodeReaderData
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentCoroutineScope
@@ -47,7 +47,7 @@ class RealDocumentDetailsComponent(
         if (barcode is UnknownBarcode) {
             messageService.showMessage(Message(text = "Некорректный код!"))
             return@launch
-            TODO("Некорректный код!")
+            TODO("Добавить звук!")
         }
 
         val shortCode = barcode.getShortCode()
@@ -62,7 +62,7 @@ class RealDocumentDetailsComponent(
         if (!product.isValid()) {
             messageService.showMessage(Message(text = "Не найден товар!"))
             return@launch
-            TODO("Товар не найден!")
+            TODO("Добавить звук!")
         }
 
         repository.upsertProduct(

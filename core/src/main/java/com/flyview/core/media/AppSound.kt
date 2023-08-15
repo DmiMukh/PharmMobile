@@ -1,4 +1,4 @@
-package com.flyview.core.domain
+package com.flyview.core.media
 
 sealed class AppSound {
     object BEEP : AppSound()

@@ -1,4 +1,4 @@
-package com.flyview.core.domain
+package com.flyview.core.media
 
 interface AudioPlayer {
     suspend fun play(sound: AppSound)

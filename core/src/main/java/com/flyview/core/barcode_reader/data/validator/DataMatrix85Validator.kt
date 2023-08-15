@@ -1,6 +1,6 @@
-package com.flyview.core.data.barcode.validator
+package com.flyview.core.barcode_reader.data.validator
 
-import com.flyview.core.domain.barcode.BarcodeValidator
+import com.flyview.core.barcode_reader.domain.BarcodeValidator
 import com.flyview.core.utils.GS1
 
 class DataMatrix85Validator: BarcodeValidator {

@@ -1,4 +1,4 @@
-package com.flyview.core.domain.barcode
+package com.flyview.core.barcode_reader.data
 
 import kotlinx.coroutines.flow.MutableStateFlow
 

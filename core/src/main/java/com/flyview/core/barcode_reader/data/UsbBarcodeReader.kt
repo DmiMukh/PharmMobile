@@ -1,4 +1,4 @@
-package com.flyview.core.data.barcode
+package com.flyview.core.barcode_reader.data
 
 import android.app.PendingIntent
 import android.content.Context
@@ -8,11 +8,10 @@ import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.os.Build
-import com.flyview.core.domain.AndroidIntent
-import com.flyview.core.domain.AppSound
-import com.flyview.core.domain.AudioPlayer
-import com.flyview.core.domain.barcode.BarcodeReader
-import com.flyview.core.domain.barcode.BarcodeReaderData
+import com.flyview.core.android.AndroidIntent
+import com.flyview.core.media.AppSound
+import com.flyview.core.media.AudioPlayer
+import com.flyview.core.barcode_reader.domain.BarcodeReader
 import com.flyview.core.utils.APPLICATION_ID
 import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialDriver

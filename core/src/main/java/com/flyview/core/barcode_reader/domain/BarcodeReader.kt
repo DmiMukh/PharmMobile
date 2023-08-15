@@ -1,4 +1,4 @@
-package com.flyview.core.domain.barcode
+package com.flyview.core.barcode_reader.domain
 
 import android.content.Context
 import android.content.Intent
