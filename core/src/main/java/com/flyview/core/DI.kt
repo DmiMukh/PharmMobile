@@ -4,9 +4,9 @@ import android.content.Context
 import android.hardware.usb.UsbManager
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.media.AudioPlayerImpl
-import com.flyview.core.barcode_reader.data.UsbBarcodeReader
+import com.flyview.core.barcode.data.UsbBarcodeReader
 import com.flyview.core.media.AudioPlayer
-import com.flyview.core.barcode_reader.domain.BarcodeReader
+import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.data.MessageServiceImpl
 import com.flyview.core.message.ui.MessageComponent

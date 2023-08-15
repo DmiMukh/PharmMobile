@@ -1,4 +1,4 @@
-package com.flyview.core.barcode_reader.data
+package com.flyview.core.barcode.data
 
 import android.app.PendingIntent
 import android.content.Context
@@ -11,7 +11,7 @@ import android.os.Build
 import com.flyview.core.android.AndroidIntent
 import com.flyview.core.media.AppSound
 import com.flyview.core.media.AudioPlayer
-import com.flyview.core.barcode_reader.domain.BarcodeReader
+import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.utils.APPLICATION_ID
 import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialDriver

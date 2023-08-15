@@ -1,6 +1,6 @@
-package com.flyview.core.barcode_reader.data.validator
+package com.flyview.core.barcode.data.validator
 
-import com.flyview.core.barcode_reader.domain.BarcodeValidator
+import com.flyview.core.barcode.domain.BarcodeValidator
 
 class EAN13Validator: BarcodeValidator {
 

@@ -1,6 +1,6 @@
-package com.flyview.core.barcode_reader.data
+package com.flyview.core.barcode.data
 
-import com.flyview.core.barcode_reader.domain.BarcodeExtractor
+import com.flyview.core.barcode.domain.BarcodeExtractor
 
 interface Barcode {
 

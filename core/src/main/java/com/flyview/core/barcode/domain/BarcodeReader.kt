@@ -1,8 +1,5 @@
-package com.flyview.core.barcode_reader.domain
+package com.flyview.core.barcode.domain
 
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import kotlinx.coroutines.flow.StateFlow
 
 interface BarcodeReader {

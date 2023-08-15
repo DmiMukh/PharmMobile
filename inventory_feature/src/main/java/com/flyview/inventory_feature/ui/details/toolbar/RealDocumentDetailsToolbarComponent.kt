@@ -1,7 +1,7 @@
 package com.flyview.inventory_feature.ui.details.toolbar
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.core.barcode_reader.domain.BarcodeReader
+import com.flyview.core.barcode.domain.BarcodeReader
 
 class RealDocumentDetailsToolbarComponent(
     componentContext: ComponentContext,

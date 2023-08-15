@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.core.android.AndroidIntent
-import com.flyview.core.barcode_reader.domain.BarcodeReader
+import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.koin
 import com.flyview.core.theme.AppTheme
 import com.flyview.pharmmobile.root.ui.RootContent

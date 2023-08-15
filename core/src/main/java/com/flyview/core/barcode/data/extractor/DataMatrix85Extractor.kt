@@ -1,6 +1,6 @@
-package com.flyview.core.barcode_reader.data.extractor
+package com.flyview.core.barcode.data.extractor
 
-import com.flyview.core.barcode_reader.domain.BarcodeExtractor
+import com.flyview.core.barcode.domain.BarcodeExtractor
 
 class DataMatrix85Extractor : BarcodeExtractor {
     override fun getEAN(code: String) = code.substring(3, 16)

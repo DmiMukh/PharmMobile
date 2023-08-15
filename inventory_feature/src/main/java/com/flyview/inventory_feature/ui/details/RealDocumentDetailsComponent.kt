@@ -2,11 +2,11 @@ package com.flyview.inventory_feature.ui.details
 
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.inventory_feature.data.InvBarcodeBinder
-import com.flyview.core.barcode_reader.data.code.EAN13
-import com.flyview.core.barcode_reader.data.code.UnknownBarcode
-import com.flyview.core.barcode_reader.domain.BarcodeBinder
-import com.flyview.core.barcode_reader.domain.BarcodeReader
-import com.flyview.core.barcode_reader.data.BarcodeReaderData
+import com.flyview.core.barcode.data.code.EAN13
+import com.flyview.core.barcode.data.code.UnknownBarcode
+import com.flyview.core.barcode.domain.BarcodeBinder
+import com.flyview.core.barcode.domain.BarcodeReader
+import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentCoroutineScope

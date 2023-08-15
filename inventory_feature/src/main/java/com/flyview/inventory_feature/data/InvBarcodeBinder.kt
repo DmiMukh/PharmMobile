@@ -1,13 +1,13 @@
 package com.flyview.inventory_feature.data
 
-import com.flyview.core.barcode_reader.data.Barcode
-import com.flyview.core.barcode_reader.data.code.DataMatrix85
-import com.flyview.core.barcode_reader.data.code.EAN13
-import com.flyview.core.barcode_reader.data.code.UnknownBarcode
-import com.flyview.core.barcode_reader.data.validator.DataMatrix85Validator
-import com.flyview.core.barcode_reader.data.validator.EAN13Validator
-import com.flyview.core.barcode_reader.domain.BarcodeBinder
-import com.flyview.core.barcode_reader.domain.BarcodeValidator
+import com.flyview.core.barcode.data.Barcode
+import com.flyview.core.barcode.data.code.DataMatrix85
+import com.flyview.core.barcode.data.code.EAN13
+import com.flyview.core.barcode.data.code.UnknownBarcode
+import com.flyview.core.barcode.data.validator.DataMatrix85Validator
+import com.flyview.core.barcode.data.validator.EAN13Validator
+import com.flyview.core.barcode.domain.BarcodeBinder
+import com.flyview.core.barcode.domain.BarcodeValidator
 
 class InvBarcodeBinder : BarcodeBinder {
 
