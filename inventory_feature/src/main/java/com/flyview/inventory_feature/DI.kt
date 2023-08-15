@@ -60,7 +60,8 @@ fun InventoryComponentFactory.createInventoryDetailsComponent(
         document = document,
         onBack = onBack,
         repository = get(),
-        barcodeReader = get()
+        barcodeReader = get(),
+        messageService = get()
     )
 }
 

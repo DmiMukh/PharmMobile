@@ -1,6 +1,7 @@
 package com.flyview.pharmmobile.root.ui
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.childContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -9,6 +10,8 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.core.ComponentFactory
+import com.flyview.core.createMessageComponent
+import com.flyview.core.message.ui.MessageComponent
 import com.flyview.core.utils.toStateFlow
 import com.flyview.inventory_feature.createInventoryComponent
 import com.flyview.pharmmobile.createHomeComponent
@@ -30,6 +33,10 @@ class RealRootComponent(
         handleBackButton = true,
         childFactory = ::createChild
     ).toStateFlow(lifecycle)
+
+    override val messageComponent = componentFactory.createMessageComponent(
+        childContext(key = "message")
+    )
 
     private fun createChild(
         config: ChildConfig,

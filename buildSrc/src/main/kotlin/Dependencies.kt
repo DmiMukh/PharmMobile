@@ -24,6 +24,10 @@ object Libs {
         const val compose = "io.insert-koin:koin-androidx-compose:$version"
     }
 
+    object Moko {
+
+    }
+
     object Paging {
         private const val version = "3.1.1"
 

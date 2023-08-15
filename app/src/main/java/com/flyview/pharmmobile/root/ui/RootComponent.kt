@@ -1,6 +1,7 @@
 package com.flyview.pharmmobile.root.ui
 
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.flyview.core.message.ui.MessageComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
 import com.flyview.pharmmobile.home.HomeComponent
 import com.flyview.pharmmobile.settings.SettingsComponent
@@ -11,6 +12,8 @@ interface RootComponent {
 
     val childStack: StateFlow<ChildStack<*, Child>>
 
+    val messageComponent: MessageComponent
+    
     sealed interface Child {
 
 

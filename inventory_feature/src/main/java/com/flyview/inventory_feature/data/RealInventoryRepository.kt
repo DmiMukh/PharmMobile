@@ -29,21 +29,21 @@ class RealInventoryRepository(
         }
     }
 
-    override suspend fun getProduct(code: String, codeType: Barcode, documentId: Long): Product {
-        if (codeType is Barcode.EAN13) {
+    override suspend fun getProduct(code: String, documentId: Long, marked: Boolean): Product {
+        if (marked) {
+            db.transactionWithResult {
+                db.productEntityQueries.selectBySgtin(document = documentId, sgtin = code)
+                    .executeAsOneOrNull()
+            }?.let {
+                return it.toDomain(code)
+            }
+        } else {
             db.transactionWithResult {
                 db.productEntityQueries
                     .selectByBarcode(document = documentId, barcode = code)
                     .executeAsOneOrNull()
             }?.let {
                 return it.toDomain("")
-            }
-        } else {
-            db.transactionWithResult {
-                db.productEntityQueries.selectBySgtin(document = documentId, sgtin = code)
-                    .executeAsOneOrNull()
-            }?.let {
-                return it.toDomain(code)
             }
         }
 
