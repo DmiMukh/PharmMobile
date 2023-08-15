@@ -21,11 +21,11 @@ data class Product(
     )
 }
 
-fun Product.toData(document: Long) = GoodEntity(
+fun Product.toData(document: Long, quantity: Double) = GoodEntity(
     certificate = this.certificate.id,
     sgtin = this.sgtin,
     document = document,
-    quantity = this.quantity
+    quantity = quantity
 )
 
 fun Product.isValid(): Boolean = (this.articul.id > 0)

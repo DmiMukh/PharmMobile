@@ -16,6 +16,13 @@ FROM goodEntity
 WHERE
     document = ?;
 
+delete:
+DELETE FROM goodEntity
+WHERE
+    certificate = ?
+    AND sgtin = ?
+    AND document = ?;
+
 goods:
 SELECT *
 FROM goodEntity

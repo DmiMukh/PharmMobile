@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
@@ -12,7 +13,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
@@ -20,6 +23,10 @@ import com.flyview.core.theme.AppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductEditUi(component: ProductEditComponent) {
+
+    val divQuantity = component.divQuantity.collectAsState()
+    val modQuantity = component.modQuantity.collectAsState()
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -28,41 +35,45 @@ fun ProductEditUi(component: ProductEditComponent) {
                 .padding(12.dp)
         ) {
             Text(text = "Товар")
-            Text(text = "Аспирин кардио")
+            Text(text = component.articul)
 
             Text(text = "Производитель")
-            Text(text = "")
+            Text(text = component.producer)
 
             Text(text = "Серия")
-            Text(text = "")
+            Text(text = component.certificate)
 
             Text(text = "Количество")
 
             OutlinedTextField(
-                value = "12",
-                onValueChange = {},
+                value = divQuantity.value,
+                onValueChange = component::onChangeDivQuantity,
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Целые") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = CircleShape
             )
 
-            OutlinedTextField(
-                value = "121",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Деленые") },
-                shape = CircleShape
-            )
+            if (component.isDivisibility) {
+                OutlinedTextField(
+                    value = modQuantity.value,
+                    onValueChange = component::onChangeModQuantity,
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(text = "Деленые") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    shape = CircleShape
+                )
+            }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = component::onSaveClick,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Сохранить")
             }
 
             OutlinedButton(
-                onClick = { /*TODO*/ },
+                onClick = component::onCancelClick,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Отмена")

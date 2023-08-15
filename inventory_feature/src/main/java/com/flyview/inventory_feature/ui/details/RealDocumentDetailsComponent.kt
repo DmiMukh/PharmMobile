@@ -23,6 +23,7 @@ class RealDocumentDetailsComponent(
     componentContext: ComponentContext,
     private val document: Document,
     private val onBack: () -> Unit,
+    private val onEditProduct: (Product) -> Unit,
     private val repository: InventoryRepository,
     private val barcodeReader: BarcodeReader,
     private val messageService: MessageService
@@ -51,7 +52,7 @@ class RealDocumentDetailsComponent(
         }
 
         val shortCode = barcode.getShortCode()
-        val marked = !(barcode is EAN13)
+        val marked = barcode !is EAN13
 
         val product: Product = repository.getProduct(
             code = shortCode,
@@ -65,15 +66,20 @@ class RealDocumentDetailsComponent(
             TODO("Добавить звук!")
         }
 
+        if (product.sgtin.isNotEmpty() && product.quantity > 0) {
+            messageService.showMessage(Message(text = "SGTIN уже добавлен!"))
+            return@launch
+            TODO("Добавить звук!")
+        }
+
         repository.upsertProduct(
             product = product,
-            documentId = document.id
+            documentId = document.id,
+            newQuantity = product.quantity.plus(1)
         )
     }
 
-    override fun onItemClick(product: Product) {
-        TODO("Изменение кол-ва")
-    }
+    override fun onItemClick(product: Product) = onEditProduct.invoke(product)
 
     init {
         BarcodeReaderData.data.onEach {

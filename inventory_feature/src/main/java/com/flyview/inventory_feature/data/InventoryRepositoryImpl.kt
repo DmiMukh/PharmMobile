@@ -13,7 +13,7 @@ import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 
-class RealInventoryRepository(
+class InventoryRepositoryImpl(
     private val db: InventoryDatabase
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
@@ -26,6 +26,14 @@ class RealInventoryRepository(
                 it.document(id = documentId).executeAsOne()
             }.toDomain()
         }
+    }
+
+    override suspend fun deleteProduct(product: Product, documentId: Long) {
+        db.goodEntityQueries.delete(
+            certificate = product.certificate.id,
+            sgtin = product.sgtin,
+            document = documentId
+        )
     }
 
     override suspend fun getProduct(code: String, documentId: Long, marked: Boolean): Product {
@@ -49,18 +57,18 @@ class RealInventoryRepository(
         return Product()
     }
 
-    override suspend fun upsertProduct(product: Product, documentId: Long) {
+    override suspend fun upsertProduct(product: Product, documentId: Long, newQuantity: Double) {
         db.transaction {
-            val item = product.toData(document = documentId)
+            val item = product.toData(document = documentId, quantity = newQuantity)
 
             db.goodEntityQueries.update(
-                quantity = item.quantity,
+                quantity = newQuantity,
                 certificate = item.certificate,
                 sgtin = item.sgtin,
                 document = item.document
             )
 
-            db.goodEntityQueries.insertOrIgnore(product.toData(document = documentId))
+            db.goodEntityQueries.insertOrIgnore(item)
         }
     }
 

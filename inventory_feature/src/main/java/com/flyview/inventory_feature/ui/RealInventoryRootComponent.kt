@@ -41,13 +41,24 @@ class RealInventoryRootComponent(
             component = this.componentFactory.createInventoryDetailsComponent(
                 componentContext = componentContext,
                 document = config.document,
-                onBack = { navigation.pop() }
+                onBack = { navigation.pop() },
+                onEditProduct = { product ->
+                    navigation.push(
+                        ChildConfig.Edit(
+                            product = product,
+                            documentId = config.document.id
+                        )
+                    )
+                }
             )
         )
 
         is ChildConfig.Edit -> InventoryRootComponent.Child.Edit(
             component = this.componentFactory.createOnventoryEditComponent(
-                componentContext = componentContext
+                componentContext = componentContext,
+                onBack = { navigation.pop() },
+                product = config.product,
+                documentId = config.documentId
             )
         )
 
@@ -76,7 +87,7 @@ class RealInventoryRootComponent(
         class Details(val document: Document) : ChildConfig
 
         @Parcelize
-        class Edit(val product: Product) : ChildConfig
+        class Edit(val product: Product, val documentId: Long) : ChildConfig
 
         @Parcelize
         object List : ChildConfig

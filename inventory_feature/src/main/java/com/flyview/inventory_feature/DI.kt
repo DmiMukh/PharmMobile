@@ -5,9 +5,10 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
-import com.flyview.inventory_feature.data.RealInventoryRepository
+import com.flyview.inventory_feature.data.InventoryRepositoryImpl
 import com.flyview.inventory_feature.domain.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
+import com.flyview.inventory_feature.domain.Product
 import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
 import com.flyview.inventory_feature.ui.details.DocumentDetailsComponent
@@ -24,7 +25,7 @@ import org.koin.dsl.module
 
 val inventoryModule = module {
     single<InventoryDatabase> { provideInventoryDatabase(provideInventorySqlDriver(get())) }
-    single<InventoryRepository> { RealInventoryRepository(db = get()) }
+    single<InventoryRepository> { InventoryRepositoryImpl(db = get()) }
 }
 
 fun provideInventorySqlDriver(app: Application): SqlDriver {
@@ -53,12 +54,14 @@ fun ComponentFactory.createInventoryComponent(
 fun InventoryComponentFactory.createInventoryDetailsComponent(
     componentContext: ComponentContext,
     document: Document,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onEditProduct: (Product) -> Unit
 ): DocumentDetailsComponent {
     return RealDocumentDetailsComponent(
         componentContext = componentContext,
         document = document,
         onBack = onBack,
+        onEditProduct = onEditProduct,
         repository = get(),
         barcodeReader = get(),
         messageService = get()
@@ -91,9 +94,16 @@ fun InventoryComponentFactory.createInventoryMainComponent(
 }
 
 fun InventoryComponentFactory.createOnventoryEditComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
+    onBack: () -> Unit,
+    product: Product,
+    documentId: Long
 ): ProductEditComponent {
     return RealProductEditComponent(
-        componentContext = componentContext
+        componentContext = componentContext,
+        onBack = onBack,
+        product = product,
+        documentId = documentId,
+        repository = get()
     )
 }
