@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.ui.list.toolbar.FakeDocumentListToolbarComponent
 import java.io.IOException
 

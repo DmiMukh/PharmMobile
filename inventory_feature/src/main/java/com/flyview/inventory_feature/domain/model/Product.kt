@@ -1,4 +1,4 @@
-package com.flyview.inventory_feature.domain
+package com.flyview.inventory_feature.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventoryfeature.GoodEntity

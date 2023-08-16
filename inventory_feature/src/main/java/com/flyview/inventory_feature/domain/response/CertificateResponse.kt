@@ -1,4 +1,4 @@
-package com.flyview.inventory_feature.domain
+package com.flyview.inventory_feature.domain.response
 
 data class CertificateResponse(
     val id: Long,

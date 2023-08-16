@@ -6,9 +6,9 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.inventory_feature.data.InventoryRepositoryImpl
-import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
-import com.flyview.inventory_feature.domain.Product
+import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
 import com.flyview.inventory_feature.ui.details.DocumentDetailsComponent

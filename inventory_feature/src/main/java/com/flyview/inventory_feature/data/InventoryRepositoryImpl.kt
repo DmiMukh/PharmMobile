@@ -4,11 +4,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
-import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
-import com.flyview.inventory_feature.domain.Product
-import com.flyview.inventory_feature.domain.toData
-import com.flyview.inventory_feature.domain.toDomain
+import com.flyview.inventory_feature.domain.model.Product
+import com.flyview.inventory_feature.domain.model.toData
+import com.flyview.inventory_feature.domain.model.toDomain
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map

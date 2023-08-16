@@ -10,10 +10,10 @@ import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentCoroutineScope
-import com.flyview.inventory_feature.domain.Document
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
-import com.flyview.inventory_feature.domain.Product
-import com.flyview.inventory_feature.domain.isValid
+import com.flyview.inventory_feature.domain.model.Product
+import com.flyview.inventory_feature.domain.model.isValid
 import com.flyview.inventory_feature.ui.details.toolbar.RealDocumentDetailsToolbarComponent
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

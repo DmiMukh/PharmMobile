@@ -14,9 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
-import com.flyview.inventory_feature.domain.Articul
-import com.flyview.inventory_feature.domain.Certificate
-import com.flyview.inventory_feature.domain.Product
+import com.flyview.inventory_feature.domain.model.Articul
+import com.flyview.inventory_feature.domain.model.Certificate
+import com.flyview.inventory_feature.domain.model.Product
 import java.math.RoundingMode
 
 @OptIn(ExperimentalFoundationApi::class)

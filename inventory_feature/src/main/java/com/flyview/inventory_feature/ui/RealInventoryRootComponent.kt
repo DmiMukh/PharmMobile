@@ -13,8 +13,8 @@ import com.flyview.inventory_feature.createInventoryDetailsComponent
 import com.flyview.inventory_feature.createInventoryListComponent
 import com.flyview.inventory_feature.createInventoryMainComponent
 import com.flyview.inventory_feature.createOnventoryEditComponent
-import com.flyview.inventory_feature.domain.Document
-import com.flyview.inventory_feature.domain.Product
+import com.flyview.inventory_feature.domain.model.Document
+import com.flyview.inventory_feature.domain.model.Product
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 

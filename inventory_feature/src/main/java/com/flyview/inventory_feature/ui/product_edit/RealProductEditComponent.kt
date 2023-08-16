@@ -3,8 +3,7 @@ package com.flyview.inventory_feature.ui.product_edit
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.InventoryRepository
-import com.flyview.inventory_feature.domain.Product
-import kotlinx.coroutines.coroutineScope
+import com.flyview.inventory_feature.domain.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.math.BigDecimal

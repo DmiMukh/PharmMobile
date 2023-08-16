@@ -1,6 +1,8 @@
 package com.flyview.inventory_feature.domain
 
 import androidx.paging.PagingData
+import com.flyview.inventory_feature.domain.model.Document
+import com.flyview.inventory_feature.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {
