@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id(Libs.SQLDelight.plugin) version Libs.SQLDelight.version
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -79,6 +80,8 @@ dependencies {
     implementation(Libs.Koin.core)
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.compose)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC")
 
     // Paging
     implementation(Libs.Paging.core)

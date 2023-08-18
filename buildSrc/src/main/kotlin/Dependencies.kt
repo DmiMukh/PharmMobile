@@ -24,6 +24,17 @@ object Libs {
         const val compose = "io.insert-koin:koin-androidx-compose:$version"
     }
 
+    object KotlinX {
+
+        object Serialization {
+
+            val plugin = "plugin.serialization"
+            val pluginVersion = "1.9.0"
+
+            val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC"
+        }
+    }
+
     object Moko {
 
     }
