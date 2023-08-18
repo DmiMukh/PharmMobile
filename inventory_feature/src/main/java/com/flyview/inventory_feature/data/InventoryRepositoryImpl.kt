@@ -10,11 +10,15 @@ import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
 import com.flyview.inventory_feature.domain.model.toDomain
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class InventoryRepositoryImpl(
-    private val db: InventoryDatabase
+    private val db: InventoryDatabase,
+    private val api: InventoryApi
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
@@ -97,6 +101,10 @@ class InventoryRepositoryImpl(
     }.flow.map { it.map { good -> Product() } }
 
     override suspend fun saveDocument(document: Document, products: List<Product>) {
+
+    }
+
+    override suspend fun uploadData(stock: Int, scope: CoroutineScope) {
 
     }
 }
