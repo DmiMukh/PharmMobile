@@ -14,8 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 
 class InventoryRepositoryImpl(
-    private val db: InventoryDatabase,
-    private val api: InventoryApi
+    private val db: InventoryDatabase
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
@@ -99,6 +98,5 @@ class InventoryRepositoryImpl(
 
     override suspend fun saveDocument(document: Document, products: List<Product>) {
 
-        api.putDocument()
     }
 }

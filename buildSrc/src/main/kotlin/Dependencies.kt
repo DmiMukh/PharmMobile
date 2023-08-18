@@ -29,14 +29,23 @@ object Libs {
         object Serialization {
 
             val plugin = "plugin.serialization"
-            val pluginVersion = "1.9.0"
+            val pluginVersion = "1.8.10"
 
-            val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC"
+            private val version = "1.5.1"
+
+            val contentNegotation = "io.ktor:ktor-client-content-negotiation:$version"
+            val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
         }
     }
 
-    object Moko {
+    object Ktor {
+        private val version = "2.3.3"
 
+        val core = "io.ktor:ktor-client-core:$version"
+        val android = "io.ktor:ktor-client-android:$version"
+        val serialization = "io.ktor:ktor-serialization-kotlinx-json:$version"
+        val logging = "io.ktor:ktor-client-logging:$version"
+        val negotiation = "io.ktor:ktor-client-content-negotiation:$version"
     }
 
     object Paging {

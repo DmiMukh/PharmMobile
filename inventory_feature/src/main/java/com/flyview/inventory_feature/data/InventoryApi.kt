@@ -1,10 +1,11 @@
 package com.flyview.inventory_feature.data
 
-interface InventoryApi {
-    suspend fun getArticuls()
-    suspend fun getBarcodes()
-    suspend fun getCertificates()
-    suspend fun getMarks()
+import com.flyview.inventory_feature.domain.request.DocumentRequest
+import com.flyview.inventory_feature.domain.response.ArticulResponse
 
-    suspend fun putDocument()
+interface InventoryApi {
+    suspend fun getArticuls(limit: Long, offset: Long): List<ArticulResponse>
+    suspend fun getCertificates(limit: Long, offset: Long, stock: Int)
+    suspend fun getMarks(limit: Long, offset: Long, stock: Int)
+    suspend fun putDocument(document: DocumentRequest): Long
 }
