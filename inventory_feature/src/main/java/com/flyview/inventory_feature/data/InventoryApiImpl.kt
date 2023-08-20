@@ -2,6 +2,8 @@ package com.flyview.inventory_feature.data
 
 import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
+import com.flyview.inventory_feature.domain.response.CertificateResponse
+import com.flyview.inventory_feature.domain.response.MarkResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -25,7 +27,7 @@ class InventoryApiImpl(private val client: HttpClient) : InventoryApi {
         }.body()
     }
 
-    override suspend fun getCertificates(limit: Long, offset: Long, stock: Int) {
+    override suspend fun getCertificates(limit: Long, offset: Long, stock: Int): List<CertificateResponse> {
         return client.get("http://${host}/v1/inventory/certificates") {
             url {
                 parameters.append("limit", limit.toString())
@@ -35,7 +37,7 @@ class InventoryApiImpl(private val client: HttpClient) : InventoryApi {
         }.body()
     }
 
-    override suspend fun getMarks(limit: Long, offset: Long, stock: Int) {
+    override suspend fun getMarks(limit: Long, offset: Long, stock: Int): List<MarkResponse> {
         return client.get("http://${host}/v1/inventory/marks") {
             url {
                 parameters.append("limit", limit.toString())

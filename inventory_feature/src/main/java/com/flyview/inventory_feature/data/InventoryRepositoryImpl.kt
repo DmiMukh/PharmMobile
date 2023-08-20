@@ -9,9 +9,13 @@ import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
 import com.flyview.inventory_feature.domain.model.toDomain
+import com.flyview.inventory_feature.domain.response.ArticulResponse
+import com.flyview.inventory_feature.domain.response.CertificateResponse
+import com.flyview.inventory_feature.domain.response.toEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -105,6 +109,43 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun uploadData(stock: Int, scope: CoroutineScope) {
+        val articuls = scope.async {
+            var items: List<ArticulResponse>?
+            var offset = 0L
+            do {
+                items = api.getArticuls(limit = 10_000, offset = offset)
 
+                db.articulEntityQueries.let { query ->
+                    query.transaction { items?.forEach { item -> query.insert(item.toEntity()) } }
+                }
+
+
+                offset = offset.plus(10_000)
+            } while (items.isNullOrEmpty())
+        }
+
+        val certificates = scope.async {
+            var items: List<CertificateResponse>?
+            var offset = 0L
+            do {
+                items = api.getCertificates(limit = 10_000, offset = offset, stock = stock)
+
+                db.certificateEntityQueries.let { query ->
+                    query.transaction { items?.forEach { item -> query.insert(item.toEntity()) } }
+                }
+
+                offset = offset.plus(10_000)
+
+            } while (items.isNullOrEmpty())
+
+        }
+
+        val marks = scope.async {
+
+        }
+
+        articuls.await()
+        certificates.await()
+        marks.await()
     }
 }

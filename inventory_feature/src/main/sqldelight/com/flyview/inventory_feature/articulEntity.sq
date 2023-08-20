@@ -5,3 +5,9 @@ CREATE TABLE articulEntity (
     divisibility INTEGER NOT NULL
 );
 
+insert:
+INSERT INTO articulEntity
+VALUES ?;
+
+deleteAll:
+DELETE FROM articulEntity;
