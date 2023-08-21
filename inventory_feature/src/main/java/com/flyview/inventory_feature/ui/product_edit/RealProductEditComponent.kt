@@ -17,10 +17,8 @@ class RealProductEditComponent(
 ) : ComponentContext by componentContext, ProductEditComponent {
 
     private val coroutineScope = componentCoroutineScope()
-    override val articul: String
-        get() = this.product.articul.name
-    override val producer: String
-        get() = this.product.articul.producer
+    override val articul = this.product.articul.name
+    override val producer = this.product.articul.producer
     override val certificate: String
         get() = this.product.certificate.name
     override val divQuantity = MutableStateFlow("")

@@ -7,4 +7,5 @@ interface DocumentDetailsToolbarComponent {
     val barcodeReaderConnected: StateFlow<Boolean>
     fun onBackClick()
     fun onUsbDeviceConnectionClick()
+    fun onTestBarcodeClick()
 }

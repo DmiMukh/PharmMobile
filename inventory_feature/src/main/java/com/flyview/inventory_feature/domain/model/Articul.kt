@@ -3,6 +3,7 @@ package com.flyview.inventory_feature.domain.model
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
+import com.flyview.inventoryfeature.SelectProductsByDocument
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -28,6 +29,13 @@ fun SelectByBarcode.toDomainArticul() = Articul(
 )
 
 fun SelectBySgtin.toDomainArticul() = Articul(
+    id = this.articulId,
+    name = this.articulName,
+    producer = this.producer,
+    divisibility = this.divisibility.toInt()
+)
+
+fun SelectProductsByDocument.toDomainArtucul() = Articul(
     id = this.articulId,
     name = this.articulName,
     producer = this.producer,

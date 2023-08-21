@@ -31,8 +31,7 @@ class RealMainComponent(
 
         componentCoroutineScope().launch {
             repository.uploadData(
-                156,
-                this
+                156
             )
         }
     }

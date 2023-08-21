@@ -12,6 +12,9 @@ import com.flyview.inventory_feature.domain.model.toDomain
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
 import com.flyview.inventory_feature.domain.response.toEntity
+import com.flyview.inventoryfeature.ArticulEntity
+import com.flyview.inventoryfeature.BarcodeEntity
+import com.flyview.inventoryfeature.CertificateEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -95,20 +98,21 @@ class InventoryRepositoryImpl(
             transacter = db.goodEntityQueries,
             context = Dispatchers.IO,
             queryProvider = { limit, offset ->
-                db.goodEntityQueries.goods(
+                db.goodEntityQueries.selectProductsByDocument(
                     document = documentId,
                     limit = limit,
                     offset = offset
                 )
             }
         )
-    }.flow.map { it.map { good -> Product() } }
+    }.flow.map { it.map { good -> good.toDomain() } }
 
     override suspend fun saveDocument(document: Document, products: List<Product>) {
 
     }
 
-    override suspend fun uploadData(stock: Int, scope: CoroutineScope) {
+    override suspend fun uploadData(stock: Int) {
+        /*
         val articuls = scope.async {
             var items: List<ArticulResponse>?
             var offset = 0L
@@ -147,5 +151,31 @@ class InventoryRepositoryImpl(
         articuls.await()
         certificates.await()
         marks.await()
+        */
+
+        val articul = ArticulEntity(
+            id = 0,
+            name = "Ice Edge Mini FS V2.0",
+            producer = "DeepCool",
+            7
+        )
+
+        val certificate = CertificateEntity(
+            id = 0,
+            name = "",
+            marked = 0L,
+            articul = 0
+        )
+
+        val barcode = BarcodeEntity(
+            barcode = "6933412725527",
+            certificate = 0
+        )
+
+        db.transaction {
+            db.articulEntityQueries.insert(articul)
+            db.certificateEntityQueries.insert(certificate)
+            db.barcodeEntityQueries.insert(barcode)
+        }
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,6 +47,14 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
             }
         },
         actions = {
+            IconButton(onClick = component::onTestBarcodeClick) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "usb_device_connection",
+                    modifier = Modifier.size(ICON_SIZE)
+                )
+            }
+
             IconButton(onClick = component::onUsbDeviceConnectionClick) {
                 Icon(
                     painter = painterResource(

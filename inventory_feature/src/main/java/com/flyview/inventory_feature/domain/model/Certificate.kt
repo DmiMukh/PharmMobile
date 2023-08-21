@@ -3,6 +3,7 @@ package com.flyview.inventory_feature.domain.model
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
+import com.flyview.inventoryfeature.SelectProductsByDocument
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -22,6 +23,11 @@ fun SelectByBarcode.toDomainCertificate() = Certificate(
 )
 
 fun SelectBySgtin.toDomainCertificate() = Certificate(
+    id = this.certificateId,
+    name = this.certificateName
+)
+
+fun SelectProductsByDocument.toDomainCertificate() = Certificate(
     id = this.certificateId,
     name = this.certificateName
 )

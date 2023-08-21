@@ -34,6 +34,24 @@ insertOrIgnore:
 INSERT OR IGNORE INTO goodEntity
 VALUES ?;
 
+selectProductsByDocument:
+SELECT
+    ae.id AS articulId,
+    ae.name AS articulName,
+    ae.producer,
+    ae.divisibility,
+    ce.id AS certificateId,
+    ce.name AS certificateName,
+    ce.marked,
+    ge.quantity AS quantity,
+    ge.sgtin
+FROM goodEntity ge
+JOIN certificateEntity ce ON ce.id = ge.certificate
+JOIN articulEntity ae ON ae.id = ce.articul
+WHERE
+    ge.document = ?
+LIMIT :limit OFFSET :offset;
+
 update:
 UPDATE goodEntity
 SET quantity = ?
