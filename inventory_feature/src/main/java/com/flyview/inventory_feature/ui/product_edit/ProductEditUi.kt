@@ -1,12 +1,14 @@
 package com.flyview.inventory_feature.ui.product_edit
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -35,13 +37,13 @@ fun ProductEditUi(component: ProductEditComponent) {
                 .padding(12.dp)
         ) {
             Text(text = "Товар")
-            Text(text = component.articul)
+            Text(text = component.articul.name)
 
             Text(text = "Производитель")
-            Text(text = component.producer)
+            Text(text = component.articul.producer)
 
             Text(text = "Серия")
-            Text(text = component.certificate)
+            Text(text = component.certificate.name)
 
             Text(text = "Количество")
 
@@ -55,14 +57,25 @@ fun ProductEditUi(component: ProductEditComponent) {
             )
 
             if (component.isDivisibility) {
-                OutlinedTextField(
-                    value = modQuantity.value,
-                    onValueChange = component::onChangeModQuantity,
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Деленые") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = CircleShape
-                )
+                Row {
+                    OutlinedTextField(
+                        value = modQuantity.value,
+                        onValueChange = component::onChangeModQuantity,
+                        modifier = Modifier.weight(1f).padding(end = 2.dp),
+                        label = { Text(text = "Деленые") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        shape = CircleShape
+                    )
+
+                    OutlinedTextField(
+                        value = component.articul.divisibility.toString(),
+                        onValueChange = {},
+                        modifier = Modifier.weight(1f).padding(start = 2.dp),
+                        label = { Text(text = "Делимость") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        shape = CircleShape
+                    )
+                }
             }
 
             Button(
