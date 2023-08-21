@@ -164,17 +164,19 @@ class UsbBarcodeReader(
     private fun read() {
         if (port.value == null) return
 
-        try {
-            val responseData = ByteArray(MAX_BUFFER_SIZE)
-            port.value?.read(responseData, READ_WAIT_MILLIS.toInt())
-            val resultData = String(responseData)
-                .replace("\u0000", "")
-                .trim()
+        val responseData = ByteArray(MAX_BUFFER_SIZE)
 
-            BarcodeReaderData.data.update { resultData }
+        try {
+            port.value?.read(responseData, READ_WAIT_MILLIS.toInt())
         } catch (ex: Exception) {
             onDisconnect()
         }
+
+        val resultData = String(responseData)
+            .replace("\u0000", "")
+            .trim()
+
+        BarcodeReaderData.data.update { resultData }
     }
 
     init {
