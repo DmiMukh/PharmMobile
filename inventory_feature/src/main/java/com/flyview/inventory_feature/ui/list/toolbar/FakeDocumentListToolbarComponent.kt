@@ -9,4 +9,5 @@ class FakeDocumentListToolbarComponent : DocumentListToolbarComponent {
     override fun onBackClick() = Unit
     override fun onCollapseMenuClick() = Unit
     override fun onExpandMenuClick() = Unit
+    override fun onSendDataClick() = Unit
 }

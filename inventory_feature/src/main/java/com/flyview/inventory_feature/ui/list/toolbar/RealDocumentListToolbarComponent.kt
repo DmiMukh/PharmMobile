@@ -22,6 +22,11 @@ class RealDocumentListToolbarComponent(
         Log.d("EXPANDED", this.menuExpanded.value.toString())
     }
 
+    override fun onSendDataClick() {
+        TODO("Not yet implemented")
+        TODO("")
+    }
+
     private fun onSetMenuExpand(newValue: Boolean) {
         this.menuExpanded.value = newValue
     }
