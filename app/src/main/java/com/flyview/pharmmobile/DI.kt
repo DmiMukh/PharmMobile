@@ -39,7 +39,8 @@ fun ComponentFactory.createSettingsComponent(
 ): SettingsComponent {
     return RealSettingsComponent(
         componentContext = componentContext,
-        onBack = onBackClick
+        onBack = onBackClick,
+        storage = get()
     )
 }
 

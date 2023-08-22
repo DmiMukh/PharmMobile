@@ -5,10 +5,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
+import com.flyview.core.storage.SettingsStorage
 import com.flyview.core.utils.getCurrentLocalDateTime
 import com.flyview.core.utils.toLocalDateTime
+import com.flyview.inventory_feature.domain.AGENT
+import com.flyview.inventory_feature.domain.FIRM
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
+import com.flyview.inventory_feature.domain.STOCK
 import com.flyview.inventory_feature.domain.model.Mark
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
@@ -41,7 +45,8 @@ import java.util.UUID
 
 class InventoryRepositoryImpl(
     private val db: InventoryDatabase,
-    private val api: InventoryApi
+    private val api: InventoryApi,
+    private val storage: SettingsStorage
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
@@ -136,9 +141,9 @@ class InventoryRepositoryImpl(
         products: List<Product>,
         marks: List<Mark>
     ) {
-        val firm = 50
-        val stock = 156
-        val partner = 20092
+        val firm = storage.getInt(FIRM)
+        val stock = storage.getInt(STOCK)
+        val partner = storage.getInt(AGENT)
 
         val data = DocumentRequest(
             expectedDate = getCurrentLocalDateTime().toString(),

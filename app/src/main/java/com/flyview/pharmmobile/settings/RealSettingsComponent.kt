@@ -3,13 +3,19 @@ package com.flyview.pharmmobile.settings
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.flyview.core.storage.SettingsStorage
+import com.flyview.inventory_feature.domain.AGENT
+import com.flyview.inventory_feature.domain.FIRM
+import com.flyview.inventory_feature.domain.HOST
+import com.flyview.inventory_feature.domain.STOCK
 import com.flyview.pharmmobile.settings.toolbar.RealSettingsToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class RealSettingsComponent(
     componentContext: ComponentContext,
-    private val onBack: () -> Unit
+    private val onBack: () -> Unit,
+    private val storage: SettingsStorage
 ) : ComponentContext by componentContext, SettingsComponent {
 
     private val componentInstance = instanceKeeper.getOrCreate(::SomeLogic)
@@ -42,16 +48,41 @@ class RealSettingsComponent(
     }
 
     override fun onSaveClick() {
-        TODO("Not yet implemented")
+
+        this.agent.value.toIntOrNull()?.let {
+            storage.putInt(AGENT, it)
+        }
+
+        this.firm.value.toIntOrNull()?.let {
+            storage.putInt(FIRM, it)
+        }
+
+        this.stock.value.toIntOrNull()?.let {
+            storage.putInt(STOCK, it)
+        }
+
+        storage.putString(HOST, this.host.value)
     }
 
     private class SomeLogic : InstanceKeeper.Instance {
 
-        val agent = MutableStateFlow("")
-        val firm = MutableStateFlow("")
-        val host = MutableStateFlow("")
-        val stock = MutableStateFlow("")
+        var inited = false
+
+        val agent = MutableStateFlow(AGENT)
+        val firm = MutableStateFlow(FIRM)
+        val host = MutableStateFlow(HOST)
+        val stock = MutableStateFlow(STOCK)
 
         override fun onDestroy() = Unit
+    }
+
+    init {
+        if (!componentInstance.inited) {
+            this.agent.value = storage.getString(AGENT)
+            this.firm.value = storage.getString(FIRM)
+            this.host.value = storage.getString(HOST)
+            this.stock.value = storage.getString(STOCK)
+            componentInstance.inited = true
+        }
     }
 }

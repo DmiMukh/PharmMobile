@@ -11,6 +11,8 @@ import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.data.MessageServiceImpl
 import com.flyview.core.message.ui.MessageComponent
 import com.flyview.core.message.ui.RealMessageComponent
+import com.flyview.core.storage.SettingsStorage
+import com.flyview.core.storage.SettingsStorageImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -20,6 +22,7 @@ import org.koin.core.component.get
 val coreModule = module {
     single<CoroutineScope> { provideAppScope() }
     single<UsbManager> { provideUsbManager(context = get()) }
+    single<SettingsStorage> { SettingsStorageImpl(context = get()) }
     single<MessageService> { MessageServiceImpl() }
     single<AudioPlayer> { AudioPlayerImpl(context = get()) }
     single<BarcodeReader> {

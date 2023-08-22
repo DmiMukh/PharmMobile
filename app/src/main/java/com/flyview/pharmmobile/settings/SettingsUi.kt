@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
@@ -20,7 +22,10 @@ import com.flyview.pharmmobile.settings.toolbar.SettingsToolbarUi
 @Composable
 fun SettingsUi(component: SettingsComponent) {
 
+    val agent = component.agent.collectAsState()
+    val firm = component.firm.collectAsState()
     val host = component.host.collectAsState()
+    val stock = component.stock.collectAsState()
 
     Scaffold(
         topBar = { SettingsToolbarUi(component.toolbarComponent) }
@@ -41,38 +46,41 @@ fun SettingsUi(component: SettingsComponent) {
             )
 
             OutlinedTextField(
-                value = host.value,
-                onValueChange = component::onHostChange,
+                value = firm.value,
+                onValueChange = component::onFirmChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
                 label = { Text(text = "Фирма") },
                 supportingText = { Text(text = "Обазательное поле") },
-                isError = host.value.isEmpty(),
+                isError = firm.value.isEmpty(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = CircleShape
             )
 
             OutlinedTextField(
-                value = host.value,
-                onValueChange = component::onHostChange,
+                value = stock.value,
+                onValueChange = component::onStockChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
                 label = { Text(text = "Склад") },
                 supportingText = { Text(text = "Обазательное поле") },
-                isError = host.value.isEmpty(),
+                isError = stock.value.isEmpty(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = CircleShape
             )
 
             OutlinedTextField(
-                value = host.value,
-                onValueChange = component::onHostChange,
+                value = agent.value,
+                onValueChange = component::onAgentChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
                 label = { Text(text = "Агент") },
                 supportingText = { Text(text = "Обазательное поле") },
-                isError = host.value.isEmpty(),
+                isError = agent.value.isEmpty(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = CircleShape
             )
         }
