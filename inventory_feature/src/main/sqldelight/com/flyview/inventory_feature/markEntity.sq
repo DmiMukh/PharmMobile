@@ -6,3 +6,10 @@ CREATE TABLE markEntity (
         certificate ASC
     )
 );
+
+deleteAll:
+DELETE FROM markEntity;
+
+insert:
+INSERT INTO markEntity
+VALUES ?;

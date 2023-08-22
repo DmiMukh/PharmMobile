@@ -14,7 +14,7 @@ interface InventoryRepository {
     fun getDocumentsPager(): Flow<PagingData<Document>>
     fun getProductsPager(documentId: Long): Flow<PagingData<Product>>
     suspend fun saveDocument(document: Document, products: List<Product>, marks: List<Mark>)
-    suspend fun uploadData(stock: Int)
+    suspend fun uploadData()
     suspend fun upsertProduct(product: Product, documentId: Long, newQuantity: Double)
 
 }

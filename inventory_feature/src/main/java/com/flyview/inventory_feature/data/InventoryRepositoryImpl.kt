@@ -1,13 +1,11 @@
 package com.flyview.inventory_feature.data
 
-import android.os.Build
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.flyview.core.storage.SettingsStorage
 import com.flyview.core.utils.getCurrentLocalDateTime
-import com.flyview.core.utils.toLocalDateTime
 import com.flyview.inventory_feature.domain.AGENT
 import com.flyview.inventory_feature.domain.FIRM
 import com.flyview.inventory_feature.domain.model.Document
@@ -22,25 +20,11 @@ import com.flyview.inventory_feature.domain.model.toRequest
 import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
+import com.flyview.inventory_feature.domain.response.MarkResponse
 import com.flyview.inventory_feature.domain.response.toEntity
-import com.flyview.inventoryfeature.ArticulEntity
-import com.flyview.inventoryfeature.BarcodeEntity
-import com.flyview.inventoryfeature.CertificateEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toKotlinLocalDate
-import kotlinx.datetime.toKotlinLocalDateTime
-import kotlinx.datetime.todayIn
-import java.util.Calendar
 import java.util.UUID
 
 class InventoryRepositoryImpl(
@@ -161,70 +145,47 @@ class InventoryRepositoryImpl(
 
     }
 
-    override suspend fun uploadData(stock: Int) {
-        /*
-        val articuls = scope.async {
-            var items: List<ArticulResponse>?
-            var offset = 0L
-            do {
-                items = api.getArticuls(limit = 10_000, offset = offset)
+    override suspend fun uploadData() {
 
-                db.articulEntityQueries.let { query ->
-                    query.transaction { items?.forEach { item -> query.insert(item.toEntity()) } }
-                }
+        val stock = storage.getInt(STOCK)
+
+        var offset = 0L
+
+        var articuls: List<ArticulResponse>?
+        do {
+            articuls = api.getArticuls(limit = 10_000, offset = offset)
+
+            db.articulEntityQueries.let { query ->
+                query.transaction { articuls.forEach { item -> query.insert(item.toEntity()) } }
+            }
 
 
-                offset = offset.plus(10_000)
-            } while (items.isNullOrEmpty())
-        }
+            offset = offset.plus(10_000)
+        } while (articuls.isNullOrEmpty())
 
-        val certificates = scope.async {
-            var items: List<CertificateResponse>?
-            var offset = 0L
-            do {
-                items = api.getCertificates(limit = 10_000, offset = offset, stock = stock)
 
-                db.certificateEntityQueries.let { query ->
-                    query.transaction { items?.forEach { item -> query.insert(item.toEntity()) } }
-                }
+        var certificates: List<CertificateResponse>?
+        offset = 0
+        do {
+            certificates = api.getCertificates(limit = 10_000, offset = offset, stock = stock)
 
-                offset = offset.plus(10_000)
+            db.certificateEntityQueries.let { query ->
+                query.transaction { certificates.forEach { item -> query.insert(item.toEntity()) } }
+            }
 
-            } while (items.isNullOrEmpty())
+            offset = offset.plus(10_000)
 
-        }
+        } while (certificates.isNullOrEmpty())
 
-        val marks = scope.async {
+        var marks: List<MarkResponse>?
+        offset = 0
+        do {
+            marks = api.getMarks(limit = 10_000, offset = offset, stock = stock)
 
-        }
+            db.markEntityQueries.let { query ->
+                query.transaction { marks.forEach { item -> query.insert(item.toEntity()) } }
+            }
 
-        articuls.await()
-        certificates.await()
-        marks.await()
-        */
-
-        val articul = ArticulEntity(
-            id = 0,
-            name = "Ice Edge Mini FS V2.0",
-            producer = "DeepCool",
-            7
-        )
-
-        val certificate = CertificateEntity(
-            id = 0,
-            name = "",
-            articul = 0
-        )
-
-        val barcode = BarcodeEntity(
-            barcode = "6933412725527",
-            certificate = 0
-        )
-
-        db.transaction {
-            db.articulEntityQueries.insert(articul)
-            db.certificateEntityQueries.insert(certificate)
-            db.barcodeEntityQueries.insert(barcode)
-        }
+        } while (marks.isNullOrEmpty())
     }
 }
