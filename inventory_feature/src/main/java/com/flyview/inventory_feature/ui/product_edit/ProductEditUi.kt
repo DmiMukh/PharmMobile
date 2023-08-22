@@ -60,7 +60,9 @@ fun ProductEditUi(component: ProductEditComponent) {
                     OutlinedTextField(
                         value = modQuantity.value,
                         onValueChange = component::onChangeModQuantity,
-                        modifier = Modifier.weight(1f).padding(end = 2.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 2.dp),
                         label = { Text(text = "Деленые") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         shape = CircleShape
@@ -69,9 +71,11 @@ fun ProductEditUi(component: ProductEditComponent) {
                     OutlinedTextField(
                         value = component.articul.divisibility.toString(),
                         onValueChange = {},
-                        modifier = Modifier.weight(1f).padding(start = 2.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 2.dp),
+                        readOnly = true,
                         label = { Text(text = "Делимость") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         shape = CircleShape
                     )
                 }
