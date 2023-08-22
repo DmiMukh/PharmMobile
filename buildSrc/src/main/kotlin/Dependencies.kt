@@ -26,6 +26,11 @@ object Libs {
 
     object KotlinX {
 
+        object Datetime {
+            private const val version = "0.4.0"
+            const val core = "org.jetbrains.kotlinx:kotlinx-datetime:$version"
+        }
+
         object Serialization {
 
             val plugin = "plugin.serialization"

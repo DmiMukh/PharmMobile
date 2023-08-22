@@ -5,10 +5,16 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsComponent {
 
+    val agent: StateFlow<String>
+    val firm: StateFlow<String>
     val host: StateFlow<String>
+    val stock: StateFlow<String>
 
     val toolbarComponent: SettingsToolbarComponent
 
-    fun onHostChanged(newValue: String)
+    fun onAgentChange(newValue: String)
+    fun onFirmChange(newValue: String)
+    fun onHostChange(newValue: String)
+    fun onStockChange(newValue: String)
     fun onSaveClick()
 }

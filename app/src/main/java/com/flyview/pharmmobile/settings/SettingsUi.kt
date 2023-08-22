@@ -3,6 +3,7 @@ package com.flyview.pharmmobile.settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -29,13 +30,50 @@ fun SettingsUi(component: SettingsComponent) {
         ) {
             OutlinedTextField(
                 value = host.value,
-                onValueChange = component::onHostChanged,
+                onValueChange = component::onHostChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
                 label = { Text(text = "Сервер") },
                 supportingText = { Text(text = "Обазательное поле") },
-                isError = host.value.isEmpty()
+                isError = host.value.isEmpty(),
+                shape = CircleShape
+            )
+
+            OutlinedTextField(
+                value = host.value,
+                onValueChange = component::onHostChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                label = { Text(text = "Фирма") },
+                supportingText = { Text(text = "Обазательное поле") },
+                isError = host.value.isEmpty(),
+                shape = CircleShape
+            )
+
+            OutlinedTextField(
+                value = host.value,
+                onValueChange = component::onHostChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                label = { Text(text = "Склад") },
+                supportingText = { Text(text = "Обазательное поле") },
+                isError = host.value.isEmpty(),
+                shape = CircleShape
+            )
+
+            OutlinedTextField(
+                value = host.value,
+                onValueChange = component::onHostChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                label = { Text(text = "Агент") },
+                supportingText = { Text(text = "Обазательное поле") },
+                isError = host.value.isEmpty(),
+                shape = CircleShape
             )
         }
     }

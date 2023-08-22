@@ -83,6 +83,7 @@ dependencies {
     implementation(Libs.Koin.compose)
 
     // KotlinX
+    implementation(Libs.KotlinX.Datetime.core)
     implementation(Libs.KotlinX.Serialization.contentNegotation)
     implementation(Libs.KotlinX.Serialization.json)
 

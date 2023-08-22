@@ -1,11 +1,14 @@
 CREATE TABLE documentEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    number TEXT NOT NULL
+    number TEXT NOT NULL,
+    creation_date TEXT NOT NULL,
+    guid TEXT NOT NULL,
+    is_id INTEGER NOT NULL
 );
 
 insert:
-INSERT INTO documentEntity (number)
-VALUES (?);
+INSERT INTO documentEntity (number, creation_date, guid, is_id)
+VALUES (?,?,?,?);
 
 deleteAll:
 DELETE FROM documentEntity;

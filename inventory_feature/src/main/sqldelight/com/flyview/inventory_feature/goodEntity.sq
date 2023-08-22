@@ -42,7 +42,6 @@ SELECT
     ae.divisibility,
     ce.id AS certificateId,
     ce.name AS certificateName,
-    ce.marked,
     ge.quantity AS quantity,
     ge.sgtin
 FROM goodEntity ge

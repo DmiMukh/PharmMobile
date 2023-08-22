@@ -75,6 +75,9 @@ dependencies {
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.compose)
 
+    // KotlinX
+    implementation(Libs.KotlinX.Datetime.core)
+
     // UsbSerial
     implementation(Libs.UsbSerial.android)
 }

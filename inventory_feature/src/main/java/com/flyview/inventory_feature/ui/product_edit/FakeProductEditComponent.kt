@@ -12,10 +12,7 @@ class FakeProductEditComponent: ProductEditComponent {
     override val modQuantity = MutableStateFlow("")
 
     override fun onCancelClick() = Unit
-
     override fun onChangeDivQuantity(newValue: String) = Unit
-
     override fun onChangeModQuantity(newValue: String) = Unit
-
     override fun onSaveClick() = Unit
 }

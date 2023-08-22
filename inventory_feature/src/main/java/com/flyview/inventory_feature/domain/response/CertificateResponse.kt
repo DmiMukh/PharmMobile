@@ -10,6 +10,5 @@ data class CertificateResponse(
 fun CertificateResponse.toEntity() = CertificateEntity(
     id = this.id,
     name = this.name,
-    marked = 0,
     articul = 0
 )

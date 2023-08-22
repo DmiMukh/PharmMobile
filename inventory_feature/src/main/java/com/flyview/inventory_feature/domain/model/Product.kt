@@ -1,6 +1,7 @@
 package com.flyview.inventory_feature.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
+import com.flyview.inventory_feature.domain.request.GoodRequest
 import com.flyview.inventoryfeature.GoodEntity
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
@@ -30,6 +31,12 @@ fun Product.toData(document: Long, quantity: Double) = GoodEntity(
 )
 
 fun Product.isValid(): Boolean = (this.articul.id > -1)
+
+fun Product.toGoodRequest() = GoodRequest(
+    articul = this.articul.id.toInt(),
+    certificate = this.certificate.id.toInt(),
+    quantity = this.quantity
+)
 
 fun SelectProductsByDocument.toDomain() = Product(
     articul = this.toDomainArtucul(),

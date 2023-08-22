@@ -1,14 +1,21 @@
 package com.flyview.inventory_feature.data
 
+import android.os.Build
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
+import com.flyview.core.utils.getCurrentLocalDateTime
+import com.flyview.core.utils.toLocalDateTime
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
+import com.flyview.inventory_feature.domain.model.Mark
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
 import com.flyview.inventory_feature.domain.model.toDomain
+import com.flyview.inventory_feature.domain.model.toGoodRequest
+import com.flyview.inventory_feature.domain.model.toRequest
+import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
 import com.flyview.inventory_feature.domain.response.toEntity
@@ -22,6 +29,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toKotlinLocalDate
+import kotlinx.datetime.toKotlinLocalDateTime
+import kotlinx.datetime.todayIn
+import java.util.Calendar
+import java.util.UUID
 
 class InventoryRepositoryImpl(
     private val db: InventoryDatabase,
@@ -29,8 +45,16 @@ class InventoryRepositoryImpl(
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
+
+            val currentDateTime = getCurrentLocalDateTime()
+
             return it.transactionWithResult {
-                it.insert("")
+                it.insert(
+                    number = "",
+                    creation_date = currentDateTime.toString(),
+                    guid = UUID.randomUUID().toString(),
+                    is_id = -1
+                )
 
                 val documentId = it.lastInsertRowId().executeAsOne()
 
@@ -107,7 +131,28 @@ class InventoryRepositoryImpl(
         )
     }.flow.map { it.map { good -> good.toDomain() } }
 
-    override suspend fun saveDocument(document: Document, products: List<Product>) {
+    override suspend fun saveDocument(
+        document: Document,
+        products: List<Product>,
+        marks: List<Mark>
+    ) {
+        val firm = 50
+        val stock = 156
+        val partner = 20092
+
+        val data = DocumentRequest(
+            expectedDate = getCurrentLocalDateTime().toString(),
+            firm = firm,
+            heap = "",
+            id = -1,
+            opDate = getCurrentLocalDateTime().toString(),
+            partner = partner,
+            stock = stock,
+            products = products.map { it.toGoodRequest() },
+            marks = marks.map { it.toRequest() }
+        )
+
+        val documentId = api.putDocument(data)
 
     }
 
@@ -163,7 +208,6 @@ class InventoryRepositoryImpl(
         val certificate = CertificateEntity(
             id = 0,
             name = "",
-            marked = 0L,
             articul = 0
         )
 
