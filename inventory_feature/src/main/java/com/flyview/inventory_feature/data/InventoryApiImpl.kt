@@ -1,5 +1,7 @@
 package com.flyview.inventory_feature.data
 
+import com.flyview.core.storage.SettingsStorage
+import com.flyview.inventory_feature.domain.HOST
 import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
@@ -14,9 +16,12 @@ import io.ktor.http.contentType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class InventoryApiImpl(private val client: HttpClient) : InventoryApi {
+class InventoryApiImpl(
+    private val client: HttpClient,
+    private val storage: SettingsStorage
+) : InventoryApi {
 
-    private val host = "127.0.0.1:8080"
+    private val host = storage.getString(HOST)
 
     override suspend fun getArticuls(limit: Long, offset: Long): List<ArticulResponse> {
         return client.get("http://${host}/v1/inventory/articuls") {
