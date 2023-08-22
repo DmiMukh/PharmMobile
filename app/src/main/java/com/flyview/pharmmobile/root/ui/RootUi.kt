@@ -14,6 +14,7 @@ import com.flyview.inventory_feature.ui.InventoryRootUi
 import com.flyview.pharmmobile.home.HomeUi
 import com.flyview.pharmmobile.settings.SettingsUi
 import com.flyview.pharmmobile.splash.SplashUi
+import com.flyview.pharmmobile.usb_device.UsbListUi
 
 @Composable
 fun RootContent(
@@ -32,6 +33,7 @@ fun RootContent(
             is RootComponent.Child.InventoryRoot -> InventoryRootUi(child.component)
             is RootComponent.Child.Settings -> SettingsUi(child.component)
             is RootComponent.Child.Splash -> SplashUi(child.component)
+            is RootComponent.Child.UsbList -> UsbListUi(child.component)
         }
     }
 

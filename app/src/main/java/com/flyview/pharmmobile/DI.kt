@@ -10,6 +10,9 @@ import com.flyview.pharmmobile.settings.RealSettingsComponent
 import com.flyview.pharmmobile.settings.SettingsComponent
 import com.flyview.pharmmobile.splash.RealSplashComponent
 import com.flyview.pharmmobile.splash.SplashComponent
+import com.flyview.pharmmobile.usb_device.RealUsbListComponent
+import com.flyview.pharmmobile.usb_device.UsbListComponent
+import org.koin.core.component.get
 
 val allModules = listOf(
     coreModule,
@@ -47,5 +50,16 @@ fun ComponentFactory.createSplashComponent(
     return RealSplashComponent(
         componentContext = componentContext,
         onFinish = onFinish
+    )
+}
+fun ComponentFactory.createUsbListComponent(
+    componentContext: ComponentContext,
+    onBack: () -> Unit
+): UsbListComponent {
+    return RealUsbListComponent(
+        componentContext = componentContext,
+        onBack = onBack,
+        usbManager = get(),
+        messageService = get()
     )
 }

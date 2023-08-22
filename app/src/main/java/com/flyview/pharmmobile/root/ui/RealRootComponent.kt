@@ -17,6 +17,7 @@ import com.flyview.inventory_feature.createInventoryComponent
 import com.flyview.pharmmobile.createHomeComponent
 import com.flyview.pharmmobile.createSettingsComponent
 import com.flyview.pharmmobile.createSplashComponent
+import com.flyview.pharmmobile.createUsbListComponent
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
@@ -46,7 +47,7 @@ class RealRootComponent(
         ChildConfig.Home -> RootComponent.Child.Home(
             component = this.componentFactory.createHomeComponent(
                 componentContext = componentContext,
-                onBarcodeReaderClick = { TODO("Добавить нафигация на экран USB-устройств") },
+                onBarcodeReaderClick = { navigation.push(ChildConfig.UsbList) },
                 onSettingsClick = { navigation.push(ChildConfig.Settings) },
                 onInventoryClick = { navigation.push(ChildConfig.InventoryRoot) }
             )
@@ -72,6 +73,13 @@ class RealRootComponent(
                 onFinish = { navigation.replaceCurrent(ChildConfig.Home) }
             )
         )
+
+        ChildConfig.UsbList -> RootComponent.Child.UsbList(
+            component = this.componentFactory.createUsbListComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
     }
 
     private sealed interface ChildConfig : Parcelable {
@@ -87,5 +95,8 @@ class RealRootComponent(
 
         @Parcelize
         object Splash : ChildConfig
+
+        @Parcelize
+        object UsbList : ChildConfig
     }
 }

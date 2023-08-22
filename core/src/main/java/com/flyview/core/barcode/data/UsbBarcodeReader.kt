@@ -170,6 +170,8 @@ class UsbBarcodeReader(
             port.value?.read(responseData, READ_WAIT_MILLIS.toInt())
         } catch (ex: Exception) {
             onDisconnect()
+            return
+            // TODO("Надо проверить ошибку с другими устройствами.")
         }
 
         val resultData = String(responseData)
