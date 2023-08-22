@@ -28,11 +28,8 @@ class RealMainComponent(
 
     override fun onDocumentsClick() = this.onDocumentsClick.invoke()
     override fun onUploadDataClick() {
-
         componentCoroutineScope().launch {
-            repository.uploadData(
-                156
-            )
+            repository.uploadData()
         }
     }
 }

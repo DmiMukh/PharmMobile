@@ -142,7 +142,6 @@ class InventoryRepositoryImpl(
         )
 
         val documentId = api.putDocument(data)
-
     }
 
     override suspend fun uploadData() {
