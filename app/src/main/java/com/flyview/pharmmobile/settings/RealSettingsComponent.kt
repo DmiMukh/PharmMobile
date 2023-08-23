@@ -3,6 +3,8 @@ package com.flyview.pharmmobile.settings
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.flyview.core.message.data.MessageService
+import com.flyview.core.message.domain.Message
 import com.flyview.core.storage.SettingsStorage
 import com.flyview.inventory_feature.domain.AGENT
 import com.flyview.inventory_feature.domain.FIRM
@@ -10,20 +12,20 @@ import com.flyview.inventory_feature.domain.HOST
 import com.flyview.inventory_feature.domain.STOCK
 import com.flyview.pharmmobile.settings.toolbar.RealSettingsToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 class RealSettingsComponent(
     componentContext: ComponentContext,
     private val onBack: () -> Unit,
-    private val storage: SettingsStorage
+    private val storage: SettingsStorage,
+    private val messageService: MessageService
 ) : ComponentContext by componentContext, SettingsComponent {
 
     private val componentInstance = instanceKeeper.getOrCreate(::SomeLogic)
 
-    override val agent = componentInstance.agent
-    override val firm = componentInstance.firm
-    override val host = componentInstance.host
-    override val stock = componentInstance.stock
+    override val agent get() = componentInstance.agent
+    override val firm get() = componentInstance.firm
+    override val host get() = componentInstance.host
+    override val stock get() = componentInstance.stock
 
     override val toolbarComponent = RealSettingsToolbarComponent(
         componentContext = componentContext,
@@ -48,7 +50,6 @@ class RealSettingsComponent(
     }
 
     override fun onSaveClick() {
-
         this.agent.value.toIntOrNull()?.let {
             storage.putInt(AGENT, it)
         }
@@ -62,6 +63,8 @@ class RealSettingsComponent(
         }
 
         storage.putString(HOST, this.host.value)
+
+        messageService.showMessage(Message(text = "Данные сохранены"))
     }
 
     private class SomeLogic : InstanceKeeper.Instance {

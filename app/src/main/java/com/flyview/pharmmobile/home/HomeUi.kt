@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flyview.core.theme.AppTheme
 import com.flyview.pharmmobile.home.toolbar.HomeToolbarUi
 
@@ -31,7 +32,9 @@ fun HomeUi(component: HomeComponent) {
                     .fillMaxWidth()
                     .padding(12.dp)
             ) {
-                Text(text = "Инвентаризация")
+                Text(
+                    text = "Инвентаризация"
+                )
             }
         }
     }

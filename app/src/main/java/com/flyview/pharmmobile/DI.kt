@@ -40,7 +40,8 @@ fun ComponentFactory.createSettingsComponent(
     return RealSettingsComponent(
         componentContext = componentContext,
         onBack = onBackClick,
-        storage = get()
+        storage = get(),
+        messageService = get()
     )
 }
 

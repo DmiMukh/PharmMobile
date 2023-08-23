@@ -45,46 +45,54 @@ fun SettingsUi(component: SettingsComponent) {
                 shape = CircleShape
             )
 
-            OutlinedTextField(
+            OutlinedNumberTextField(
                 value = firm.value,
                 onValueChange = component::onFirmChange,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                label = { Text(text = "Фирма") },
-                supportingText = { Text(text = "Обазательное поле") },
-                isError = firm.value.isEmpty(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = CircleShape
+                label = "Фирма",
+                supportingText = "Обязательное поле",
+                isError = firm.value.isEmpty()
             )
 
-            OutlinedTextField(
+            OutlinedNumberTextField(
                 value = stock.value,
                 onValueChange = component::onStockChange,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                label = { Text(text = "Склад") },
-                supportingText = { Text(text = "Обазательное поле") },
-                isError = stock.value.isEmpty(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = CircleShape
+                label = "Склад",
+                supportingText = "Обязательное поле",
+                isError = stock.value.isEmpty()
             )
 
-            OutlinedTextField(
+            OutlinedNumberTextField(
                 value = agent.value,
                 onValueChange = component::onAgentChange,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                label = { Text(text = "Агент") },
-                supportingText = { Text(text = "Обазательное поле") },
-                isError = agent.value.isEmpty(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = CircleShape
+                label = "Склад",
+                supportingText = "Обязательное поле",
+                isError = agent.value.isEmpty()
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OutlinedNumberTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    supportingText: String,
+    isError: Boolean = false,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        label = { Text(text = label) },
+        supportingText = { Text(text = supportingText) },
+        isError = isError,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        shape = CircleShape
+    )
 }
 
 @Composable
