@@ -3,6 +3,7 @@ package com.flyview.inventory_feature.ui.main
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.ui.main.dialog.MainDialogState
 import com.flyview.inventory_feature.ui.main.dialog.RealMainDialogComponent
@@ -11,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -35,8 +37,9 @@ class RealMainComponent(
     )
 
     override fun onClearDataClick() {
-        TODO("Not yet implemented")
-
+        componentCoroutineScope().launch {
+            repository.clearData()
+        }
     }
 
     override fun onDocumentsClick() = this.onDocumentsClick.invoke()

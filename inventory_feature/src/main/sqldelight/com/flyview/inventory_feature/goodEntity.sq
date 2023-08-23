@@ -23,6 +23,9 @@ WHERE
     AND sgtin = ?
     AND document = ?;
 
+deleteAll:
+DELETE FROM goodEntity;
+
 goods:
 SELECT *
 FROM goodEntity

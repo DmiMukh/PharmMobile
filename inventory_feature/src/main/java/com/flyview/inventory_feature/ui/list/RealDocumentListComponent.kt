@@ -5,6 +5,8 @@ import com.flyview.core.utils.componentCoroutineScope
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.ui.list.toolbar.RealDocumentListToolbarComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RealDocumentListComponent(
@@ -13,8 +15,7 @@ class RealDocumentListComponent(
     private val onDocumentDetails: (Document) -> Unit,
     private val repository: InventoryRepository
 ) : ComponentContext by componentContext, DocumentListComponent {
-
-    private val coroutineScope = componentCoroutineScope()
+    private val createDocumentEnabled = MutableStateFlow(true)
 
     override val documentsPager = repository.getDocumentsPager()
 
@@ -26,9 +27,13 @@ class RealDocumentListComponent(
     override fun onBackClick() = this.onBack.invoke()
 
     override fun onCreateDocumentClick() {
-        coroutineScope.launch {
-            val document = repository.createDocument()
-            onDocumentDetails.invoke(document)
+        if (createDocumentEnabled.value) {
+            createDocumentEnabled.value = false
+            componentCoroutineScope().launch {
+                val document = repository.createDocument()
+                onDocumentDetails.invoke(document)
+                createDocumentEnabled.value = true
+            }
         }
     }
 

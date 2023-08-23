@@ -6,10 +6,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.ui.list.toolbar.FakeDocumentListToolbarComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
 
 class FakeDocumentListComponent : DocumentListComponent {
-
     override val documentsPager = Pager(PagingConfig(pageSize = 10)) { FakePagingSource() }.flow
 
     override val toolbarComponent = FakeDocumentListToolbarComponent()

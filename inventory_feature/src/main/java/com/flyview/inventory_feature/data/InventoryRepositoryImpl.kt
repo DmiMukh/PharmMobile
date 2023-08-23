@@ -36,6 +36,17 @@ class InventoryRepositoryImpl(
     private val storage: SettingsStorage,
     private val messageService: MessageService
 ) : InventoryRepository {
+    override suspend fun clearData() {
+        db.transaction {
+            db.markEntityQueries.deleteAll()
+            db.goodEntityQueries.deleteAll()
+            db.documentEntityQueries.deleteAll()
+            db.barcodeEntityQueries.deleteAll()
+            db.certificateEntityQueries.deleteAll()
+            db.articulEntityQueries.deleteAll()
+        }
+    }
+
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
 

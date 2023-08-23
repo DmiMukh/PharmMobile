@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {
+    suspend fun clearData()
     suspend fun createDocument(): Document
     suspend fun deleteProduct(product: Product, documentId: Long)
     suspend fun getProduct(code: String, documentId: Long, marked: Boolean): Product
