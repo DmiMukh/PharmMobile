@@ -96,6 +96,14 @@ class InventoryRepositoryImpl(
         return Product()
     }
 
+    override suspend fun getProductsByDocument(documentId: Long): List<Product> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMarksByDocument(documentId: Long): List<Mark> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun upsertProduct(product: Product, documentId: Long, newQuantity: Double) {
         db.transaction {
             val item = product.toData(document = documentId, quantity = newQuantity)
@@ -135,7 +143,7 @@ class InventoryRepositoryImpl(
         )
     }.flow.map { it.map { good -> good.toDomain() } }
 
-    override suspend fun saveDocument(
+    override suspend fun sendDocument(
         document: Document,
         products: List<Product>,
         marks: List<Mark>

@@ -5,7 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class RealDocumentListToolbarComponent(
     componentContext: ComponentContext,
-    private val onBack: () -> Unit
+    private val onBack: () -> Unit,
+    private val onSendClick: () -> Unit
 ) : ComponentContext by componentContext, DocumentListToolbarComponent {
 
     override val menuExpanded = MutableStateFlow(false)
@@ -14,10 +15,7 @@ class RealDocumentListToolbarComponent(
     override fun onCollapseMenuClick() = this.onSetMenuExpand(false)
     override fun onExpandMenuClick() = this.onSetMenuExpand(true)
 
-    override fun onSendDataClick() {
-        TODO("Not yet implemented")
-        TODO("")
-    }
+    override fun onSendDataClick() = this.onSendClick.invoke()
 
     private fun onSetMenuExpand(newValue: Boolean) {
         this.menuExpanded.value = newValue

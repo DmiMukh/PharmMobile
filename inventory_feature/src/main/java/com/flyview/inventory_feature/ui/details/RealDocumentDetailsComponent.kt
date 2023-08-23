@@ -35,13 +35,10 @@ class RealDocumentDetailsComponent(
 
     override val productsPager = this.repository.getProductsPager(this.document.id)
 
-    private val testBarcode = 6_933_412_725_527
-
     override val toolbarComponent = RealDocumentDetailsToolbarComponent(
         componentContext = componentContext,
         onBack = this.onBack,
-        barcodeReader = this.barcodeReader,
-        onTestBarcodeClick = { onReadBarcode(testBarcode.toString()) }
+        barcodeReader = this.barcodeReader
     )
 
     private fun onReadBarcode(code: String) = coroutineScope.launch {

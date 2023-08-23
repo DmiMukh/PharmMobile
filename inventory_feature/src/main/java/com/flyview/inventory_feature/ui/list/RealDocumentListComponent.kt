@@ -6,7 +6,6 @@ import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.ui.list.toolbar.RealDocumentListToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RealDocumentListComponent(
@@ -21,8 +20,25 @@ class RealDocumentListComponent(
 
     override val toolbarComponent = RealDocumentListToolbarComponent(
         componentContext = componentContext,
-        onBack = this.onBack
+        onBack = this.onBack,
+        onSendClick = { onSendClick() }
     )
+
+    private fun onSendClick() {
+        /*
+        val documentId = 1L
+
+        val document = Document()
+        val products = repository.getProductsByDocument(documentId = documentId)
+        val marks = repository.getMarksByDocument(documentId = documentId)
+
+        repository.sendDocument(
+            document = document,
+            products = products,
+            marks = marks
+        )
+        */
+    }
 
     override fun onBackClick() = this.onBack.invoke()
 
