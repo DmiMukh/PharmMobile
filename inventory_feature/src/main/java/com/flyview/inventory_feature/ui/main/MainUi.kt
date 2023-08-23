@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flyview.core.theme.AppTheme
+import com.flyview.inventory_feature.ui.main.dialog.MainDialogState
+import com.flyview.inventory_feature.ui.main.dialog.UploadDialogUi
 import com.flyview.inventory_feature.ui.main.toolbar.MainToolbarUi
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,6 +23,10 @@ import com.flyview.inventory_feature.ui.main.toolbar.MainToolbarUi
 fun MainUi(component: MainComponent) {
 
     val dataDate = component.formattedDateOfData.collectAsState()
+    val dialogState = component.dialogComponent.state.collectAsState()
+
+    if (dialogState.value != MainDialogState.Hidden)
+        UploadDialogUi(component.dialogComponent)
 
     Scaffold(
         topBar = { MainToolbarUi(component.toolbarComponent) }

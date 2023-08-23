@@ -41,7 +41,14 @@ import org.koin.dsl.module
 val inventoryModule = module {
     single<InventoryApi> { InventoryApiImpl(client = provideKtorHttpClient(), storage = get()) }
     single<InventoryDatabase> { provideInventoryDatabase(provideInventorySqlDriver(get())) }
-    single<InventoryRepository> { InventoryRepositoryImpl(db = get(), api = get(), storage = get()) }
+    single<InventoryRepository> {
+        InventoryRepositoryImpl(
+            db = get(),
+            api = get(),
+            storage = get(),
+            messageService = get()
+        )
+    }
 }
 
 fun provideKtorHttpClient(): HttpClient {

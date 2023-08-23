@@ -4,6 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import app.cash.sqldelight.paging3.QueryPagingSource
+import com.flyview.core.message.data.MessageService
+import com.flyview.core.message.domain.Message
 import com.flyview.core.storage.SettingsStorage
 import com.flyview.core.utils.getCurrentLocalDateTime
 import com.flyview.inventory_feature.domain.AGENT
@@ -25,12 +27,14 @@ import com.flyview.inventory_feature.domain.response.toEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
+import java.net.UnknownHostException
 import java.util.UUID
 
 class InventoryRepositoryImpl(
     private val db: InventoryDatabase,
     private val api: InventoryApi,
-    private val storage: SettingsStorage
+    private val storage: SettingsStorage,
+    private val messageService: MessageService
 ) : InventoryRepository {
     override suspend fun createDocument(): Document {
         db.documentEntityQueries.let {
@@ -146,13 +150,20 @@ class InventoryRepositoryImpl(
 
     override suspend fun uploadData() {
 
+    }
+
+    override suspend fun uploadArticuls(): Boolean {
         val stock = storage.getInt(STOCK)
-
         var offset = 0L
-
         var articuls: List<ArticulResponse>?
+
         do {
-            articuls = api.getArticuls(limit = 10_000, offset = offset)
+            try {
+                articuls = api.getArticuls(limit = 10_000, offset = offset)
+            } catch (ex: Exception) {
+                messageService.showMessage(Message(text = ex.localizedMessage.orEmpty()))
+                return false
+            }
 
             db.articulEntityQueries.let { query ->
                 query.transaction { articuls.forEach { item -> query.insert(item.toEntity()) } }
@@ -162,11 +173,20 @@ class InventoryRepositoryImpl(
             offset = offset.plus(10_000)
         } while (articuls.isNullOrEmpty())
 
+        return true
+    }
 
+    override suspend fun uploadCertificates(): Boolean {
+        val stock = storage.getInt(STOCK)
         var certificates: List<CertificateResponse>?
-        offset = 0
+        var offset = 0L
         do {
-            certificates = api.getCertificates(limit = 10_000, offset = offset, stock = stock)
+            try {
+                certificates = api.getCertificates(limit = 10_000, offset = offset, stock = stock)
+            } catch (ex: Exception) {
+                messageService.showMessage(Message(text = ex.localizedMessage.orEmpty()))
+                return false
+            }
 
             db.certificateEntityQueries.let { query ->
                 query.transaction { certificates.forEach { item -> query.insert(item.toEntity()) } }
@@ -175,16 +195,26 @@ class InventoryRepositoryImpl(
             offset = offset.plus(10_000)
 
         } while (certificates.isNullOrEmpty())
+        return true
+    }
 
+    override suspend fun uploadMarks(): Boolean {
+        val stock = storage.getInt(STOCK)
         var marks: List<MarkResponse>?
-        offset = 0
+        var offset = 0L
         do {
-            marks = api.getMarks(limit = 10_000, offset = offset, stock = stock)
+            try {
+                marks = api.getMarks(limit = 10_000, offset = offset, stock = stock)
+            } catch (ex: Exception) {
+                messageService.showMessage(Message(text = ex.localizedMessage.orEmpty()))
+                return false
+            }
 
             db.markEntityQueries.let { query ->
                 query.transaction { marks.forEach { item -> query.insert(item.toEntity()) } }
             }
 
         } while (marks.isNullOrEmpty())
+        return true
     }
 }
