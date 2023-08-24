@@ -1,7 +1,7 @@
 package com.flyview.inventory_feature.ui.product_edit
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.core.utils.componentCoroutineScope
+import com.flyview.core.utils.componentScope
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.model.Articul
 import com.flyview.inventory_feature.domain.model.Certificate
@@ -18,8 +18,6 @@ class RealProductEditComponent(
     private val documentId: Long,
     private val repository: InventoryRepository
 ) : ComponentContext by componentContext, ProductEditComponent {
-
-    private val coroutineScope = componentCoroutineScope()
     override val articul: Articul
         get() = this.product.articul
     override val certificate: Certificate
@@ -73,7 +71,7 @@ class RealProductEditComponent(
     }
 
     override fun onSaveClick() {
-        coroutineScope.launch {
+        componentScope.launch {
             val qtyDiv = getDivQuantity()
             val qtyMod = getModQuantity()
             val newQuantity = qtyDiv.plus(qtyMod)

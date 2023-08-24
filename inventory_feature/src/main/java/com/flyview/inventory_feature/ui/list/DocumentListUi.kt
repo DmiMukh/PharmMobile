@@ -14,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,15 +47,13 @@ fun DocumentListUi(component: DocumentListComponent) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .padding(12.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Row {
-                    Text(text = "Записей:", modifier = Modifier.padding(end = 4.dp))
-                    Text(text = documentsData.itemCount.toString())
-                }
+            Row {
+                Text(text = "Записей:", modifier = Modifier.padding(end = 4.dp))
+                Text(text = documentsData.itemCount.toString())
             }
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(documentsData) { document ->
                     document?.let {

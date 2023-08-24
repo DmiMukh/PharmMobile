@@ -22,6 +22,6 @@ data class Document(
 fun DocumentEntity.toDomain() = Document(
     id = id,
     number = number,
-    formattedCreationDate = "",
+    formattedCreationDate = this.creation_date,
     sended = this.is_id > 0
 )

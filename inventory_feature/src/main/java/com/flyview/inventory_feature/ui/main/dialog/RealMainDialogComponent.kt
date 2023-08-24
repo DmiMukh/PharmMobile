@@ -11,10 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -62,7 +59,6 @@ class RealMainDialogComponent(
             scope.launch {
                 val articuls = async {
                     val loaded = repository.uploadArticuls()
-                    delay(3000)
                     articulsLoadComplete.value = if (loaded) LoadState.OK else LoadState.Cancel
                 }
 
@@ -81,6 +77,7 @@ class RealMainDialogComponent(
                 marks.await()
 
                 canClose.value = true
+                return@launch
             }
         }
 

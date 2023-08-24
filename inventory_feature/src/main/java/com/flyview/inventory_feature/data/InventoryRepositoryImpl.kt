@@ -10,9 +10,9 @@ import com.flyview.core.storage.SettingsStorage
 import com.flyview.core.utils.getCurrentLocalDateTime
 import com.flyview.inventory_feature.domain.AGENT
 import com.flyview.inventory_feature.domain.FIRM
-import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.STOCK
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Mark
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
@@ -26,8 +26,8 @@ import com.flyview.inventory_feature.domain.response.MarkResponse
 import com.flyview.inventory_feature.domain.response.toEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
-import java.net.UnknownHostException
 import java.util.UUID
 
 class InventoryRepositoryImpl(
@@ -45,6 +45,9 @@ class InventoryRepositoryImpl(
             db.certificateEntityQueries.deleteAll()
             db.articulEntityQueries.deleteAll()
         }
+
+        delay(500)
+        messageService.showMessage(Message("Данные удалены!"))
     }
 
     override suspend fun createDocument(): Document {

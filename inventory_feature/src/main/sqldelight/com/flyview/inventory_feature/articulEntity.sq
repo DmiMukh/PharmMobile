@@ -11,3 +11,4 @@ VALUES ?;
 
 deleteAll:
 DELETE FROM articulEntity;
+

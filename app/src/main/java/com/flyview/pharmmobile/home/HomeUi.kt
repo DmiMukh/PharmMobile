@@ -33,7 +33,8 @@ fun HomeUi(component: HomeComponent) {
                     .padding(12.dp)
             ) {
                 Text(
-                    text = "Инвентаризация"
+                    text = "Инвентаризация",
+                    fontSize = 24.sp
                 )
             }
         }

@@ -1,17 +1,17 @@
 package com.flyview.inventory_feature.ui.details
 
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.inventory_feature.data.InvBarcodeBinder
+import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.barcode.data.code.EAN13
 import com.flyview.core.barcode.data.code.UnknownBarcode
 import com.flyview.core.barcode.domain.BarcodeBinder
 import com.flyview.core.barcode.domain.BarcodeReader
-import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
-import com.flyview.core.utils.componentCoroutineScope
-import com.flyview.inventory_feature.domain.model.Document
+import com.flyview.core.utils.componentScope
+import com.flyview.inventory_feature.data.InvBarcodeBinder
 import com.flyview.inventory_feature.domain.InventoryRepository
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.isValid
 import com.flyview.inventory_feature.ui.details.toolbar.RealDocumentDetailsToolbarComponent
@@ -29,8 +29,6 @@ class RealDocumentDetailsComponent(
     private val messageService: MessageService
 ) : ComponentContext by componentContext, DocumentDetailsComponent {
 
-    private val coroutineScope = componentCoroutineScope()
-
     private val barcodeBinder: BarcodeBinder = InvBarcodeBinder()
 
     override val productsPager = this.repository.getProductsPager(this.document.id)
@@ -38,10 +36,11 @@ class RealDocumentDetailsComponent(
     override val toolbarComponent = RealDocumentDetailsToolbarComponent(
         componentContext = componentContext,
         onBack = this.onBack,
+        document = this.document,
         barcodeReader = this.barcodeReader
     )
 
-    private fun onReadBarcode(code: String) = coroutineScope.launch {
+    private fun onReadBarcode(code: String) = componentScope.launch {
 
         val barcode = barcodeBinder.createBarcode(data = code)
 
@@ -77,6 +76,7 @@ class RealDocumentDetailsComponent(
             documentId = document.id,
             newQuantity = product.quantity.plus(1)
         )
+        return@launch
     }
 
     override fun onItemClick(product: Product) = onEditProduct.invoke(product)
@@ -84,6 +84,6 @@ class RealDocumentDetailsComponent(
     init {
         BarcodeReaderData.data.onEach {
             if (it.isNotEmpty()) onReadBarcode(it)
-        }.launchIn(coroutineScope)
+        }.launchIn(componentScope)
     }
 }

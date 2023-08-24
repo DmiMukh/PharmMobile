@@ -1,15 +1,13 @@
 package com.flyview.pharmmobile.usb_device
 
-import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
-import com.flyview.core.utils.componentCoroutineScope
+import com.flyview.core.utils.componentScope
 import com.flyview.pharmmobile.usb_device.state.UsbListState
 import com.flyview.pharmmobile.usb_device.toolbar.RealUsbListToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RealUsbListComponent(
@@ -26,7 +24,7 @@ class RealUsbListComponent(
     )
     override val state = MutableStateFlow<UsbListState>(UsbListState.NoItems)
     private fun refreshList() {
-        componentCoroutineScope().launch {
+        componentScope.launch {
 
             if (state.value == UsbListState.Loading) return@launch
             state.value = UsbListState.Loading

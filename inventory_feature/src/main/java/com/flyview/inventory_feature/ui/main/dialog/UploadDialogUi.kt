@@ -79,8 +79,8 @@ fun UploadDialogUi(component: MainDialogComponent) {
 
     LaunchedEffect(Unit) {
         while (true) {
-            for (i in 1..5) {
-                delay(200)
+            for (i in 1..10) {
+                delay(100)
                 if (canClose.value) return@LaunchedEffect
             }
             ticks.value++

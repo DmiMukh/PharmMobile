@@ -54,10 +54,6 @@ fun DocumentListToolbarUi(component: DocumentListToolbarComponent) {
                     text = { Text("Отправить на сервер") },
                     onClick = component::onSendDataClick
                 )
-                DropdownMenuItem(
-                    text = { Text("ТЕС") },
-                    onClick = { }
-                )
             }
         }
     )

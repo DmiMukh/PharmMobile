@@ -8,11 +8,11 @@ import com.flyview.core.ComponentFactory
 import com.flyview.inventory_feature.data.InventoryApi
 import com.flyview.inventory_feature.data.InventoryApiImpl
 import com.flyview.inventory_feature.data.InventoryRepositoryImpl
-import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.InventoryRepository
+import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Product
-import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
+import com.flyview.inventory_feature.ui.RealInventoryRootComponent
 import com.flyview.inventory_feature.ui.details.DocumentDetailsComponent
 import com.flyview.inventory_feature.ui.details.RealDocumentDetailsComponent
 import com.flyview.inventory_feature.ui.list.DocumentListComponent
@@ -137,7 +137,8 @@ fun InventoryComponentFactory.createInventoryListComponent(
         componentContext = componentContext,
         onBack = onBack,
         onDocumentDetails = onDocumentDetails,
-        repository = get()
+        repository = get(),
+        messageService = get()
     )
 }
 
@@ -150,7 +151,8 @@ fun InventoryComponentFactory.createInventoryMainComponent(
         componentContext = componentContext,
         onBack = onBack,
         onDocumentsClick = onDocumentsClick,
-        repository = get()
+        repository = get(),
+        messageService = get()
     )
 }
 

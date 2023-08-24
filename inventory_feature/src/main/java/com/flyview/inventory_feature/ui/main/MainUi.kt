@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flyview.core.theme.AppTheme
 import com.flyview.inventory_feature.ui.main.dialog.MainDialogState
 import com.flyview.inventory_feature.ui.main.dialog.UploadDialogUi
@@ -32,12 +33,16 @@ fun MainUi(component: MainComponent) {
         topBar = { MainToolbarUi(component.toolbarComponent) }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(12.dp)
         ) {
-            Column(
+            Row (
                 modifier = Modifier.padding(12.dp)
             ) {
-                Row {
+                if (dataDate.value.isEmpty()) {
+                    Text(text = "Данные не загружены")
+                } else {
                     Text(
                         text = "Данные от",
                         modifier = Modifier.padding(end = 4.dp)
@@ -48,29 +53,32 @@ fun MainUi(component: MainComponent) {
 
             Button(
                 onClick = component::onDocumentsClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
             ) {
-                Text(text = "Ведомости")
+                Text(
+                    text = "Ведомости",
+                    fontSize = 24.sp
+                )
             }
 
             Button(
                 onClick = component::onUploadDataClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
             ) {
-                Text(text = "Загрузить данные")
+                Text(
+                    text = "Загрузить данные",
+                    fontSize = 24.sp
+                )
             }
 
             Button(
                 onClick = component::onClearDataClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Удалить данные")
+                Text(
+                    text = "Удалить данные",
+                    fontSize = 24.sp
+                )
             }
         }
     }
