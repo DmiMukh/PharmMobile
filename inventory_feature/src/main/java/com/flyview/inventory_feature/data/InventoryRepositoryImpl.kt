@@ -13,16 +13,16 @@ import com.flyview.inventory_feature.domain.FIRM
 import com.flyview.inventory_feature.domain.InventoryRepository
 import com.flyview.inventory_feature.domain.STOCK
 import com.flyview.inventory_feature.domain.model.Document
-import com.flyview.inventory_feature.domain.model.Mark
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.toData
 import com.flyview.inventory_feature.domain.model.toDomain
 import com.flyview.inventory_feature.domain.model.toGoodRequest
-import com.flyview.inventory_feature.domain.model.toRequest
+import com.flyview.inventory_feature.domain.model.toMarkRequest
 import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
 import com.flyview.inventory_feature.domain.response.MarkResponse
+import com.flyview.inventory_feature.domain.response.toBarcodeEntity
 import com.flyview.inventory_feature.domain.response.toEntity
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import kotlinx.coroutines.Dispatchers
@@ -99,13 +99,18 @@ class InventoryRepositoryImpl(
         return Product()
     }
 
-    override suspend fun getProductsByDocument(documentId: Long): List<Product> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getProductsByDocument(documentId: Long) =
+        db.goodEntityQueries.selectProductsByDocument(
+            document = documentId,
+            limit = 200,
+            offset = 0
+        ).executeAsList().map { it.toDomain() }
 
-    override suspend fun getMarksByDocument(documentId: Long): List<Mark> {
-        TODO("Not yet implemented")
-    }
+    override fun getDocuments() = db.documentEntityQueries.documents(
+        limit = 1_000,
+        offset = 0
+    ).executeAsList().map { it.toDomain() }
+
 
     override suspend fun upsertProduct(product: Product, documentId: Long, newQuantity: Double) {
         db.transaction {
@@ -148,9 +153,8 @@ class InventoryRepositoryImpl(
 
     override suspend fun sendDocument(
         document: Document,
-        products: List<Product>,
-        marks: List<Mark>
-    ) {
+        products: List<Product>
+    ): Int {
         val firm = storage.getInt(FIRM)
         val stock = storage.getInt(STOCK)
         val partner = storage.getInt(AGENT)
@@ -164,14 +168,19 @@ class InventoryRepositoryImpl(
             partner = partner,
             stock = stock,
             products = products.map { it.toGoodRequest() },
-            marks = marks.map { it.toRequest() }
+            marks = products.map { it.toMarkRequest() }
         )
 
-        val documentId = api.putDocument(data)
+        try {
+            return api.putDocument(data).toInt()
+        } catch (ex: Exception) {
+            messageService.showMessage(Message(ex.localizedMessage.orEmpty()))
+            return -1
+        }
     }
 
-    override suspend fun uploadData() {
-
+    override suspend fun updateDocument(document: Document, infSysId: Int) {
+        //TODO("Not yet implemented")
     }
 
     override suspend fun uploadArticuls(): Boolean {
@@ -212,6 +221,10 @@ class InventoryRepositoryImpl(
 
             db.certificateEntityQueries.let { query ->
                 query.transaction { certificates.forEach { item -> query.insert(item.toEntity()) } }
+            }
+
+            db.barcodeEntityQueries.let { query ->
+                query.transaction { certificates.forEach { item -> query.insert(item.toBarcodeEntity()) } }
             }
 
             offset = offset.plus(10_000)

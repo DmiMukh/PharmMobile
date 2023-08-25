@@ -124,7 +124,8 @@ fun InventoryComponentFactory.createInventoryDetailsComponent(
         onEditProduct = onEditProduct,
         repository = get(),
         barcodeReader = get(),
-        messageService = get()
+        messageService = get(),
+        audioPlayer = get()
     )
 }
 

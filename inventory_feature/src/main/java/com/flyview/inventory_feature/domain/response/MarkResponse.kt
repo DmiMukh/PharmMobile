@@ -1,11 +1,14 @@
 package com.flyview.inventory_feature.domain.response
 
 import com.flyview.inventoryfeature.MarkEntity
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MarkResponse(
     val certificate: Long,
     val code: String,
-    val fullCode: String
+    @SerialName("fullcode") val fullCode: String?
 )
 
 fun MarkResponse.toEntity() = MarkEntity(

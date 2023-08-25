@@ -81,10 +81,10 @@ class RealSettingsComponent(
 
     init {
         if (!componentInstance.inited) {
-            this.agent.value = storage.getString(AGENT)
-            this.firm.value = storage.getString(FIRM)
+            this.agent.value = storage.getInt(AGENT).toString()
+            this.firm.value = storage.getInt(FIRM).toString()
             this.host.value = storage.getString(HOST)
-            this.stock.value = storage.getString(STOCK)
+            this.stock.value = storage.getInt(STOCK).toString()
             componentInstance.inited = true
         }
     }

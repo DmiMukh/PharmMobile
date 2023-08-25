@@ -6,6 +6,8 @@ import com.flyview.core.barcode.data.code.EAN13
 import com.flyview.core.barcode.data.code.UnknownBarcode
 import com.flyview.core.barcode.domain.BarcodeBinder
 import com.flyview.core.barcode.domain.BarcodeReader
+import com.flyview.core.media.AppSound
+import com.flyview.core.media.AudioPlayer
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
@@ -26,7 +28,8 @@ class RealDocumentDetailsComponent(
     private val onEditProduct: (Product) -> Unit,
     private val repository: InventoryRepository,
     private val barcodeReader: BarcodeReader,
-    private val messageService: MessageService
+    private val messageService: MessageService,
+    private val audioPlayer: AudioPlayer
 ) : ComponentContext by componentContext, DocumentDetailsComponent {
 
     private val barcodeBinder: BarcodeBinder = InvBarcodeBinder()
@@ -46,8 +49,8 @@ class RealDocumentDetailsComponent(
 
         if (barcode is UnknownBarcode) {
             messageService.showMessage(Message(text = "Некорректный код!"))
+            audioPlayer.play(AppSound.ERROR)
             return@launch
-            TODO("Добавить звук!")
         }
 
         val shortCode = barcode.getShortCode()
@@ -61,14 +64,14 @@ class RealDocumentDetailsComponent(
 
         if (!product.isValid()) {
             messageService.showMessage(Message(text = "Не найден товар!"))
+            audioPlayer.play(AppSound.ERROR)
             return@launch
-            TODO("Добавить звук!")
         }
 
         if (product.sgtin.isNotEmpty() && product.quantity > 0) {
             messageService.showMessage(Message(text = "SGTIN уже добавлен!"))
+            audioPlayer.play(AppSound.ERROR)
             return@launch
-            TODO("Добавить звук!")
         }
 
         repository.upsertProduct(

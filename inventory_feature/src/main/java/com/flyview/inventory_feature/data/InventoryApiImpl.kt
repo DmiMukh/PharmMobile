@@ -24,39 +24,43 @@ class InventoryApiImpl(
     private val host = storage.getString(HOST)
 
     override suspend fun getArticuls(limit: Long, offset: Long): List<ArticulResponse> {
-        return client.get("http://${host}/v1/inventory/articuls") {
+        return Json.decodeFromString(client.get("http://${host}/v1/inventory/articuls") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
             }
-        }.body()
+        }.body())
     }
 
-    override suspend fun getCertificates(limit: Long, offset: Long, stock: Int): List<CertificateResponse> {
-        return client.get("http://${host}/v1/inventory/certificates") {
+    override suspend fun getCertificates(
+        limit: Long,
+        offset: Long,
+        stock: Int
+    ): List<CertificateResponse> {
+        return Json.decodeFromString(client.get("http://${host}/v1/inventory/certificates") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
                 parameters.append("stock", stock.toString())
             }
-        }.body()
+        }.body())
     }
 
     override suspend fun getMarks(limit: Long, offset: Long, stock: Int): List<MarkResponse> {
-        return client.get("http://${host}/v1/inventory/marks") {
+        return Json.decodeFromString(client.get("http://${host}/v1/inventory/marks") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
                 parameters.append("stock", stock.toString())
             }
-        }.body()
+        }.body())
     }
 
     override suspend fun putDocument(document: DocumentRequest): Long {
-        val url = "http://127.0.0.1:8080/v1/inventory/document"
-        return client.put(url) {
+        val url = "http://${host}/v1/inventory/document"
+        return Json.decodeFromString(client.put(url) {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(document))
-        }.body()
+        }.body())
     }
 }

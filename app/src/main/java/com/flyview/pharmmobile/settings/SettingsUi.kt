@@ -64,7 +64,7 @@ fun SettingsUi(component: SettingsComponent) {
             OutlinedNumberTextField(
                 value = agent.value,
                 onValueChange = component::onAgentChange,
-                label = "Склад",
+                label = "Агент",
                 supportingText = "Обязательное поле",
                 isError = agent.value.isEmpty()
             )

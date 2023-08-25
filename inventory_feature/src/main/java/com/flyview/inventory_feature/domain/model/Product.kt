@@ -2,6 +2,7 @@ package com.flyview.inventory_feature.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.inventory_feature.domain.request.GoodRequest
+import com.flyview.inventory_feature.domain.request.MarkRequest
 import com.flyview.inventoryfeature.GoodEntity
 import com.flyview.inventoryfeature.SelectByBarcode
 import com.flyview.inventoryfeature.SelectBySgtin
@@ -36,6 +37,12 @@ fun Product.toGoodRequest() = GoodRequest(
     articul = this.articul.id.toInt(),
     certificate = this.certificate.id.toInt(),
     quantity = this.quantity
+)
+
+fun Product.toMarkRequest() = MarkRequest(
+    certificate = this.certificate.id.toInt(),
+    code = this.sgtin,
+    fullCode = null
 )
 
 fun SelectProductsByDocument.toDomain() = Product(

@@ -14,12 +14,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.flyview.core.theme.AppTheme
+import com.flyview.inventory_feature.ui.list.dialog.ListDialogState
+import com.flyview.inventory_feature.ui.list.dialog.ListDialogUi
 import com.flyview.inventory_feature.ui.list.item.DocumentItem
 import com.flyview.inventory_feature.ui.list.toolbar.DocumentListToolbarUi
 
@@ -27,7 +30,11 @@ import com.flyview.inventory_feature.ui.list.toolbar.DocumentListToolbarUi
 @Composable
 fun DocumentListUi(component: DocumentListComponent) {
 
+    val dialogState = component.dialogComponent.state.collectAsState()
     val documentsData = component.documentsPager.collectAsLazyPagingItems()
+
+    if (dialogState.value != ListDialogState.Hidden)
+        ListDialogUi(component.dialogComponent)
 
     Scaffold(
         topBar = { DocumentListToolbarUi(component.toolbarComponent) },
