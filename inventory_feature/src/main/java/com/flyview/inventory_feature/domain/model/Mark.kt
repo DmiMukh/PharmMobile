@@ -10,6 +10,5 @@ data class Mark(
 
 fun Mark.toRequest() = MarkRequest(
     certificate = this.certificate,
-    code = this.code,
-    fullCode = this.fullCode
+    code = this.code
 )

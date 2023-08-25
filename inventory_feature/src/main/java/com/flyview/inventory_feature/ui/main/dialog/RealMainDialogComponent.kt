@@ -65,15 +65,11 @@ class RealMainDialogComponent(
                 val certificates = async {
                     val loaded = repository.uploadCertificates()
                     certificatesLoadComplete.value = if (loaded) LoadState.OK else LoadState.Cancel
-                    //certificatesLoadComplete.value = LoadState.Cancel
                 }
 
                 val marks = async {
-                    /*
                     val loaded = repository.uploadMarks()
                     marksLoadComplete.value = if (loaded) LoadState.OK else LoadState.Cancel
-                    */
-                    marksLoadComplete.value = LoadState.Cancel
                 }
 
                 articuls.await()

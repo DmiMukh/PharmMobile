@@ -41,8 +41,7 @@ fun Product.toGoodRequest() = GoodRequest(
 
 fun Product.toMarkRequest() = MarkRequest(
     certificate = this.certificate.id.toInt(),
-    code = this.sgtin,
-    fullCode = null
+    code = this.sgtin
 )
 
 fun SelectProductsByDocument.toDomain() = Product(

@@ -202,7 +202,7 @@ class InventoryRepositoryImpl(
 
 
             offset = offset.plus(10_000)
-        } while (articuls.isNullOrEmpty())
+        } while (!articuls.isNullOrEmpty())
 
         return true
     }
@@ -229,27 +229,39 @@ class InventoryRepositoryImpl(
 
             offset = offset.plus(10_000)
 
-        } while (certificates.isNullOrEmpty())
+        } while (!certificates.isNullOrEmpty())
         return true
     }
 
     override suspend fun uploadMarks(): Boolean {
+        val firm = storage.getInt(FIRM)
         val stock = storage.getInt(STOCK)
         var marks: List<MarkResponse>?
         var offset = 0L
         do {
             try {
-                marks = api.getMarks(limit = 10_000, offset = offset, stock = stock)
+                marks = api.getMarks(
+                    limit = 10_000,
+                    offset = offset,
+                    firm = firm,
+                    stock = stock
+                )
             } catch (ex: Exception) {
                 messageService.showMessage(Message(text = ex.localizedMessage.orEmpty()))
                 return false
             }
 
-            db.markEntityQueries.let { query ->
-                query.transaction { marks.forEach { item -> query.insert(item.toEntity()) } }
+            try {
+                db.markEntityQueries.let { query ->
+                    query.transaction { marks.forEach { item -> query.insert(item.toEntity()) } }
+                }
+            } catch (ex: Exception) {
+                messageService.showMessage(Message(text = ex.localizedMessage.orEmpty()))
+                return false
             }
 
-        } while (marks.isNullOrEmpty())
+            offset = offset.plus(10_000)
+        } while (!marks.isNullOrEmpty())
         return true
     }
 }

@@ -5,10 +5,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("mark")
 data class MarkResponse(
     val certificate: Long,
-    val code: String,
-    @SerialName("fullcode") val fullCode: String?
+    val code: String
 )
 
 fun MarkResponse.toEntity() = MarkEntity(

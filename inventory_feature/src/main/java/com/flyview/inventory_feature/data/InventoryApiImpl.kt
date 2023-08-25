@@ -12,6 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -24,12 +25,17 @@ class InventoryApiImpl(
     private val host = storage.getString(HOST)
 
     override suspend fun getArticuls(limit: Long, offset: Long): List<ArticulResponse> {
-        return Json.decodeFromString(client.get("http://${host}/v1/inventory/articuls") {
+
+        val response = client.get("http://${host}/v1/inventory/articuls") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
             }
-        }.body())
+        }
+
+        if (response.status == HttpStatusCode.NoContent) return emptyList()
+
+        return Json.decodeFromString(response.body())
     }
 
     override suspend fun getCertificates(
@@ -37,23 +43,37 @@ class InventoryApiImpl(
         offset: Long,
         stock: Int
     ): List<CertificateResponse> {
-        return Json.decodeFromString(client.get("http://${host}/v1/inventory/certificates") {
+        val response = client.get("http://${host}/v1/inventory/certificates") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
                 parameters.append("stock", stock.toString())
             }
-        }.body())
+        }
+
+        if (response.status == HttpStatusCode.NoContent) return emptyList()
+
+        return Json.decodeFromString(response.body())
     }
 
-    override suspend fun getMarks(limit: Long, offset: Long, stock: Int): List<MarkResponse> {
-        return Json.decodeFromString(client.get("http://${host}/v1/inventory/marks") {
+    override suspend fun getMarks(
+        limit: Long,
+        offset: Long,
+        firm: Int,
+        stock: Int
+    ): List<MarkResponse> {
+        val response = client.get("http://${host}/v1/inventory/marks") {
             url {
                 parameters.append("limit", limit.toString())
                 parameters.append("offset", offset.toString())
+                parameters.append("firm", firm.toString())
                 parameters.append("stock", stock.toString())
             }
-        }.body())
+        }
+
+        if (response.status == HttpStatusCode.NoContent) return emptyList()
+
+        return Json.decodeFromString(response.body())
     }
 
     override suspend fun putDocument(document: DocumentRequest): Long {

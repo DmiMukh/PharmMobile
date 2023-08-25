@@ -7,6 +7,5 @@ import kotlinx.serialization.Serializable
 @SerialName("mark")
 data class MarkRequest(
     val certificate: Int,
-    val code: String,
-    @SerialName("fullcode") val fullCode: String?
+    val code: String
 )

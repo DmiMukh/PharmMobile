@@ -1,5 +1,5 @@
 CREATE TABLE markEntity (
-    sgtin TEXT UNIQUE,
+    sgtin TEXT NOT NULL UNIQUE,
     certificate INTEGER NOT NULL,
     PRIMARY KEY (
         sgtin ASC,
