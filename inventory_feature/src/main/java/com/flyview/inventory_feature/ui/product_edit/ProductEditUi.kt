@@ -55,31 +55,31 @@ fun ProductEditUi(component: ProductEditComponent) {
                 shape = CircleShape
             )
 
-            if (component.isDivisibility) {
-                Row {
-                    OutlinedTextField(
-                        value = modQuantity.value,
-                        onValueChange = component::onChangeModQuantity,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 2.dp),
-                        label = { Text(text = "Деленые") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        shape = CircleShape
-                    )
+            Row {
+                OutlinedTextField(
+                    value = modQuantity.value,
+                    onValueChange = component::onChangeModQuantity,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 2.dp),
+                    enabled = component.isDivisibility,
+                    label = { Text(text = "Деленые") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    shape = CircleShape
+                )
 
-                    OutlinedTextField(
-                        value = component.articul.divisibility.toString(),
-                        onValueChange = {},
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(start = 2.dp),
-                        readOnly = true,
-                        label = { Text(text = "Делимость") },
-                        shape = CircleShape
-                    )
-                }
+                OutlinedTextField(
+                    value = component.articul.divisibility.toString(),
+                    onValueChange = {},
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 2.dp),
+                    readOnly = true,
+                    label = { Text(text = "Делимость") },
+                    shape = CircleShape
+                )
             }
+
 
             Button(
                 onClick = component::onSaveClick,
