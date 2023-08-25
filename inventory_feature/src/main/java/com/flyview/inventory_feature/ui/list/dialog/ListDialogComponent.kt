@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface ListDialogComponent {
 
+    val cancelled: StateFlow<Boolean>
     val canClose: StateFlow<Boolean>
     val sendedCount: StateFlow<Int>
     val state: StateFlow<ListDialogState>

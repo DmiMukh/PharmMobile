@@ -45,6 +45,12 @@ class RealDocumentDetailsComponent(
 
     private fun onReadBarcode(code: String) = componentScope.launch {
 
+        if (document.sended) {
+            messageService.showMessage(Message(text = "Нельзя менять отправленный документ!"))
+            audioPlayer.play(AppSound.ERROR)
+            return@launch
+        }
+
         val barcode = barcodeBinder.createBarcode(data = code)
 
         if (barcode is UnknownBarcode) {
@@ -82,7 +88,20 @@ class RealDocumentDetailsComponent(
         return@launch
     }
 
-    override fun onItemClick(product: Product) = onEditProduct.invoke(product)
+    override fun onItemClick(product: Product) {
+
+        if (document.sended) {
+            componentScope.launch {
+                messageService.showMessage(Message(text = "Нельзя менять отправленный документ!"))
+                audioPlayer.play(AppSound.ERROR)
+                return@launch
+            }
+
+            return
+        }
+
+        onEditProduct.invoke(product)
+    }
 
     init {
         BarcodeReaderData.data.onEach {

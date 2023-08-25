@@ -21,6 +21,8 @@ class RealListDialogComponent(
 ) : ComponentContext by componentContext, ListDialogComponent {
 
     private val retainedInstance = instanceKeeper.getOrCreate(::DialogRetainedInstance)
+    override val cancelled: StateFlow<Boolean>
+        get() = retainedInstance.cancelled
 
     override val canClose: StateFlow<Boolean>
         get() = retainedInstance.canClose
@@ -32,7 +34,7 @@ class RealListDialogComponent(
         get() = retainedInstance.documentCount
 
     override fun onCancelClick() {
-        TODO("Not yet implemented")
+        retainedInstance.cancelled.value = true
     }
 
     override fun onCloseClick() {
@@ -55,6 +57,10 @@ class RealListDialogComponent(
             retainedInstance.documentCount.value = documents.size
 
             documents.forEach {
+                if (retainedInstance.cancelled.value) {
+                    retainedInstance.canClose.value = true
+                    return@launch
+                }
                 try {
                     sendDocument(it)
                 } catch (ex: Exception) {
@@ -83,6 +89,7 @@ class RealListDialogComponent(
 
     inner class DialogRetainedInstance : InstanceKeeper.Instance {
 
+        val cancelled = MutableStateFlow(false)
         val canClose = MutableStateFlow(false)
         val coroutineScope = componentCoroutineScope()
         val state = MutableStateFlow<ListDialogState>(ListDialogState.Hidden)
@@ -98,6 +105,7 @@ class RealListDialogComponent(
             state.onEach {
                 when (it) {
                     ListDialogState.Hidden -> {
+                        cancelled.value = false
                         canClose.value = false
                         documentCount.value = 0
                         sendedCount.value = 0

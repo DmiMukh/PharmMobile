@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class FakeListDialogComponent : ListDialogComponent {
 
+    override val cancelled = MutableStateFlow(false)
     override val canClose = MutableStateFlow(false)
     override val sendedCount = MutableStateFlow(0)
     override val state = MutableStateFlow<ListDialogState>(ListDialogState.Hidden)

@@ -12,6 +12,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.flyview.core.utils.ICON_SIZE
 import kotlinx.coroutines.delay
@@ -27,6 +29,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun ListDialogUi(component: ListDialogComponent) {
 
+    val cancelled = component.cancelled.collectAsState()
     val sendedCount = component.sendedCount.collectAsState()
     val totalCount = component.totalCount.collectAsState()
     val canClose = component.canClose.collectAsState()
@@ -35,19 +38,49 @@ fun ListDialogUi(component: ListDialogComponent) {
     AlertDialog(
         onDismissRequest = component::onDismissClick,
         confirmButton = {
-            Button(
-                onClick = component::onCloseClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
-                enabled = canClose.value
-            ) {
-                Text(text = "ОК")
+            if (canClose.value) {
+                Button(
+                    onClick = component::onCloseClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    enabled = canClose.value
+                ) {
+                    Text(text = "ОК")
+                }
             }
         },
-        title = { Text(text = "Отправка документов") },
+        dismissButton = {
+            if (!canClose.value) {
+                OutlinedButton(
+                    onClick = component::onCancelClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    enabled = !cancelled.value
+                ) {
+                    Text(text = "Отмена")
+                }
+            }
+        },
+        title = {
+            Text(
+                text = "Отправка документов",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+        },
         text = {
-            Column {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
+                    Text(text = sendedCount.value.toString())
+                    Text(text = "из", modifier = Modifier.padding(start = 4.dp, end = 4.dp))
+                    Text(text = totalCount.value.toString())
+                }
+
                 if (canClose.value) {
                     Icon(
                         imageVector = if (sendedCount.value.equals(totalCount.value))

@@ -15,7 +15,10 @@ class RealDocumentListToolbarComponent(
     override fun onCollapseMenuClick() = this.onSetMenuExpand(false)
     override fun onExpandMenuClick() = this.onSetMenuExpand(true)
 
-    override fun onSendDataClick() = this.onSendClick.invoke()
+    override fun onSendDataClick() {
+        this.onSendClick.invoke()
+        this.onCollapseMenuClick()
+    }
 
     private fun onSetMenuExpand(newValue: Boolean) {
         this.menuExpanded.value = newValue
