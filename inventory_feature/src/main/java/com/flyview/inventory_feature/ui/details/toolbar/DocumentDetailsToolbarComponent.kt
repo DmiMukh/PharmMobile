@@ -9,5 +9,6 @@ interface DocumentDetailsToolbarComponent {
 
     val model: Document
     fun onBackClick()
+    fun onTestClick()
     fun onUsbDeviceConnectionClick()
 }

@@ -136,7 +136,7 @@ class InventoryRepositoryImpl(
         )
     }.flow.map { it.map { document -> document.toDomain() } }
 
-    override fun getProductsPager(documentId: Long) = Pager(PagingConfig(pageSize = 10)) {
+    override fun getProductsPager(documentId: Long) = Pager(PagingConfig(pageSize = 40)) {
         QueryPagingSource(
             countQuery = db.goodEntityQueries.countGoods(document = documentId),
             transacter = db.goodEntityQueries,
@@ -180,7 +180,10 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun updateDocument(document: Document, infSysId: Int) {
-        //TODO("Not yet implemented")
+        db.documentEntityQueries.update(
+            is_id = infSysId.toLong(),
+            id = document.id
+        )
     }
 
     override suspend fun uploadArticuls(): Boolean {

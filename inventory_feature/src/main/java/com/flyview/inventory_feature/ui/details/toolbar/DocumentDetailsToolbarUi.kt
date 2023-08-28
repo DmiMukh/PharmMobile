@@ -46,6 +46,15 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
             }
         },
         actions = {
+            IconButton(onClick = component::onTestClick) {
+                Icon(
+                    painter = painterResource(
+                        R.drawable.ic_qr_code
+                    ),
+                    contentDescription = "usb_device_connection",
+                    modifier = Modifier.size(ICON_SIZE)
+                )
+            }
             IconButton(onClick = component::onUsbDeviceConnectionClick) {
                 Icon(
                     painter = painterResource(

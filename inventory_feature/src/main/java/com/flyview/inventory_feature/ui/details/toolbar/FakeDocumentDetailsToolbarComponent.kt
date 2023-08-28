@@ -8,5 +8,7 @@ class FakeDocumentDetailsToolbarComponent: DocumentDetailsToolbarComponent {
     override val barcodeReaderConnected = MutableStateFlow(false)
     override val model = Document()
     override fun onBackClick() = Unit
+    override fun onTestClick() = Unit
+
     override fun onUsbDeviceConnectionClick() = Unit
 }

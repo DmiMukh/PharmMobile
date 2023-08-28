@@ -3,10 +3,10 @@ package com.flyview.core
 import android.content.Context
 import android.hardware.usb.UsbManager
 import com.arkivanov.decompose.ComponentContext
-import com.flyview.core.media.AudioPlayerImpl
 import com.flyview.core.barcode.data.UsbBarcodeReader
-import com.flyview.core.media.AudioPlayer
 import com.flyview.core.barcode.domain.BarcodeReader
+import com.flyview.core.media.AudioPlayer
+import com.flyview.core.media.AudioPlayerImpl
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.data.MessageServiceImpl
 import com.flyview.core.message.ui.MessageComponent
@@ -15,9 +15,9 @@ import com.flyview.core.storage.SettingsStorage
 import com.flyview.core.storage.SettingsStorageImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import org.koin.core.component.get
 import org.koin.dsl.module
 import kotlin.coroutines.EmptyCoroutineContext
-import org.koin.core.component.get
 
 val coreModule = module {
     single<CoroutineScope> { provideAppScope() }
@@ -28,7 +28,6 @@ val coreModule = module {
     single<BarcodeReader> {
         UsbBarcodeReader(
             context = get(),
-            appScope = get(),
             usbManager = get(),
             audioPlayer = get()
         )

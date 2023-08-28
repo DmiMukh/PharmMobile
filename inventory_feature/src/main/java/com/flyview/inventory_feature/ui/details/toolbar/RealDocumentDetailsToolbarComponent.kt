@@ -7,6 +7,7 @@ import com.flyview.inventory_feature.domain.model.Document
 class RealDocumentDetailsToolbarComponent(
     componentContext: ComponentContext,
     private val onBack: () -> Unit,
+    private val onReadBarcode: () -> Unit,
     private val document: Document,
     private val barcodeReader: BarcodeReader
 ) : ComponentContext by componentContext, DocumentDetailsToolbarComponent {
@@ -16,5 +17,7 @@ class RealDocumentDetailsToolbarComponent(
         get() = this.document
 
     override fun onBackClick() = this.onBack.invoke()
+    override fun onTestClick() = this.onReadBarcode.invoke()
+
     override fun onUsbDeviceConnectionClick() = this.barcodeReader.switchConnection()
 }

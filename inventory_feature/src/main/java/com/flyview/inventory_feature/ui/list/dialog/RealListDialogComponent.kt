@@ -51,12 +51,13 @@ class RealListDialogComponent(
         componentScope.launch {
             val documents = repository.getDocuments().filter { !it.sended }
 
-            Log.d("TEST_LIST", documents.size.toString())
-
             retainedInstance.sendedCount.value = 0
             retainedInstance.documentCount.value = documents.size
 
             documents.forEach {
+
+                Log.d("TEST_LIST", it.id.toString())
+
                 if (retainedInstance.cancelled.value) {
                     retainedInstance.canClose.value = true
                     return@launch
@@ -67,7 +68,8 @@ class RealListDialogComponent(
                     retainedInstance.canClose.value = true
                     return@launch
                 }
-                retainedInstance.sendedCount.value.inc()
+
+                retainedInstance.sendedCount.value = retainedInstance.sendedCount.value.inc()
             }
 
             retainedInstance.canClose.value = true

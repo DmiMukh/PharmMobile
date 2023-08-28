@@ -9,27 +9,30 @@ import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.os.Build
 import com.flyview.core.android.AndroidIntent
+import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.media.AppSound
 import com.flyview.core.media.AudioPlayer
-import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.utils.APPLICATION_ID
 import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialPort
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.coroutines.EmptyCoroutineContext
 
 class UsbBarcodeReader(
     private val context: Context,
-    private val appScope: CoroutineScope,
     private val usbManager: UsbManager,
     private val audioPlayer: AudioPlayer
 ) : BarcodeReader, AndroidIntent {
+
+    private val coroutineScope = CoroutineScope(EmptyCoroutineContext + Dispatchers.IO)
 
     @Suppress("PrivatePropertyName")
     private val READ_WAIT_MILLIS = 100L
@@ -189,9 +192,9 @@ class UsbBarcodeReader(
                 it.open(connection.value)
                 it.setParameters(BAUD_RATE, DATA_BITS, STOP_BITS, UsbSerialPort.PARITY_NONE)
             }
-        }.launchIn(this.appScope)
+        }.launchIn(this.coroutineScope)
 
-        this.appScope.launch {
+        coroutineScope.launch {
             while (true) {
                 if (connected.value) read()
 
@@ -202,6 +205,6 @@ class UsbBarcodeReader(
         connected.onEach {
             if (it) audioPlayer.play(AppSound.USB_ON)
             else audioPlayer.play(AppSound.USB_OFF)
-        }.launchIn(this.appScope)
+        }.launchIn(this.coroutineScope)
     }
 }

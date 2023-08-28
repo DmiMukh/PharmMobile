@@ -39,6 +39,7 @@ class RealDocumentDetailsComponent(
     override val toolbarComponent = RealDocumentDetailsToolbarComponent(
         componentContext = componentContext,
         onBack = this.onBack,
+        onReadBarcode = { onReadBarcode("978020137962") },
         document = this.document,
         barcodeReader = this.barcodeReader
     )
@@ -53,6 +54,9 @@ class RealDocumentDetailsComponent(
 
         val barcode = barcodeBinder.createBarcode(data = code)
 
+        messageService.showMessage(Message(text = barcode.toString()))
+
+        // Проверка корректности кода
         if (barcode is UnknownBarcode) {
             messageService.showMessage(Message(text = "Некорректный код!"))
             audioPlayer.play(AppSound.ERROR)

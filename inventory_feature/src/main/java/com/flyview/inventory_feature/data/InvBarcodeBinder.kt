@@ -15,9 +15,12 @@ class InvBarcodeBinder : BarcodeBinder {
     val dataMatrix85Validator: BarcodeValidator = DataMatrix85Validator()
     override fun createBarcode(data: String): Barcode {
         when (data.length) {
-            13 -> { if (ean13Validator.isValid(data)) return EAN13(code = data)
+            13 -> {
+                if (ean13Validator.isValid(data) && data.first() == '2') return EAN13(code = data)
             }
-            85 -> { if (dataMatrix85Validator.isValid(data)) return DataMatrix85(code = data)
+
+            85 -> {
+                if (dataMatrix85Validator.isValid(data)) return DataMatrix85(code = data)
             }
         }
 

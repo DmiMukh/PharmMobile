@@ -45,11 +45,11 @@ fun ProductItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(start = 12.dp, top = 4.dp, end = 12.dp)
             .combinedClickable(
                 onClick = { onClick(model) },
                 onLongClick = { }
-            ),
+            )
     ) {
         Column(
             modifier = Modifier
@@ -67,6 +67,11 @@ fun ProductItem(
             Row {
                 Text(text = "Сканировано:", modifier = Modifier.padding(end = 4.dp))
                 Text(text = quantity)
+            }
+            if (model.sgtin.isNotEmpty()) {
+                Text(
+                    text = model.sgtin
+                )
             }
         }
     }

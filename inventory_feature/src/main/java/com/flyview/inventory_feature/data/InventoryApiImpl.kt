@@ -1,10 +1,12 @@
 package com.flyview.inventory_feature.data
 
+import android.util.Log
 import com.flyview.core.storage.SettingsStorage
 import com.flyview.inventory_feature.domain.HOST
 import com.flyview.inventory_feature.domain.request.DocumentRequest
 import com.flyview.inventory_feature.domain.response.ArticulResponse
 import com.flyview.inventory_feature.domain.response.CertificateResponse
+import com.flyview.inventory_feature.domain.response.DocResultResponse
 import com.flyview.inventory_feature.domain.response.MarkResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -77,10 +79,16 @@ class InventoryApiImpl(
     }
 
     override suspend fun putDocument(document: DocumentRequest): Long {
-        val url = "http://${host}/v1/inventory/document"
-        return Json.decodeFromString(client.put(url) {
+        val request = client.put("http://${host}/v1/inventory/document") {
             contentType(ContentType.Application.Json)
             setBody(Json.encodeToString(document))
-        }.body())
+        }
+
+        Log.d("TEST_LIST", request.status.toString())
+        Log.d("TEST_LIST", request.body())
+
+        val insertResult: DocResultResponse = Json.decodeFromString(request.body())
+
+        return insertResult.id.toLong()
     }
 }

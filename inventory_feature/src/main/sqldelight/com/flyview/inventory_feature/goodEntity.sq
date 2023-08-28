@@ -52,6 +52,7 @@ JOIN certificateEntity ce ON ce.id = ge.certificate
 JOIN articulEntity ae ON ae.id = ce.articul
 WHERE
     ge.document = ?
+ORDER BY ae.name, ce.name, ge.sgtin
 LIMIT :limit OFFSET :offset;
 
 update:
