@@ -155,6 +155,8 @@ class InventoryRepositoryImpl(
         document: Document,
         products: List<Product>
     ): Int {
+        if (products.size == 0) return -1
+
         val firm = storage.getInt(FIRM)
         val stock = storage.getInt(STOCK)
         val partner = storage.getInt(AGENT)

@@ -1,6 +1,5 @@
 package com.flyview.inventory_feature.ui.main.dialog
 
-import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
@@ -19,7 +18,8 @@ import kotlinx.coroutines.launch
 class RealMainDialogComponent(
     componentContext: ComponentContext,
     private val onDismiss: () -> Unit,
-    private val repository: InventoryRepository
+    private val repository: InventoryRepository,
+    private val onSetDate: () -> Unit
 ) : ComponentContext by componentContext, MainDialogComponent {
 
     private val retainedInstance = instanceKeeper.getOrCreate(::DialogRetainedInstance)
@@ -76,13 +76,19 @@ class RealMainDialogComponent(
                 certificates.await()
                 marks.await()
 
+                if ((articulsLoadComplete.value == LoadState.OK) &&
+                    (certificatesLoadComplete.value == LoadState.OK) &&
+                    (marksLoadComplete.value == LoadState.OK)
+                ) {
+                    onSetDate()
+                }
+
                 canClose.value = true
                 return@launch
             }
         }
 
         override fun onDestroy() {
-            Log.d("DESTROY", "plak=plak")
             scope.cancel() // Cancel the scope when the instance is destroyed
             coroutineScope.cancel()
         }

@@ -153,7 +153,8 @@ fun InventoryComponentFactory.createInventoryMainComponent(
         onBack = onBack,
         onDocumentsClick = onDocumentsClick,
         repository = get(),
-        messageService = get()
+        messageService = get(),
+        storage = get()
     )
 }
 
