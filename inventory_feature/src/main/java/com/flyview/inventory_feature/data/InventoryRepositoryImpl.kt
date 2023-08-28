@@ -189,7 +189,6 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun uploadArticuls(): Boolean {
-        val stock = storage.getInt(STOCK)
         var offset = 0L
         var articuls: List<ArticulResponse>?
 
