@@ -46,6 +46,7 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
             }
         },
         actions = {
+            /*
             IconButton(onClick = component::onTestClick) {
                 Icon(
                     painter = painterResource(
@@ -55,6 +56,7 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
                     modifier = Modifier.size(ICON_SIZE)
                 )
             }
+            */
             IconButton(onClick = component::onUsbDeviceConnectionClick) {
                 Icon(
                     painter = painterResource(
