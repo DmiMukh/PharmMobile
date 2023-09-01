@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/inventory_feature" />
+            <option value="$PROJECT_DIR$/mark_feature" />
           </set>
         </option>
       </GradleProjectSettings>
