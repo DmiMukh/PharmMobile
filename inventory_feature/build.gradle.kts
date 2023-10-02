@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id(Libs.SQLDelight.plugin) version Libs.SQLDelight.version
-    //id("kotlinx-serialization")
     kotlin(Libs.KotlinX.Serialization.plugin) version Libs.KotlinX.Serialization.pluginVersion
 }
 
