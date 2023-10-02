@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.SurfaceTexture
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,9 +23,11 @@ import com.flyview.pharmmobile.root.ui.RootContent
 import com.zebra.adc.decoder.BarCodeReader
 
 class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeReader.ErrorCallback,
-    SurfaceTexture.OnFrameAvailableListener  {
+    SurfaceTexture.OnFrameAvailableListener {
 
+    //private var barcodeReader: BarcodeReaderT200  by inject()
     private var barcodeReaderReciever: BroadcastReceiver? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,17 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
                 barcodeReader.onBroadcastReceive(context, intent)
             }
         }
-        registerReceiver(barcodeReaderReciever, barcodeReader.intentFilter)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(
+                barcodeReaderReciever,
+                barcodeReader.intentFilter,
+                RECEIVER_NOT_EXPORTED
+            )
+        } else {
+            @Suppress("UnspecifiedRegisterReceiverFlag")
+            registerReceiver(barcodeReaderReciever, barcodeReader.intentFilter)
+        }
 
         setContent {
             AppTheme {
@@ -77,25 +90,26 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
         TODO("Not yet implemented")
     }
 
-    override fun onEvent(event: Int, info: Int, data: ByteArray?, reader: BarCodeReader?) {
-        TODO("Not yet implemented")
-    }
+    // Auto-generated method stub
+    override fun onEvent(event: Int, info: Int, data: ByteArray?, reader: BarCodeReader?) = Unit
 
-    override fun onError(error: Int, reader: BarCodeReader?) {
-        TODO("Not yet implemented")
-    }
+    // Auto-generated method stub
+    override fun onError(error: Int, reader: BarCodeReader?) = Unit
 
-    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
-        TODO("Not yet implemented")
-    }
+    // Auto-generated method stub
+    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) = Unit
 
     override fun onResume() {
         super.onResume()
-        /*
-        TODO("")
-        if (abrcodeReaderT200.connected.value) {
 
+        if (true) {
+            if (false) {
+
+            } else {
+                System.loadLibrary("IAL.hht")
+                System.loadLibrary("SDL.hht")
+                System.loadLibrary("barcodereader90.hht")
+            }
         }
-        */
     }
 }

@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.core.coreModule
 import com.flyview.inventory_feature.inventoryModule
+import com.flyview.mark_feature.markModule
 import com.flyview.pharmmobile.home.HomeComponent
 import com.flyview.pharmmobile.home.RealHomeComponent
 import com.flyview.pharmmobile.settings.RealSettingsComponent
@@ -16,7 +17,11 @@ import org.koin.core.component.get
 
 val allModules = listOf(
     coreModule,
-    inventoryModule
+    inventoryModule,
+    markModule/*,
+    module {
+        single<EmbedBarcodeReader> {  }
+    }*/
 )
 
 fun ComponentFactory.createHomeComponent(
