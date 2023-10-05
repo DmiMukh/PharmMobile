@@ -18,6 +18,8 @@ import com.flyview.core.android.AndroidIntent
 import com.flyview.core.barcode.domain.BarcodeReader
 import com.flyview.core.koin
 import com.flyview.core.theme.AppTheme
+import com.flyview.pharmmobile.data.barcode_reader.BarcodeReaderEmpty
+import com.flyview.pharmmobile.domain.barcode_reader.EmbeddedBarcodeReader
 import com.flyview.pharmmobile.root.createRootComponent
 import com.flyview.pharmmobile.root.ui.RootContent
 import com.zebra.adc.decoder.BarCodeReader
@@ -25,9 +27,8 @@ import com.zebra.adc.decoder.BarCodeReader
 class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeReader.ErrorCallback,
     SurfaceTexture.OnFrameAvailableListener {
 
-    //private var barcodeReader: BarcodeReaderT200  by inject()
+    private var embeddedBarcodeReader: EmbeddedBarcodeReader = application.koin.get()
     private var barcodeReaderReciever: BroadcastReceiver? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +88,12 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
         data: ByteArray?,
         reader: BarCodeReader?
     ) {
-        TODO("Not yet implemented")
+        embeddedBarcodeReader.onDecodeComplete(
+            symbology,
+            length,
+            data,
+            reader
+        )
     }
 
     // Auto-generated method stub
@@ -99,17 +105,22 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
     // Auto-generated method stub
     override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) = Unit
 
+    override fun onPause() {
+        embeddedBarcodeReader.onPauseBefore()
+        super.onPause()
+        embeddedBarcodeReader.onPauseAfter()
+    }
+
     override fun onResume() {
         super.onResume()
 
-        if (true) {
-            if (false) {
-
-            } else {
-                System.loadLibrary("IAL.hht")
-                System.loadLibrary("SDL.hht")
-                System.loadLibrary("barcodereader90.hht")
-            }
+        if (!(embeddedBarcodeReader is BarcodeReaderEmpty)) {
+            embeddedBarcodeReader.onResume(
+                onFinish = { finish() },
+                cb = this,
+                er = this,
+                st = this
+            )
         }
     }
 }

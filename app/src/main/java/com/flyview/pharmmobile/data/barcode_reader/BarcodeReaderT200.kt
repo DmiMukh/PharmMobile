@@ -14,7 +14,7 @@ import android.os.VibratorManager
 import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.media.AppSound
 import com.flyview.core.media.AudioPlayer
-import com.flyview.pharmmobile.domain.barcode_reader.EmbedBarcodeReader
+import com.flyview.pharmmobile.domain.barcode_reader.EmbeddedBarcodeReader
 import com.zebra.adc.decoder.BarCodeReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +31,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 class BarcodeReaderT200(
     private val context: Context,
     private val audioPlayer: AudioPlayer
-): EmbedBarcodeReader {
+) : EmbeddedBarcodeReader {
     val use = MutableStateFlow(false)
 
     private val MANUFACTURER_NAME = "ATOL"
@@ -178,6 +178,7 @@ class BarcodeReaderT200(
             bcr = null
         }
     }
+
     private fun onBeep() {
         audioPlayer.play(AppSound.BEEP)
 
@@ -189,7 +190,7 @@ class BarcodeReaderT200(
         }
     }
 
-    fun onDecodeComplete(
+    override fun onDecodeComplete(
         symbology: Int,
         length: Int,
         data: ByteArray?,
@@ -215,6 +216,54 @@ class BarcodeReaderT200(
                 BarcodeReaderData.data.value = resultData
                 BarcodeReaderData.data.value = ""
             }
+        }
+    }
+
+    override fun onPauseBefore() {
+        try {
+            context.unregisterReceiver(intentTriggerDownReciver)
+        } catch (exception: java.lang.Exception) {
+            // The receiver was not registered.
+            // There is nothing to do in that case.
+            // Everything is fine.
+        }
+        try {
+            context.unregisterReceiver(intentTriggerUpReciver)
+        } catch (exception: java.lang.Exception) {
+            // The receiver was not registered.
+            // There is nothing to do in that case.
+            // Everything is fine.
+        }
+    }
+
+    override fun onPauseAfter() {
+        if (bcr != null) {
+            state.update { DecodeState.STATE_IDLE }
+            bcr!!.release()
+            bcr = null
+        }
+    }
+
+    override fun onResume(
+        onFinish: () -> Unit,
+        cb: BarCodeReader.DecodeCallback,
+        er: BarCodeReader.ErrorCallback,
+        st: SurfaceTexture.OnFrameAvailableListener
+    ) {
+        val configuration = ConfigurationIni()
+        configuration.readFile()
+
+        if (configuration.ReadBoolean("Device_Scanwedge", false)) {
+            onFinish()
+        } else {
+            System.loadLibrary("IAL.hht")
+            System.loadLibrary("SDL.hht")
+            System.loadLibrary("barcodereader90.hht") // Android 9.0
+            state .update { DecodeState.STATE_IDLE }
+
+            var s = 9
+
+            initBarCodeReader(cb, er, st)
         }
     }
 }

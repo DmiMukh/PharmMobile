@@ -5,6 +5,8 @@ import com.flyview.core.ComponentFactory
 import com.flyview.core.coreModule
 import com.flyview.inventory_feature.inventoryModule
 import com.flyview.mark_feature.markModule
+import com.flyview.pharmmobile.data.barcode_reader.EmbeddedBarcodeReaderBinderImpl
+import com.flyview.pharmmobile.domain.barcode_reader.EmbeddedBarcodeReader
 import com.flyview.pharmmobile.home.HomeComponent
 import com.flyview.pharmmobile.home.RealHomeComponent
 import com.flyview.pharmmobile.settings.RealSettingsComponent
@@ -14,14 +16,20 @@ import com.flyview.pharmmobile.splash.SplashComponent
 import com.flyview.pharmmobile.usb_device.RealUsbListComponent
 import com.flyview.pharmmobile.usb_device.UsbListComponent
 import org.koin.core.component.get
+import org.koin.dsl.module
 
 val allModules = listOf(
     coreModule,
     inventoryModule,
-    markModule/*,
+    markModule,
     module {
-        single<EmbedBarcodeReader> {  }
-    }*/
+        single<EmbeddedBarcodeReader> {
+            EmbeddedBarcodeReaderBinderImpl(
+                context = get(),
+                audioPlayer = get()
+            ).createBarcodeReader()
+        }
+    }
 )
 
 fun ComponentFactory.createHomeComponent(
@@ -59,6 +67,7 @@ fun ComponentFactory.createSplashComponent(
         onFinish = onFinish
     )
 }
+
 fun ComponentFactory.createUsbListComponent(
     componentContext: ComponentContext,
     onBack: () -> Unit
