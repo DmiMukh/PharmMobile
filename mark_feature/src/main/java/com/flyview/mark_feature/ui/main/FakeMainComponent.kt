@@ -1,4 +1,7 @@
 package com.flyview.mark_feature.ui.main
 
-class FakeMainComponent: MainComponent {
+import com.flyview.mark_feature.ui.main.toolbar.FakeMainToolbarComponent
+
+class FakeMainComponent : MainComponent {
+    override val toolbarComponent = FakeMainToolbarComponent()
 }
