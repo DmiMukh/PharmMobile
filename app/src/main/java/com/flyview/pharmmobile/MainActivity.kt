@@ -27,11 +27,15 @@ import com.zebra.adc.decoder.BarCodeReader
 class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeReader.ErrorCallback,
     SurfaceTexture.OnFrameAvailableListener {
 
-    private var embeddedBarcodeReader: EmbeddedBarcodeReader = application.koin.get()
+    private var embeddedBarcodeReader: EmbeddedBarcodeReader? = null
     private var barcodeReaderReciever: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (embeddedBarcodeReader == null) {
+            embeddedBarcodeReader = application.koin.get()
+        }
 
         val componentFactory = application.koin.get<ComponentFactory>()
         val rootComponent = componentFactory.createRootComponent(defaultComponentContext())
@@ -72,8 +76,6 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
     }
 
     override fun onDestroy() {
-
-        /* Сканер, работающий через VCOM */
         if (barcodeReaderReciever != null) {
             unregisterReceiver(barcodeReaderReciever)
             barcodeReaderReciever = null
@@ -88,7 +90,7 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
         data: ByteArray?,
         reader: BarCodeReader?
     ) {
-        embeddedBarcodeReader.onDecodeComplete(
+        embeddedBarcodeReader?.onDecodeComplete(
             symbology,
             length,
             data,
@@ -106,16 +108,16 @@ class MainActivity : ComponentActivity(), BarCodeReader.DecodeCallback, BarCodeR
     override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) = Unit
 
     override fun onPause() {
-        embeddedBarcodeReader.onPauseBefore()
+        embeddedBarcodeReader?.onPauseBefore()
         super.onPause()
-        embeddedBarcodeReader.onPauseAfter()
+        embeddedBarcodeReader?.onPauseAfter()
     }
 
     override fun onResume() {
         super.onResume()
 
         if (!(embeddedBarcodeReader is BarcodeReaderEmpty)) {
-            embeddedBarcodeReader.onResume(
+            embeddedBarcodeReader?.onResume(
                 onFinish = { finish() },
                 cb = this,
                 er = this,
