@@ -45,6 +45,8 @@ fun MainUi(component: MainComponent) {
                     fontSize = 24.sp
                 )
             }
+
+
         }
     }
 }
