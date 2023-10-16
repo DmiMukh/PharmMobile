@@ -36,12 +36,14 @@ fun ComponentFactory.createHomeComponent(
     componentContext: ComponentContext,
     onBarcodeReaderClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onDocumentsCLick: () -> Unit,
     onInventoryClick: () -> Unit
 ): HomeComponent {
     return RealHomeComponent(
         componentContext = componentContext,
         onBarcodeReaderClick = onBarcodeReaderClick,
         onSettingsClick = onSettingsClick,
+        onDocumentsCLick = onDocumentsCLick,
         onInventoryClick = onInventoryClick
     )
 }

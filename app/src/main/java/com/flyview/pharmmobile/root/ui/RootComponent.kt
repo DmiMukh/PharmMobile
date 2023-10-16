@@ -17,6 +17,7 @@ interface RootComponent {
     
     sealed interface Child {
 
+        class DocumentsRoot(val component: DocumentsR) : Child
         class Home(val component: HomeComponent) : Child
         class InventoryRoot(val component: InventoryRootComponent) : Child
         class Settings(val component: SettingsComponent) : Child

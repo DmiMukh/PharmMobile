@@ -6,3 +6,4 @@ const val APPLICATION_ID = "com.flyview.pharmmobile"
 
 val ICON_SIZE = 32.dp
 val GS1 = "\u001D"
+val KOTLINX_MONTH_DIFF = 1

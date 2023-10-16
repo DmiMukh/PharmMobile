@@ -11,7 +11,6 @@ import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.core.ComponentFactory
 import com.flyview.core.createMessageComponent
-import com.flyview.core.message.ui.MessageComponent
 import com.flyview.core.utils.toStateFlow
 import com.flyview.inventory_feature.createInventoryComponent
 import com.flyview.pharmmobile.createHomeComponent
@@ -44,11 +43,14 @@ class RealRootComponent(
         componentContext: ComponentContext
     ): RootComponent.Child = when (config) {
 
+        ChildConfig.DocumentsRoot -> {}
+
         ChildConfig.Home -> RootComponent.Child.Home(
             component = this.componentFactory.createHomeComponent(
                 componentContext = componentContext,
                 onBarcodeReaderClick = { navigation.push(ChildConfig.UsbList) },
                 onSettingsClick = { navigation.push(ChildConfig.Settings) },
+                onDocumentsCLick = { navigation.push(ChildConfig.DocumentsRoot) },
                 onInventoryClick = { navigation.push(ChildConfig.InventoryRoot) }
             )
         )
@@ -84,6 +86,8 @@ class RealRootComponent(
 
     private sealed interface ChildConfig : Parcelable {
 
+        @Parcelize
+        object DocumentsRoot : ChildConfig
         @Parcelize
         object Home : ChildConfig
 

@@ -26,18 +26,34 @@ fun HomeUi(component: HomeComponent) {
                 .fillMaxWidth()
                 .padding(paddingValues)
         ) {
-            Button(
-                onClick = component::onInventoryClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            ) {
-                Text(
-                    text = "Инвентаризация",
-                    fontSize = 24.sp
-                )
-            }
+            MenuButton(
+                title = "Документы",
+                onClick = component::onDocumentsCLick
+            )
+            
+            MenuButton(
+                title = "Инвентаризация",
+                onClick = component::onInventoryClick
+            )
         }
+    }
+}
+
+@Composable
+fun MenuButton(
+    title: String,
+    onClick: () -> Unit
+){
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+        Text(
+            text = title,
+            fontSize = 24.sp
+        )
     }
 }
 
