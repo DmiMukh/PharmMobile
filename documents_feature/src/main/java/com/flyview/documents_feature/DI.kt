@@ -74,7 +74,8 @@ fun DocumentsComponentFactory.createMarkListComponent(
     onBack: () -> Unit
 ): MarkListComponent {
     return RealMarkListComponent(
-        componentContext = componentContext
+        componentContext = componentContext,
+        messageService = get()
     )
 }
 

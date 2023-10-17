@@ -5,4 +5,5 @@ import com.flyview.documents_feature.ui.scan.product_list.toolbar.ProductListToo
 interface ProductListComponent {
 
     val toolbarComponent: ProductListToolbarComponent
+    //val viewState: StateFlow<ProductListViewState>
 }
