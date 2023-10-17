@@ -10,6 +10,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.flyview.core.message.ui.MessageUi
+import com.flyview.documents_feature.ui.DocumentsRootUi
 import com.flyview.inventory_feature.ui.InventoryRootUi
 import com.flyview.pharmmobile.home.HomeUi
 import com.flyview.pharmmobile.settings.SettingsUi
@@ -29,6 +30,7 @@ fun RootContent(
         animation = stackAnimation(fade() + scale()),
     ) {
         when (val child = it.instance) {
+            is RootComponent.Child.DocumentsRoot -> DocumentsRootUi(child.component)
             is RootComponent.Child.Home -> HomeUi(child.component)
             is RootComponent.Child.InventoryRoot -> InventoryRootUi(child.component)
             is RootComponent.Child.Settings -> SettingsUi(child.component)

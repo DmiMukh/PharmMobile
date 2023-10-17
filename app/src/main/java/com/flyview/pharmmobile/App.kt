@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.flyview.core.ComponentFactory
 import com.flyview.core.KoinProvider
+import com.flyview.documents_feature.DocumentsComponentFactory
 import com.flyview.inventory_feature.InventoryComponentFactory
-import com.flyview.mark_feature.MarkComponentFactory
 import org.koin.core.Koin
 
 class App : Application(), KoinProvider {
@@ -25,7 +25,7 @@ class App : Application(), KoinProvider {
             declare(this@App as Context)
             declare(ComponentFactory(this))
             declare(InventoryComponentFactory(this))
-            declare(MarkComponentFactory(this))
+            declare(DocumentsComponentFactory(this))
             createEagerInstances()
         }
     }

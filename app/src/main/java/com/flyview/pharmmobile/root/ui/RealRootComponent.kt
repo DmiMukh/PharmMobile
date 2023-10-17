@@ -12,6 +12,7 @@ import com.arkivanov.essenty.parcelable.Parcelable
 import com.flyview.core.ComponentFactory
 import com.flyview.core.createMessageComponent
 import com.flyview.core.utils.toStateFlow
+import com.flyview.documents_feature.createDocumentsComponent
 import com.flyview.inventory_feature.createInventoryComponent
 import com.flyview.pharmmobile.createHomeComponent
 import com.flyview.pharmmobile.createSettingsComponent
@@ -43,7 +44,12 @@ class RealRootComponent(
         componentContext: ComponentContext
     ): RootComponent.Child = when (config) {
 
-        ChildConfig.DocumentsRoot -> {}
+        ChildConfig.DocumentsRoot -> RootComponent.Child.DocumentsRoot(
+            component = this.componentFactory.createDocumentsComponent(
+                componentContext = componentContext,
+                onBack = { navigation.pop() }
+            )
+        )
 
         ChildConfig.Home -> RootComponent.Child.Home(
             component = this.componentFactory.createHomeComponent(

@@ -1,0 +1,4 @@
+package com.flyview.documents_feature.ui.placement.navbar
+
+class FakePlacementNavbarComponent: PlacementNavbarComponent {
+}

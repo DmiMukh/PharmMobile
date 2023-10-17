@@ -3,8 +3,8 @@ package com.flyview.pharmmobile
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
 import com.flyview.core.coreModule
+import com.flyview.documents_feature.documentsModule
 import com.flyview.inventory_feature.inventoryModule
-import com.flyview.mark_feature.markModule
 import com.flyview.pharmmobile.data.barcode_reader.EmbeddedBarcodeReaderBinderImpl
 import com.flyview.pharmmobile.domain.barcode_reader.EmbeddedBarcodeReader
 import com.flyview.pharmmobile.home.HomeComponent
@@ -21,7 +21,7 @@ import org.koin.dsl.module
 val allModules = listOf(
     coreModule,
     inventoryModule,
-    markModule,
+    documentsModule,
     module {
         single<EmbeddedBarcodeReader> {
             EmbeddedBarcodeReaderBinderImpl(

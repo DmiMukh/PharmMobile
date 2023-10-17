@@ -122,6 +122,7 @@ class BarcodeReaderT200(
         st: SurfaceTexture.OnFrameAvailableListener
     ) {
         try {
+
             val camNum = Camera.getNumberOfCameras()
             bcr = if (camNum == 0) BarCodeReader.open(0, context)
             else BarCodeReader.open(1, context)
@@ -260,8 +261,6 @@ class BarcodeReaderT200(
             System.loadLibrary("SDL.hht")
             System.loadLibrary("barcodereader90.hht") // Android 9.0
             state .update { DecodeState.STATE_IDLE }
-
-            var s = 9
 
             initBarCodeReader(cb, er, st)
         }

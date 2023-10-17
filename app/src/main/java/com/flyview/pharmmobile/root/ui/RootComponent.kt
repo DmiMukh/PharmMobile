@@ -2,6 +2,7 @@ package com.flyview.pharmmobile.root.ui
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.flyview.core.message.ui.MessageComponent
+import com.flyview.documents_feature.ui.DocumentsRootComponent
 import com.flyview.inventory_feature.ui.InventoryRootComponent
 import com.flyview.pharmmobile.home.HomeComponent
 import com.flyview.pharmmobile.settings.SettingsComponent
@@ -17,7 +18,7 @@ interface RootComponent {
     
     sealed interface Child {
 
-        class DocumentsRoot(val component: DocumentsR) : Child
+        class DocumentsRoot(val component: DocumentsRootComponent) : Child
         class Home(val component: HomeComponent) : Child
         class InventoryRoot(val component: InventoryRootComponent) : Child
         class Settings(val component: SettingsComponent) : Child
