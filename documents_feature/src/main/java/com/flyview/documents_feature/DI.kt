@@ -15,6 +15,10 @@ import com.flyview.documents_feature.ui.main.MainComponent
 import com.flyview.documents_feature.ui.main.RealMainComponent
 import com.flyview.documents_feature.ui.placement.PlacementComponent
 import com.flyview.documents_feature.ui.placement.RealPlacementComponent
+import com.flyview.documents_feature.ui.scan.mark_list.MarkListComponent
+import com.flyview.documents_feature.ui.scan.mark_list.RealMarkListComponent
+import com.flyview.documents_feature.ui.scan.product_list.ProductListComponent
+import com.flyview.documents_feature.ui.scan.product_list.RealProductListComponent
 import org.koin.core.component.get
 import org.koin.dsl.module
 
@@ -65,6 +69,15 @@ fun DocumentsComponentFactory.createMainComponent(
     )
 }
 
+fun DocumentsComponentFactory.createMarkListComponent(
+    componentContext: ComponentContext,
+    onBack: () -> Unit
+): MarkListComponent {
+    return RealMarkListComponent(
+        componentContext = componentContext
+    )
+}
+
 fun DocumentsComponentFactory.cratePlacementComponent(
     componentContext: ComponentContext,
     onBack: () -> Unit
@@ -72,5 +85,14 @@ fun DocumentsComponentFactory.cratePlacementComponent(
     return RealPlacementComponent(
         componentContext = componentContext,
         onBack = onBack
+    )
+}
+
+fun DocumentsComponentFactory.createProductListComponent(
+    componentContext: ComponentContext,
+    onBack: () -> Unit
+): ProductListComponent {
+    return RealProductListComponent(
+        componentContext = componentContext
     )
 }
