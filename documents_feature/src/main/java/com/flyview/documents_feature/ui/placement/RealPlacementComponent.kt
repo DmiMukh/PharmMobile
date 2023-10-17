@@ -5,6 +5,7 @@ import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.utils.componentScope
 import com.flyview.documents_feature.domain.model.Cell
 import com.flyview.documents_feature.domain.model.Document
+import com.flyview.documents_feature.ui.placement.navbar.RealPlacementNavbarComponent
 import com.flyview.documents_feature.ui.placement.toolbar.RealPlacementToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -18,11 +19,15 @@ class RealPlacementComponent(
 
     override val cell = MutableStateFlow(Cell(-1, ""))
 
+    override val navbarComponent = RealPlacementNavbarComponent(
+        componentContext = componentContext
+    )
+
     override val toolbarComponent = RealPlacementToolbarComponent(
         componentContext = componentContext,
         currentDocument = Document(),
         onBack = this.onBack,
-        onSave = {  }
+        onSave = { }
     )
 
     private fun onReadBarcode(code: String) = componentScope.launch {
