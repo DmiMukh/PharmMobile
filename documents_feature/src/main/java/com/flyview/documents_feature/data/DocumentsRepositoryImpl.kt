@@ -9,7 +9,7 @@ class DocumentsRepositoryImpl(
     private val api: DocumentsApi,
     private val messageService: MessageService
 ): DocumentsRepository {
-    override fun getDocuments(date: LocalDate): List<Document> {
+    override suspend fun getDocuments(date: LocalDate): List<Document> {
         return listOf(
             Document(
                 id = 0,
