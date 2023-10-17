@@ -7,6 +7,8 @@ class RealProductListComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, ProductListComponent {
     override val toolbarComponent = RealProductListToolbarComponent(
-        componentContext = componentContext
+        componentContext = componentContext,
+        onBack = {},
+        onSave = {}
     )
 }

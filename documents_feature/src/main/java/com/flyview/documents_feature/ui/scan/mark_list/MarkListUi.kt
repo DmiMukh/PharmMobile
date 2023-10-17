@@ -8,18 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.flyview.core.theme.AppTheme
+import com.flyview.documents_feature.ui.scan.mark_list.navbar.MarkListNavbarUi
 import com.flyview.documents_feature.ui.scan.mark_list.toolbar.MarkListToolbarUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MarkListUi(component: MarkListComponent) {
     Scaffold(
-        topBar = { MarkListToolbarUi(component.toolbarComponent)}
+        topBar = { MarkListToolbarUi(component.toolbarComponent) },
+        bottomBar = { MarkListNavbarUi(component.navbarComponent) }
     ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
+            /*
+            LazyColumn {
+                state.items.forEach { model ->
 
+                }
+            }
+            */
         }
     }
 }
