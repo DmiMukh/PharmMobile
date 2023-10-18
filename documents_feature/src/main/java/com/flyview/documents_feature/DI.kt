@@ -75,6 +75,7 @@ fun DocumentsComponentFactory.createMarkListComponent(
 ): MarkListComponent {
     return RealMarkListComponent(
         componentContext = componentContext,
+        onBack = onBack,
         audioPlayer = get(),
         messageService = get()
     )

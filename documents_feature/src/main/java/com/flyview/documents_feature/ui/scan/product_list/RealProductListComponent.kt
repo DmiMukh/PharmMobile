@@ -1,6 +1,7 @@
 package com.flyview.documents_feature.ui.scan.product_list
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.barcode.data.Barcode
 import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.barcode.data.code.UnknownBarcode
 import com.flyview.core.barcode.domain.BarcodeBinder
@@ -53,16 +54,38 @@ class RealProductListComponent(
     private fun onReadBarcode(code: String) = componentScope.launch {
         val barcode = barcodeBinder.createBarcode(data = code)
 
-        // Проверка корректности кода
-        if (barcode is UnknownBarcode) {
-            messageService.showMessage(Message(text = "Некорректный код!"))
-            audioPlayer.play(AppSound.ERROR)
-            return@launch
-        }
+        if (isInvalidCode(barcode)) return@launch
 
+        val shortCode = barcode.extractor.getShortCode()
         val ean13 = barcode.extractor.getEAN()
+
+        if (isBinded(shortCode)) return@launch
 
         // обрабатываем обычный ШК
         // Обрабатываем маркировку
+    }
+
+    private fun isInvalidCode(barcode: Barcode): Boolean {
+        if (barcode is UnknownBarcode) {
+            messageService.showMessage(Message(text = "Некорректный код!"))
+            audioPlayer.play(AppSound.ERROR)
+            return true
+        }
+        return false
+    }
+
+    private fun isBinded(shortCode: String): Boolean {
+        if (shortCode.length == 20) {
+            messageService.showMessage(
+                Message(
+                    text = "Код уже связан!",
+                    actionTitle = "Детали",
+                    action = { TODO("Отобразить информацию о товаре") }
+                )
+            )
+            audioPlayer.play(AppSound.ERROR)
+            return true
+        }
+        return false
     }
 }

@@ -1,7 +1,9 @@
 package com.flyview.documents_feature.ui.scan.mark_list
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.barcode.data.Barcode
 import com.flyview.core.barcode.data.BarcodeReaderData
+import com.flyview.core.barcode.data.code.Code128
 import com.flyview.core.barcode.data.code.DataMatrix85
 import com.flyview.core.barcode.data.code.UnknownBarcode
 import com.flyview.core.barcode.domain.BarcodeBinder
@@ -18,10 +20,10 @@ import com.flyview.documents_feature.ui.scan.mark_list.toolbar.RealMarkListToolb
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class RealMarkListComponent(
     componentContext: ComponentContext,
+    private val onBack: () -> Unit,
     private val audioPlayer: AudioPlayer,
     private val messageService: MessageService
 ) : ComponentContext by componentContext, MarkListComponent {
@@ -34,7 +36,7 @@ class RealMarkListComponent(
     )
     override val toolbarComponent = RealMarkListToolbarComponent(
         componentContext = componentContext,
-        onBack = {},
+        onBack = this.onBack,
         onSave = {}
     )
 
@@ -59,23 +61,34 @@ class RealMarkListComponent(
     private fun onReadBarcode(code: String) = componentScope.launch {
         val barcode = barcodeBinder.createBarcode(data = code)
 
-        // Проверка корректности кода
-        if (barcode is UnknownBarcode) {
-            messageService.showMessage(Message(text = "Некорректный код!"))
-            audioPlayer.play(AppSound.ERROR)
-            return@launch
-        }
+        setTab(barcode)
+        if (isInvalidCode(barcode)) return@launch
 
         val shortCode = barcode.extractor.getShortCode()
 
-        // Переключаемся на нужную вкладку
-        if (barcode is DataMatrix85) navbarComponent.onClick(MarkListTab.PACK)
-        else navbarComponent.onClick(MarkListTab.BOX)
+        if (isBinded(shortCode)) return@launch
 
-        // Проверяем код
-        val isExists = Random(1).nextBoolean()
+        TODO("Создание связи кода и серии")
+    }
 
-        if (isExists) {
+    private fun setTab(barcode: Barcode){
+        when (barcode) {
+            is Code128 -> navbarComponent.onClick(MarkListTab.BOX)
+            is DataMatrix85 -> navbarComponent.onClick(MarkListTab.PACK)
+        }
+    }
+
+    private fun isInvalidCode(barcode: Barcode): Boolean {
+        if (barcode is UnknownBarcode) {
+            messageService.showMessage(Message(text = "Некорректный код!"))
+            audioPlayer.play(AppSound.ERROR)
+            return true
+        }
+        return false
+    }
+
+    private fun isBinded(shortCode: String): Boolean {
+        if (shortCode.length == 20) {
             messageService.showMessage(
                 Message(
                     text = "Код уже связан!",
@@ -84,7 +97,8 @@ class RealMarkListComponent(
                 )
             )
             audioPlayer.play(AppSound.ERROR)
-            return@launch
+            return true
         }
+        return false
     }
 }
