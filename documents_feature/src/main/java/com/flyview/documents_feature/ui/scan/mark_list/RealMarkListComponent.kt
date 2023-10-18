@@ -13,7 +13,9 @@ import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
 import com.flyview.documents_feature.data.MarkBarcodeBinder
+import com.flyview.documents_feature.domain.MarkRepository
 import com.flyview.documents_feature.domain.model.MarkCode
+import com.flyview.documents_feature.domain.model.Product
 import com.flyview.documents_feature.ui.scan.mark_list.navbar.MarkListTab
 import com.flyview.documents_feature.ui.scan.mark_list.navbar.RealMarkListNavbarComponent
 import com.flyview.documents_feature.ui.scan.mark_list.toolbar.RealMarkListToolbarComponent
@@ -23,9 +25,11 @@ import kotlinx.coroutines.launch
 
 class RealMarkListComponent(
     componentContext: ComponentContext,
+    private val currentProduct: Product,
     private val onBack: () -> Unit,
     private val audioPlayer: AudioPlayer,
-    private val messageService: MessageService
+    private val messageService: MessageService,
+    private val repository: MarkRepository
 ) : ComponentContext by componentContext, MarkListComponent {
 
     private val barcodeBinder: BarcodeBinder = MarkBarcodeBinder()
@@ -37,7 +41,11 @@ class RealMarkListComponent(
     override val toolbarComponent = RealMarkListToolbarComponent(
         componentContext = componentContext,
         onBack = this.onBack,
-        onSave = {}
+        onSave = {
+            componentScope.launch {
+                repository.saveProductCodes(product = currentProduct)
+            }
+        }
     )
 
     override fun onItemClick(code: MarkCode) {
@@ -45,9 +53,13 @@ class RealMarkListComponent(
 
         messageService.showMessage(
             Message(
-                "код?",
+                text = code.code,
                 actionTitle = "Удалить",
-                action = { TODO("удаление записи") }
+                action = {
+                    componentScope.launch {
+                        repository.deleteCode(code = code.code)
+                    }
+                }
             )
         )
     }
@@ -62,33 +74,36 @@ class RealMarkListComponent(
         val barcode = barcodeBinder.createBarcode(data = code)
 
         setTab(barcode)
-        if (isInvalidCode(barcode)) return@launch
+        if (!isValidCode(barcode)) return@launch
 
         val shortCode = barcode.extractor.getShortCode()
 
         if (isBinded(shortCode)) return@launch
 
-        TODO("Создание связи кода и серии")
+        repository.putProductCode(barcode)
     }
 
-    private fun setTab(barcode: Barcode){
+    private fun setTab(barcode: Barcode) {
         when (barcode) {
             is Code128 -> navbarComponent.onClick(MarkListTab.BOX)
             is DataMatrix85 -> navbarComponent.onClick(MarkListTab.PACK)
         }
     }
 
-    private fun isInvalidCode(barcode: Barcode): Boolean {
+    private fun isValidCode(barcode: Barcode): Boolean {
         if (barcode is UnknownBarcode) {
             messageService.showMessage(Message(text = "Некорректный код!"))
             audioPlayer.play(AppSound.ERROR)
-            return true
+            return false
         }
-        return false
+        return true
     }
 
-    private fun isBinded(shortCode: String): Boolean {
-        if (shortCode.length == 20) {
+    private suspend fun isBinded(shortCode: String): Boolean {
+
+        val product = repository.getProductByCode(shortCode)
+
+        product?.let {
             messageService.showMessage(
                 Message(
                     text = "Код уже связан!",
@@ -99,6 +114,7 @@ class RealMarkListComponent(
             audioPlayer.play(AppSound.ERROR)
             return true
         }
+
         return false
     }
 }

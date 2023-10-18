@@ -77,7 +77,8 @@ fun DocumentsComponentFactory.createMarkListComponent(
         componentContext = componentContext,
         onBack = onBack,
         audioPlayer = get(),
-        messageService = get()
+        messageService = get(),
+        repository = get()
     )
 }
 
@@ -87,7 +88,9 @@ fun DocumentsComponentFactory.cratePlacementComponent(
 ): PlacementComponent {
     return RealPlacementComponent(
         componentContext = componentContext,
-        onBack = onBack
+        onBack = onBack,
+        audioPlayer = get(),
+        messageService = get()
     )
 }
 

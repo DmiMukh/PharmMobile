@@ -1,8 +1,17 @@
 package com.flyview.documents_feature.ui.placement
 
 import com.arkivanov.decompose.ComponentContext
+import com.flyview.core.barcode.data.Barcode
 import com.flyview.core.barcode.data.BarcodeReaderData
+import com.flyview.core.barcode.data.code.UnknownBarcode
+import com.flyview.core.barcode.domain.BarcodeBinder
+import com.flyview.core.media.AppSound
+import com.flyview.core.media.AudioPlayer
+import com.flyview.core.message.data.MessageService
+import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
+import com.flyview.documents_feature.data.PlacementBarcodeBinder
+import com.flyview.documents_feature.domain.PlacementRepository
 import com.flyview.documents_feature.domain.model.Cell
 import com.flyview.documents_feature.domain.model.Document
 import com.flyview.documents_feature.ui.placement.navbar.RealPlacementNavbarComponent
@@ -14,8 +23,13 @@ import kotlinx.coroutines.launch
 
 class RealPlacementComponent(
     componentContext: ComponentContext,
-    private val onBack: () -> Unit
+    private val onBack: () -> Unit,
+    private val audioPlayer: AudioPlayer,
+    private val messageService: MessageService,
+    private val repository: PlacementRepository
 ) : ComponentContext by componentContext, PlacementComponent {
+
+    private val barcodeBinder: BarcodeBinder = PlacementBarcodeBinder()
 
     override val cell = MutableStateFlow(Cell(-1, ""))
 
@@ -27,17 +41,35 @@ class RealPlacementComponent(
         componentContext = componentContext,
         currentDocument = Document(),
         onBack = this.onBack,
-        onSave = { }
+        onSave = {  }
     )
 
     private fun onReadBarcode(code: String) = componentScope.launch {
 
+        val barcode = barcodeBinder.createBarcode(data = code)
+
+        if (isInvalidCode(barcode)) return@launch
+
         TODO("Обработка кода")
+
+        TODO("Ячейка")
+        TODO("Товар")
+        TODO("Маркировка")
+        TODO("Транспортная упаковка")
     }
 
     init {
         BarcodeReaderData.data.onEach {
             if (it.isNotEmpty()) onReadBarcode(it)
         }.launchIn(componentScope)
+    }
+
+    private fun isInvalidCode(barcode: Barcode): Boolean {
+        if (barcode is UnknownBarcode) {
+            messageService.showMessage(Message(text = "Некорректный код!"))
+            audioPlayer.play(AppSound.ERROR)
+            return true
+        }
+        return false
     }
 }
