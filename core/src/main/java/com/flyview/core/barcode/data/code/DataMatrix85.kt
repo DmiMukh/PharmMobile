@@ -4,8 +4,7 @@ import com.flyview.core.barcode.data.Barcode
 import com.flyview.core.barcode.data.extractor.DataMatrix85Extractor
 import com.flyview.core.barcode.domain.BarcodeExtractor
 
-class DataMatrix85 constructor(code: String): Barcode {
+class DataMatrix85 constructor(override val code: String): Barcode {
 
-    override val code = code
-    override val extractor: BarcodeExtractor = DataMatrix85Extractor()
+    override val extractor: BarcodeExtractor = DataMatrix85Extractor(this.code)
 }

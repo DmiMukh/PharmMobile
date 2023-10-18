@@ -2,8 +2,7 @@ package com.flyview.core.barcode.data.extractor
 
 import com.flyview.core.barcode.domain.BarcodeExtractor
 
-class UnknowBarcodeExtractor: BarcodeExtractor {
+class Code128Extractor(private val code: String): BarcodeExtractor {
     override fun getEAN() = ""
-
-    override fun getShortCode() = ""
+    override fun getShortCode() = this.code.substring(3, 20)
 }

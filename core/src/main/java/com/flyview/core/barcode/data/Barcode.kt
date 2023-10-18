@@ -6,7 +6,4 @@ interface Barcode {
 
     val code: String
     val extractor: BarcodeExtractor
-
-    fun getEAN() = extractor.getEAN(this.code)
-    fun getShortCode() = extractor.getShortCode(this.code)
 }
