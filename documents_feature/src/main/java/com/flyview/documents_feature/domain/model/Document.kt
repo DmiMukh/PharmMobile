@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Document(
-    val id: Int,
+    val id: Long,
     val number: String,
     val recieverName: String,
     val senderName: String,

@@ -14,6 +14,8 @@ import com.flyview.core.utils.ICON_SIZE
 
 @Composable
 fun PlacementNavbarUi(component: PlacementNavbarComponent) {
+
+
     NavigationBar(){
         NavigationBarItem(
             selected = true,

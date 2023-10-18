@@ -31,6 +31,7 @@ class RealPlacementComponent(
     )
 
     private fun onReadBarcode(code: String) = componentScope.launch {
+
         TODO("Обработка кода")
     }
 

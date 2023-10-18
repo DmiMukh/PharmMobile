@@ -75,6 +75,7 @@ fun DocumentsComponentFactory.createMarkListComponent(
 ): MarkListComponent {
     return RealMarkListComponent(
         componentContext = componentContext,
+        audioPlayer = get(),
         messageService = get()
     )
 }
@@ -91,9 +92,15 @@ fun DocumentsComponentFactory.cratePlacementComponent(
 
 fun DocumentsComponentFactory.createProductListComponent(
     componentContext: ComponentContext,
+    document: Document,
     onBack: () -> Unit
 ): ProductListComponent {
     return RealProductListComponent(
-        componentContext = componentContext
+        componentContext = componentContext,
+        currentDocument = document,
+        onBack = onBack,
+        audioPlayer = get(),
+        messageService = get(),
+        repository = get()
     )
 }

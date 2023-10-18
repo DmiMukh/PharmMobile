@@ -70,6 +70,7 @@ class RealDocumentsRootComponent(
         is ChildConfig.ProductList -> DocumentsRootComponent.Child.ProductList(
             component = this.componentFactory.createProductListComponent(
                 componentContext = componentContext,
+                document = config.document,
                 onBack = { navigation.pop() }
             )
         )
