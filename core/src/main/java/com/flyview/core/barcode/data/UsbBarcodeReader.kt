@@ -34,30 +34,12 @@ class UsbBarcodeReader(
 
     private val coroutineScope = CoroutineScope(EmptyCoroutineContext + Dispatchers.IO)
 
-    @Suppress("PrivatePropertyName")
-    private val READ_WAIT_MILLIS = 100L
-
-    @Suppress("PrivatePropertyName")
-    private val MAX_BUFFER_SIZE = 1024
-
-    @Suppress("PrivatePropertyName")
-    private val BAUD_RATE = 115200
-
-    @Suppress("PrivatePropertyName")
-    private val DATA_BITS = 8
-
-    @Suppress("PrivatePropertyName")
-    private val STOP_BITS = 1
-
-    @Suppress("PrivatePropertyName")
-    private val INTENT_ACTION_GRANT_USB = APPLICATION_ID.plus(".GRANT_USB")
-
-    override val intentFilter = IntentFilter(INTENT_ACTION_GRANT_USB)
+    override val intentFilter = IntentFilter(Companion.INTENT_ACTION_GRANT_USB)
 
     private val usbPermissionIntent = PendingIntent.getBroadcast(
         this.context,
         0,
-        Intent(INTENT_ACTION_GRANT_USB),
+        Intent(Companion.INTENT_ACTION_GRANT_USB),
         PendingIntent.FLAG_MUTABLE
     )
 
@@ -114,7 +96,7 @@ class UsbBarcodeReader(
     }
 
     override fun onBroadcastReceive(context: Context?, intent: Intent?) {
-        if (INTENT_ACTION_GRANT_USB == intent?.action) {
+        if (Companion.INTENT_ACTION_GRANT_USB == intent?.action) {
             val isPermissionGranted = intent.extras?.getBoolean(
                 UsbManager.EXTRA_PERMISSION_GRANTED, false
             ) ?: false
@@ -167,10 +149,10 @@ class UsbBarcodeReader(
     private fun read() {
         if (port.value == null) return
 
-        val responseData = ByteArray(MAX_BUFFER_SIZE)
+        val responseData = ByteArray(Companion.MAX_BUFFER_SIZE)
 
         try {
-            port.value?.read(responseData, READ_WAIT_MILLIS.toInt())
+            port.value?.read(responseData, Companion.READ_WAIT_MILLIS.toInt())
         } catch (ex: Exception) {
             onDisconnect()
             return
@@ -190,7 +172,10 @@ class UsbBarcodeReader(
         port.onEach {
             it?.let {
                 it.open(connection.value)
-                it.setParameters(BAUD_RATE, DATA_BITS, STOP_BITS, UsbSerialPort.PARITY_NONE)
+                it.setParameters(
+                    Companion.BAUD_RATE, Companion.DATA_BITS,
+                    Companion.STOP_BITS, UsbSerialPort.PARITY_NONE
+                )
             }
         }.launchIn(this.coroutineScope)
 
@@ -198,7 +183,7 @@ class UsbBarcodeReader(
             while (true) {
                 if (connected.value) read()
 
-                delay(READ_WAIT_MILLIS)
+                delay(Companion.READ_WAIT_MILLIS)
             }
         }
 
@@ -206,5 +191,19 @@ class UsbBarcodeReader(
             if (it) audioPlayer.play(AppSound.USB_ON)
             else audioPlayer.play(AppSound.USB_OFF)
         }.launchIn(this.coroutineScope)
+    }
+
+    companion object {
+        private const val READ_WAIT_MILLIS = 100L
+
+        private const val MAX_BUFFER_SIZE = 1024
+
+        private const val BAUD_RATE = 115200
+
+        private const val DATA_BITS = 8
+
+        private const val STOP_BITS = 1
+
+        private const val INTENT_ACTION_GRANT_USB = APPLICATION_ID.plus(".GRANT_USB")
     }
 }
