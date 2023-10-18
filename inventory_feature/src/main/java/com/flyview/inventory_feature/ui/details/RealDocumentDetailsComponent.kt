@@ -54,8 +54,6 @@ class RealDocumentDetailsComponent(
 
         val barcode = barcodeBinder.createBarcode(data = code)
 
-        messageService.showMessage(Message(text = barcode.toString()))
-
         // Проверка корректности кода
         if (barcode is UnknownBarcode) {
             messageService.showMessage(Message(text = "Некорректный код!"))
@@ -63,7 +61,7 @@ class RealDocumentDetailsComponent(
             return@launch
         }
 
-        val shortCode = barcode.getShortCode()
+        val shortCode = barcode.extractor.getShortCode()
         val marked = barcode !is EAN13
 
         val product: Product = repository.getProduct(

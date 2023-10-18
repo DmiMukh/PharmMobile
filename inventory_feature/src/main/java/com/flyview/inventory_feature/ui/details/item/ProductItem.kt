@@ -27,16 +27,16 @@ fun ProductItem(
 ) {
 
     fun test(quantity: Double, divisibility: Int): String {
-        val packs = (model.quantity * model.articul.divisibility)
+        val packs = (quantity * divisibility)
             .toBigDecimal().setScale(1, RoundingMode.HALF_EVEN).toInt()
-        val mainQty = packs.div(model.articul.divisibility)
-        val subQty = packs.mod(model.articul.divisibility)
+        val mainQty = packs.div(divisibility)
+        val subQty = packs.mod(divisibility)
 
         return mainQty.toString()
             .plus(" (")
             .plus(subQty.toString())
             .plus(" / ")
-            .plus(model.articul.divisibility.toString())
+            .plus(divisibility.toString())
             .plus(")")
     }
 
