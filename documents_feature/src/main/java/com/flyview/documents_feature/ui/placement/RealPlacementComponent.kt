@@ -3,6 +3,7 @@ package com.flyview.documents_feature.ui.placement
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.barcode.data.Barcode
 import com.flyview.core.barcode.data.BarcodeReaderData
+import com.flyview.core.barcode.data.code.EAN13
 import com.flyview.core.barcode.data.code.UnknownBarcode
 import com.flyview.core.barcode.domain.BarcodeBinder
 import com.flyview.core.media.AppSound
@@ -41,7 +42,7 @@ class RealPlacementComponent(
         componentContext = componentContext,
         currentDocument = Document(),
         onBack = this.onBack,
-        onSave = {  }
+        onSave = { }
     )
 
     private fun onReadBarcode(code: String) = componentScope.launch {
@@ -50,12 +51,41 @@ class RealPlacementComponent(
 
         if (isInvalidCode(barcode)) return@launch
 
-        TODO("Обработка кода")
+        // "Обработка кода"
 
-        TODO("Ячейка")
-        TODO("Товар")
-        TODO("Маркировка")
-        TODO("Транспортная упаковка")
+        if (barcode is EAN13 && code.substring(1, 4) == "9999") {
+
+            val cell = repository.getCell(code)
+
+            if (cell == null) {
+                messageService.showMessage(
+                    Message(text = "Ячейка не найдена!")
+                )
+                return@launch
+            }
+
+        } else {
+            val product = repository.getProduct(
+                cell = cell.value,
+                barcode = barcode
+            )
+
+            if (product == null) {
+                messageService.showMessage(
+                    Message(text = "Нет товара по коду ${code}!")
+                )
+                return@launch
+            }
+
+            TODO("Отображение ввода кол-ва")
+            TODO("Изменение кол-ва")
+
+            repository.collectProduct(
+                cell = cell.value,
+                product = product,
+                quantity = 0.0
+            )
+        }
     }
 
     init {

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -18,27 +19,31 @@ fun PlacementNavbarUi(component: PlacementNavbarComponent) {
 
     NavigationBar(){
         NavigationBarItem(
-            selected = true,
-            onClick = { /*TODO*/ },
+            selected = false/*MarkListTab.BOX == currentTab.value*/,
+            onClick = {  },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_pack),
-                    contentDescription = "mark",
+                    painter = painterResource(id = R.drawable.ic_box),
+                    contentDescription = "pack",
                     modifier = Modifier.size(ICON_SIZE)
                 )
-            }
+            },
+            label = { Text(text = "Нужен") },
+            enabled = true/*MarkListTab.BOX != currentTab.value*/
         )
 
         NavigationBarItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = false/*MarkListTab.BOX == currentTab.value*/,
+            onClick = {  },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_pack),
-                    contentDescription = "mark",
+                    painter = painterResource(id = R.drawable.ic_box),
+                    contentDescription = "box",
                     modifier = Modifier.size(ICON_SIZE)
                 )
-            }
+            },
+            label = { Text(text = "Собран") },
+            enabled = true/*MarkListTab.BOX != currentTab.value*/
         )
     }
 }

@@ -61,6 +61,9 @@ class RealProductListComponent(
 
         if (isBinded(shortCode)) return@launch
 
+        // val items = repository.getProducts()
+
+        // Получаем список товаров
         // обрабатываем обычный ШК
         // Обрабатываем маркировку
     }
