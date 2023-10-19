@@ -11,9 +11,9 @@ import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
 import com.flyview.documents_feature.data.ProductBarcodeBinder
-import com.flyview.documents_feature.domain.DocumentsRepository
 import com.flyview.documents_feature.domain.model.Document
 import com.flyview.documents_feature.domain.model.Product
+import com.flyview.documents_feature.domain.repository.DocumentsRepository
 import com.flyview.documents_feature.ui.scan.product_list.toolbar.RealProductListToolbarComponent
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +30,7 @@ class RealProductListComponent(
 
     private val barcodeBinder: BarcodeBinder = ProductBarcodeBinder()
 
-    override val productsPager = repository.getProductsPager(this.currentDocument.id)
+    override val productsPager = repository.getProductsPager()
     override val toolbarComponent = RealProductListToolbarComponent(
         componentContext = componentContext,
         onBack = onBack,
@@ -39,6 +39,7 @@ class RealProductListComponent(
 
     override fun onItemClick(model: Product) {
         if (model.certificate.marked) {
+
             TODO("Маркировка: открытие списка кодов")
             return
         }
@@ -57,10 +58,11 @@ class RealProductListComponent(
         if (isInvalidCode(barcode)) return@launch
 
         val shortCode = barcode.extractor.getShortCode()
-        val ean13 = barcode.extractor.getEAN()
+        // val ean13 = barcode.extractor.getEAN()
 
         if (isBinded(shortCode)) return@launch
 
+        //
         // val items = repository.getProducts()
 
         // Получаем список товаров

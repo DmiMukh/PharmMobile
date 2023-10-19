@@ -1,12 +1,20 @@
 package com.flyview.documents_feature
 
+import android.app.Application
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.ComponentFactory
-import com.flyview.documents_feature.data.DocumentsApi
-import com.flyview.documents_feature.data.DocumentsApiImpl
-import com.flyview.documents_feature.data.DocumentsRepositoryImpl
-import com.flyview.documents_feature.domain.DocumentsRepository
+import com.flyview.documents_feature.data.api.FakeDocumentsApi
+import com.flyview.documents_feature.data.repository.DocumentsRepositoryImpl
+import com.flyview.documents_feature.data.repository.MarkRepositoryImpl
+import com.flyview.documents_feature.data.repository.PlacementRepositoryImpl
+import com.flyview.documents_feature.domain.api.DocumentsApi
 import com.flyview.documents_feature.domain.model.Document
+import com.flyview.documents_feature.domain.model.Product
+import com.flyview.documents_feature.domain.repository.DocumentsRepository
+import com.flyview.documents_feature.domain.repository.MarkRepository
+import com.flyview.documents_feature.domain.repository.PlacementRepository
 import com.flyview.documents_feature.ui.DocumentsRootComponent
 import com.flyview.documents_feature.ui.RealDocumentsRootComponent
 import com.flyview.documents_feature.ui.document.DocumentComponent
@@ -19,17 +27,41 @@ import com.flyview.documents_feature.ui.scan.mark_list.MarkListComponent
 import com.flyview.documents_feature.ui.scan.mark_list.RealMarkListComponent
 import com.flyview.documents_feature.ui.scan.product_list.ProductListComponent
 import com.flyview.documents_feature.ui.scan.product_list.RealProductListComponent
+import com.flyview.pharmmobile.documents_feature.DocDatabase
 import org.koin.core.component.get
 import org.koin.dsl.module
 
 val documentsModule = module {
-    single<DocumentsApi> { DocumentsApiImpl() }
+    single<DocumentsApi> { FakeDocumentsApi() /*RealDocumentsApi()*/ }
+    single<DocDatabase> { provideDocDatabase(provideDocSqlDriver(get())) }
     single<DocumentsRepository> {
         DocumentsRepositoryImpl(
             api = get(),
-            messageService = get()
+            db = get()
         )
     }
+
+    single<MarkRepository> {
+        MarkRepositoryImpl()
+    }
+
+    single<PlacementRepository> {
+        PlacementRepositoryImpl(
+            db = get()
+        )
+    }
+}
+
+fun provideDocSqlDriver(app: Application): SqlDriver {
+    return AndroidSqliteDriver(
+        schema = DocDatabase.Schema,
+        context = app,
+        name = "doc.db"
+    )
+}
+
+fun provideDocDatabase(driver: SqlDriver): DocDatabase {
+    return DocDatabase(driver)
 }
 
 fun ComponentFactory.createDocumentsComponent(
@@ -46,12 +78,16 @@ fun ComponentFactory.createDocumentsComponent(
 fun DocumentsComponentFactory.createDocumentComponent(
     componentContext: ComponentContext,
     document: Document,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onScanClick: () -> Unit,
+    onPlacementClick: () -> Unit
 ): DocumentComponent {
     return RealDocumentComponent(
         componentContext = componentContext,
         currentDocument = document,
-        onBack = onBack
+        onBack = onBack,
+        onScanClick = onScanClick,
+        onPlacementClick = onPlacementClick
     )
 }
 
@@ -71,10 +107,12 @@ fun DocumentsComponentFactory.createMainComponent(
 
 fun DocumentsComponentFactory.createMarkListComponent(
     componentContext: ComponentContext,
+    product: Product,
     onBack: () -> Unit
 ): MarkListComponent {
     return RealMarkListComponent(
         componentContext = componentContext,
+        currentProduct = product,
         onBack = onBack,
         audioPlayer = get(),
         messageService = get(),
@@ -90,7 +128,8 @@ fun DocumentsComponentFactory.cratePlacementComponent(
         componentContext = componentContext,
         onBack = onBack,
         audioPlayer = get(),
-        messageService = get()
+        messageService = get(),
+        repository = get<PlacementRepository>()
     )
 }
 

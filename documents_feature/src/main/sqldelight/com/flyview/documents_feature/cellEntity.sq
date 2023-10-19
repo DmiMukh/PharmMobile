@@ -1,0 +1,11 @@
+CREATE TABLE cellEntity (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+deleteAll:
+DELETE FROM cellEntity;
+
+insert:
+INSERT INTO cellEntity
+VALUES ?;

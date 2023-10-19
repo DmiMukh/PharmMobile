@@ -1,12 +1,13 @@
-package com.flyview.documents_feature.data
+package com.flyview.documents_feature.data.api
 
+import com.flyview.documents_feature.domain.api.DocumentsApi
 import com.flyview.documents_feature.domain.response.ArticulResponse
 import com.flyview.documents_feature.domain.response.BarcodeResponse
 import com.flyview.documents_feature.domain.response.CertificateResponse
 import com.flyview.documents_feature.domain.response.DocumentResponse
 import kotlinx.datetime.LocalDate
 
-class DocumentsApiImpl : DocumentsApi {
+class RealDocumentsApi : DocumentsApi {
     override suspend fun getArticuls(document: Int): List<ArticulResponse> {
         TODO("Not yet implemented")
     }

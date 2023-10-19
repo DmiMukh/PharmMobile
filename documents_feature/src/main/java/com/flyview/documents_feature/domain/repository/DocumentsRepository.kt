@@ -1,4 +1,4 @@
-package com.flyview.documents_feature.domain
+package com.flyview.documents_feature.domain.repository
 
 import androidx.paging.PagingData
 import com.flyview.documents_feature.domain.model.Document
@@ -12,5 +12,5 @@ interface DocumentsRepository {
     suspend fun getDocuments(date: LocalDate): List<Document>
     fun getMarksPager(documentId: Long): Flow<PagingData<MarkCode>>
     suspend fun getProducts(document: Long): List<Product>
-    fun getProductsPager(documentId: Long): Flow<PagingData<Product>>
+    fun getProductsPager(): Flow<PagingData<Product>>
 }

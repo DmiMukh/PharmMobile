@@ -1,0 +1,12 @@
+CREATE TABLE articulEntity (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  producer TEXT NOT NULL
+);
+
+deleteAll:
+DELETE FROM articulEntity;
+
+insert:
+INSERT INTO articulEntity
+VALUES ?;

@@ -1,4 +1,4 @@
-package com.flyview.documents_feature.domain
+package com.flyview.documents_feature.domain.repository
 
 import com.flyview.core.barcode.data.Barcode
 import com.flyview.documents_feature.domain.model.Product

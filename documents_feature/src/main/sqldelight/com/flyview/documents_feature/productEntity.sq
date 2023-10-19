@@ -1,0 +1,29 @@
+countProducts:
+SELECT COUNT(*)
+FROM cellEntity;
+
+products:
+SELECT
+    id AS Id
+FROM cellEntity
+LIMIT :limit OFFSET :offset;
+
+countCollectedProducts:
+SELECT COUNT(*)
+FROM cellEntity;
+
+collectedProducts:
+SELECT
+    id AS Id
+FROM cellEntity
+LIMIT :limit OFFSET :offset;
+
+countFreeProducts:
+SELECT COUNT(*)
+FROM cellEntity;
+
+freeProducts:
+SELECT
+    id AS Id
+FROM cellEntity
+LIMIT :limit OFFSET :offset;

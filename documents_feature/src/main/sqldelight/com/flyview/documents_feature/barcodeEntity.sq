@@ -1,0 +1,8 @@
+CREATE TABLE barcodeEntity (
+    barcode TEXT NOT NULL,
+    articul INTEGER NOT NULL,
+
+    CONSTRAINT barcodeEntity_pk PRIMARY KEY (barcode, articul)
+);
+
+CREATE INDEX IF NOT EXISTS barcodeEntity_barcode ON barcodeEntity (barcode);

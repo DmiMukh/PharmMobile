@@ -15,6 +15,7 @@ import com.flyview.documents_feature.createMainComponent
 import com.flyview.documents_feature.createMarkListComponent
 import com.flyview.documents_feature.createProductListComponent
 import com.flyview.documents_feature.domain.model.Document
+import com.flyview.documents_feature.domain.model.Product
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 
@@ -41,7 +42,9 @@ class RealDocumentsRootComponent(
             component = this.componentFactory.createDocumentComponent(
                 componentContext = componentContext,
                 document = config.document,
-                onBack = { navigation.pop() }
+                onBack = { navigation.pop() },
+                onScanClick = { navigation.push(ChildConfig.ProductList(config.document)) },
+                onPlacementClick = { navigation.push(ChildConfig.Placement(config.document)) }
             )
         )
 
@@ -56,6 +59,7 @@ class RealDocumentsRootComponent(
         is ChildConfig.MarkList -> DocumentsRootComponent.Child.MarkList(
             component = this.componentFactory.createMarkListComponent(
                 componentContext = componentContext,
+                product = config.product,
                 onBack = { navigation.pop() }
             )
         )
@@ -84,7 +88,7 @@ class RealDocumentsRootComponent(
         object Main : ChildConfig
 
         @Parcelize
-        class MarkList(val product: Int) : ChildConfig
+        class MarkList(val product: Product) : ChildConfig
 
         @Parcelize
         class Placement(val document: Document) : ChildConfig

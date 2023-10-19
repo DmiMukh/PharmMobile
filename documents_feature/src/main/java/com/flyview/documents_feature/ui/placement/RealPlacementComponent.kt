@@ -12,9 +12,9 @@ import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
 import com.flyview.documents_feature.data.PlacementBarcodeBinder
-import com.flyview.documents_feature.domain.PlacementRepository
 import com.flyview.documents_feature.domain.model.Cell
 import com.flyview.documents_feature.domain.model.Document
+import com.flyview.documents_feature.domain.repository.PlacementRepository
 import com.flyview.documents_feature.ui.placement.navbar.RealPlacementNavbarComponent
 import com.flyview.documents_feature.ui.placement.toolbar.RealPlacementToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow

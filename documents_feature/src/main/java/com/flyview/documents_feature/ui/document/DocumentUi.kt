@@ -28,17 +28,12 @@ fun DocumentUi(component: DocumentComponent) {
         ) {
             DocumentButton(
                 text = "Сканирование",
-                onClick = {}
+                onClick = component::onScanClick
             )
 
             DocumentButton(
                 text = "Размещение",
-                onClick = {}
-            )
-
-            DocumentButton(
-                text = "Сборка",
-                onClick = {}
+                onClick = component::onPlacementClick
             )
         }
     }

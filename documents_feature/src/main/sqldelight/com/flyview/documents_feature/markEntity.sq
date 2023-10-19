@@ -1,0 +1,9 @@
+import java.lang.Boolean;
+
+CREATE TABLE markEntity (
+  code TEXT PRIMARY KEY,
+  fullCode TEXT NOT NULL,
+  codeType INTEGER NOT NULL,
+  certificate INTEGER NOT NULL,
+  saved INTEGER AS Boolean NOT NULL
+);

@@ -1,4 +1,4 @@
-package com.flyview.documents_feature.data
+package com.flyview.documents_feature.domain.api
 
 import com.flyview.documents_feature.domain.response.ArticulResponse
 import com.flyview.documents_feature.domain.response.BarcodeResponse

@@ -13,9 +13,9 @@ import com.flyview.core.message.data.MessageService
 import com.flyview.core.message.domain.Message
 import com.flyview.core.utils.componentScope
 import com.flyview.documents_feature.data.MarkBarcodeBinder
-import com.flyview.documents_feature.domain.MarkRepository
 import com.flyview.documents_feature.domain.model.MarkCode
 import com.flyview.documents_feature.domain.model.Product
+import com.flyview.documents_feature.domain.repository.MarkRepository
 import com.flyview.documents_feature.ui.scan.mark_list.navbar.MarkListTab
 import com.flyview.documents_feature.ui.scan.mark_list.navbar.RealMarkListNavbarComponent
 import com.flyview.documents_feature.ui.scan.mark_list.toolbar.RealMarkListToolbarComponent

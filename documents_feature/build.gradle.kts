@@ -102,3 +102,11 @@ dependencies {
     implementation(Libs.SQLDelight.coroutines)
     implementation(Libs.SQLDelight.paging)
 }
+
+sqldelight {
+    databases {
+        create("DocDatabase") {
+            packageName.set("com.flyview.pharmmobile.documents_feature")
+        }
+    }
+}

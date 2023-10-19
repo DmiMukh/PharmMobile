@@ -1,0 +1,10 @@
+import java.lang.Boolean;
+import java.lang.Double;
+
+CREATE TABLE certificateEntity (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  quantity REAL AS Double NOT NULL,
+  articul INTEGER NOT NULL,
+  marked INTEGER AS Boolean NOT NULL
+);

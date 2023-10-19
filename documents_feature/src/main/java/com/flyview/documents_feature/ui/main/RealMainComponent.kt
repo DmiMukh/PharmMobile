@@ -3,8 +3,8 @@ package com.flyview.documents_feature.ui.main
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.message.data.MessageService
 import com.flyview.core.utils.componentScope
-import com.flyview.documents_feature.domain.DocumentsRepository
 import com.flyview.documents_feature.domain.model.Document
+import com.flyview.documents_feature.domain.repository.DocumentsRepository
 import com.flyview.documents_feature.ui.main.toolbar.RealMainToolbarComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
