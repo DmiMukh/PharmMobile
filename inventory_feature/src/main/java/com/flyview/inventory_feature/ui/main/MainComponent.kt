@@ -14,5 +14,6 @@ interface MainComponent {
 
     fun onClearDataClick()
     fun onDocumentsClick()
+    fun onTestCameraClick()
     fun onUploadDataClick()
 }

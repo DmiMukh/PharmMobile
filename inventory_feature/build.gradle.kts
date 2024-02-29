@@ -11,7 +11,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -27,6 +27,9 @@ android {
         }
     }
     compileOptions {
+
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -101,6 +104,10 @@ dependencies {
     implementation(Libs.SQLDelight.android)
     implementation(Libs.SQLDelight.coroutines)
     implementation(Libs.SQLDelight.paging)
+
+    // Camera ZXing
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
+    implementation("com.google.zxing:core:3.4.1")
 
 }
 

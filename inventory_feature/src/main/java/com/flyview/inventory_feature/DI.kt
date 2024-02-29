@@ -21,6 +21,8 @@ import com.flyview.inventory_feature.ui.main.MainComponent
 import com.flyview.inventory_feature.ui.main.RealMainComponent
 import com.flyview.inventory_feature.ui.product_edit.ProductEditComponent
 import com.flyview.inventory_feature.ui.product_edit.RealProductEditComponent
+import com.flyview.inventory_feature.ui.test.RealTestCameraComponent
+import com.flyview.inventory_feature.ui.test.TestCameraComponent
 import com.flyview.pharmmobile.inventory_feature.InventoryDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -146,19 +148,21 @@ fun InventoryComponentFactory.createInventoryListComponent(
 fun InventoryComponentFactory.createInventoryMainComponent(
     componentContext: ComponentContext,
     onBack: () -> Unit,
-    onDocumentsClick: () -> Unit
+    onDocumentsClick: () -> Unit,
+    onTestCameraClick: () -> Unit
 ): MainComponent {
     return RealMainComponent(
         componentContext = componentContext,
         onBack = onBack,
         onDocumentsClick = onDocumentsClick,
+        onTestCameraClick = onTestCameraClick,
         repository = get(),
         messageService = get(),
         storage = get()
     )
 }
 
-fun InventoryComponentFactory.createOnventoryEditComponent(
+fun InventoryComponentFactory.createInventoryEditComponent(
     componentContext: ComponentContext,
     onBack: () -> Unit,
     product: Product,
@@ -171,4 +175,15 @@ fun InventoryComponentFactory.createOnventoryEditComponent(
         documentId = documentId,
         repository = get()
     )
+}
+
+fun InventoryComponentFactory.createInventoryTestCameraComponent(
+    componentContext: ComponentContext,
+    onBack: () -> Unit
+): TestCameraComponent {
+    return RealTestCameraComponent(
+        componentContext = componentContext,
+        onBack = onBack,
+        messageService = get()
+    );
 }

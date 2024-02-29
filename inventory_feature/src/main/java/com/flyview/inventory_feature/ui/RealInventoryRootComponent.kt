@@ -12,7 +12,8 @@ import com.flyview.inventory_feature.InventoryComponentFactory
 import com.flyview.inventory_feature.createInventoryDetailsComponent
 import com.flyview.inventory_feature.createInventoryListComponent
 import com.flyview.inventory_feature.createInventoryMainComponent
-import com.flyview.inventory_feature.createOnventoryEditComponent
+import com.flyview.inventory_feature.createInventoryEditComponent
+import com.flyview.inventory_feature.createInventoryTestCameraComponent
 import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Product
 import kotlinx.coroutines.flow.StateFlow
@@ -54,7 +55,7 @@ class RealInventoryRootComponent(
         )
 
         is ChildConfig.Edit -> InventoryRootComponent.Child.Edit(
-            component = this.componentFactory.createOnventoryEditComponent(
+            component = this.componentFactory.createInventoryEditComponent(
                 componentContext = componentContext,
                 onBack = { navigation.pop() },
                 product = config.product,
@@ -76,7 +77,15 @@ class RealInventoryRootComponent(
             this.componentFactory.createInventoryMainComponent(
                 componentContext = componentContext,
                 onBack = this.onBack,
-                onDocumentsClick = { navigation.push(ChildConfig.List) }
+                onDocumentsClick = { navigation.push(ChildConfig.List) },
+                onTestCameraClick = { navigation.push(ChildConfig.TestCamera) }
+            )
+        )
+
+        is ChildConfig.TestCamera -> InventoryRootComponent.Child.TestCamera(
+            this.componentFactory.createInventoryTestCameraComponent(
+                componentContext = componentContext,
+                onBack = this.onBack
             )
         )
     }
@@ -94,5 +103,8 @@ class RealInventoryRootComponent(
 
         @Parcelize
         object Main : ChildConfig
+
+        @Parcelize
+        object TestCamera : ChildConfig
     }
 }

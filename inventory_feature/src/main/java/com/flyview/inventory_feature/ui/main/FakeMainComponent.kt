@@ -12,5 +12,7 @@ class FakeMainComponent : MainComponent {
     override val toolbarComponent = FakeMainToolbarComponent()
     override fun onClearDataClick() = Unit
     override fun onDocumentsClick() = Unit
+    override fun onTestCameraClick() = Unit
+
     override fun onUploadDataClick() = Unit
 }

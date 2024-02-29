@@ -18,6 +18,7 @@ class RealMainComponent(
     componentContext: ComponentContext,
     private val onBack: () -> Unit,
     private val onDocumentsClick: () -> Unit,
+    private val onTestCameraClick: () -> Unit,
     private val repository: InventoryRepository,
     private val messageService: MessageService,
     private val storage: SettingsStorage
@@ -58,6 +59,8 @@ class RealMainComponent(
     }
 
     override fun onDocumentsClick() = this.onDocumentsClick.invoke()
+    override fun onTestCameraClick() = this.onTestCameraClick.invoke()
+
     override fun onUploadDataClick() {
         this.dialogComponent.state.value = MainDialogState.UploadData
     }

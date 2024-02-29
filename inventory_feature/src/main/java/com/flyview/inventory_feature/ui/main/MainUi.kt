@@ -73,10 +73,20 @@ fun MainUi(component: MainComponent) {
 
             Button(
                 onClick = component::onClearDataClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
             ) {
                 Text(
                     text = "Удалить данные",
+                    fontSize = 24.sp
+                )
+            }
+
+            Button(
+                onClick = component::onTestCameraClick,
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+            ) {
+                Text(
+                    text = "Тест камеры",
                     fontSize = 24.sp
                 )
             }

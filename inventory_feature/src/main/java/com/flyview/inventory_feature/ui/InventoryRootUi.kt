@@ -12,6 +12,7 @@ import com.flyview.inventory_feature.ui.details.DocumentDetailsUi
 import com.flyview.inventory_feature.ui.list.DocumentListUi
 import com.flyview.inventory_feature.ui.main.MainUi
 import com.flyview.inventory_feature.ui.product_edit.ProductEditUi
+import com.flyview.inventory_feature.ui.test.TestCameraUi
 
 @Composable
 fun InventoryRootUi(
@@ -30,6 +31,7 @@ fun InventoryRootUi(
             is InventoryRootComponent.Child.Edit -> ProductEditUi(child.component)
             is InventoryRootComponent.Child.List -> DocumentListUi(child.component)
             is InventoryRootComponent.Child.Main -> MainUi(child.component)
+            is InventoryRootComponent.Child.TestCamera -> TestCameraUi(child.component)
         }
     }
 }
