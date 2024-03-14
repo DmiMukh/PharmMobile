@@ -7,8 +7,11 @@ interface DocumentDetailsToolbarComponent {
 
     val barcodeReaderConnected: StateFlow<Boolean>
 
+    val camera: StateFlow<Boolean>
+
     val model: Document
     fun onBackClick()
+    fun onCameraClick()
     fun onTestClick()
     fun onUsbDeviceConnectionClick()
 }

@@ -17,8 +17,10 @@ import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.isValid
 import com.flyview.inventory_feature.ui.details.toolbar.RealDocumentDetailsToolbarComponent
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RealDocumentDetailsComponent(
@@ -33,6 +35,7 @@ class RealDocumentDetailsComponent(
 ) : ComponentContext by componentContext, DocumentDetailsComponent {
 
     private val barcodeBinder: BarcodeBinder = InvBarcodeBinder()
+    override val idleHandleScanCode = MutableStateFlow(true)
 
     override val productsPager = this.repository.getProductsPager(this.document.id)
 
@@ -103,6 +106,14 @@ class RealDocumentDetailsComponent(
         }
 
         onEditProduct.invoke(product)
+    }
+
+    override fun onHandleReadBarcode(code: String) {
+        this.onReadBarcode(code)
+    }
+
+    override fun setHandleState(idle: Boolean) {
+        this.idleHandleScanCode.update { idle }
     }
 
     init {

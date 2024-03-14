@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,6 +27,7 @@ import com.flyview.core.utils.ICON_SIZE
 fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
 
     val connected = component.barcodeReaderConnected.collectAsState()
+    val camera = component.camera.collectAsState()
 
     TopAppBar(
         title = {
@@ -64,6 +67,17 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
                         else R.drawable.ic_usb_off
                     ),
                     contentDescription = "usb_device_connection",
+                    modifier = Modifier.size(ICON_SIZE)
+                )
+            }
+
+            IconButton(onClick = component::onCameraClick) {
+                Icon(
+                    painter = painterResource(
+                        id = if (camera.value) R.drawable.ic_camera_on
+                        else R.drawable.ic_camera_off
+                    ),
+                    contentDescription = "camera",
                     modifier = Modifier.size(ICON_SIZE)
                 )
             }

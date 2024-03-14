@@ -6,12 +6,17 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.ui.details.toolbar.FakeDocumentDetailsToolbarComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
 
 class FakeDocumentDetailsComponent : DocumentDetailsComponent {
+    override val idleHandleScanCode = MutableStateFlow(false)
     override val productsPager = Pager(PagingConfig(pageSize = 10)) { FakePagingSource() }.flow
     override val toolbarComponent = FakeDocumentDetailsToolbarComponent()
     override fun onItemClick(product: Product) = Unit
+    override fun onHandleReadBarcode(code: String) = Unit
+    override fun setHandleState(idle: Boolean) = Unit
 
     internal class FakePagingSource : PagingSource<Int, Product>() {
         override fun getRefreshKey(state: PagingState<Int, Product>) = null
