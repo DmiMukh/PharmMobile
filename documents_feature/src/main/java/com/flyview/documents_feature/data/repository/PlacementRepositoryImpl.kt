@@ -16,19 +16,23 @@ class PlacementRepositoryImpl(
     private val db: DocDatabase
 ) : PlacementRepository {
     override suspend fun collectProduct(cell: Cell, product: Product, quantity: Double) {
-        TODO("Not yet implemented")
+        return
+        TODO("Not yet implemented collectProduct")
     }
 
     override suspend fun deleteProduct(cell: Cell, product: Product) {
-        TODO("Not yet implemented")
+        return
+        TODO("Not yet implemented deleteProduct")
     }
 
     override suspend fun editProduct(cell: Cell, product: Product, quantity: Double) {
-        TODO("Not yet implemented")
+        return
+        TODO("Not yet implemented editProduct")
     }
 
     override suspend fun getCell(barcode: String): Cell? {
-        TODO("Not yet implemented")
+        return null
+        TODO("Not yet implemented getCell")
     }
 
     override suspend fun getCollectedProducts() = Pager(PagingConfig(pageSize = 10)) {
@@ -50,6 +54,6 @@ class PlacementRepositoryImpl(
     }.flow.map { it.map { item -> Product() } }
 
     override suspend fun getProduct(cell: Cell, barcode: Barcode): Product? {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented getProduct")
     }
 }

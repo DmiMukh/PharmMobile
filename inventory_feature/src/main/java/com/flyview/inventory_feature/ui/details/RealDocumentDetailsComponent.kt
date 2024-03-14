@@ -109,6 +109,10 @@ class RealDocumentDetailsComponent(
     }
 
     override fun onHandleReadBarcode(code: String) {
+        audioPlayer.play(AppSound.BEEP)
+
+        this.idleHandleScanCode.update { true }
+
         this.onReadBarcode(code)
     }
 

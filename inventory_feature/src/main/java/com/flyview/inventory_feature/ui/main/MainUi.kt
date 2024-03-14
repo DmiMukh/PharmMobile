@@ -81,15 +81,18 @@ fun MainUi(component: MainComponent) {
                 )
             }
 
+            /*
             Button(
                 onClick = component::onTestCameraClick,
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                enabled = false
             ) {
                 Text(
                     text = "Тест камеры",
                     fontSize = 24.sp
                 )
             }
+            */
         }
     }
 }

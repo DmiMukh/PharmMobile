@@ -22,15 +22,15 @@ class DocumentsRepositoryImpl(
 ): DocumentsRepository {
     override suspend fun getDocuments(date: LocalDate): List<Document> {
         api.getDocuments(date)
-        TODO("Not yet implemented")
+        TODO("Not yet implemented getDocuments")
     }
 
     override fun getMarksPager(documentId: Long): Flow<PagingData<MarkCode>> {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented getMarksPager")
     }
 
     override suspend fun getProducts(document: Long): List<Product> {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented getProducts")
     }
 
     override fun getProductsPager() = Pager(PagingConfig(pageSize = 200)) {
