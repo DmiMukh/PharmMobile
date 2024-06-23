@@ -18,62 +18,62 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.flyview.core.theme.AppTheme
 import com.flyview.core.utils.ICON_SIZE
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DocumentListToolbarUi(component: DocumentListToolbarComponent) {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun DocumentListToolbarUi(component: DocumentListToolbarComponent) {
 
-    val expanded = component.menuExpanded.collectAsState()
+        val expanded = component.menuExpanded.collectAsState()
 
-    TopAppBar(
-        title = {
-            Text(
-                text = "Документы"
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = component::onBackClick) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "back",
-                    modifier = Modifier.size(ICON_SIZE)
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Документы"
                 )
+            },
+            navigationIcon = {
+                IconButton(onClick = component::onBackClick) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "back",
+                        modifier = Modifier.size(ICON_SIZE)
+                    )
+                }
+            },
+            actions = {
+                IconButton(onClick = component::onExpandMenuClick) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "more_vert"
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded.value,
+                    onDismissRequest = component::onCollapseMenuClick
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Отправить на сервер") },
+                        onClick = component::onSendDataClick
+                    )
+                }
             }
-        },
-        actions = {
-            IconButton(onClick = component::onExpandMenuClick) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "more_vert"
-                )
-            }
-            DropdownMenu(
-                expanded = expanded.value,
-                onDismissRequest = component::onCollapseMenuClick
-            ) {
-                DropdownMenuItem(
-                    text = { Text("Отправить на сервер") },
-                    onClick = component::onSendDataClick
-                )
-            }
-        }
-    )
-}
-
-@Composable
-fun DocumentListToolbarUiPreview(darkTheme: Boolean) {
-    AppTheme(darkTheme = darkTheme) {
-        DocumentListToolbarUi(FakeDocumentListToolbarComponent())
+        )
     }
-}
 
-@Preview(name = "light")
-@Composable
-fun DocumentListToolbarUiPreviewLight() {
-    DocumentListToolbarUiPreview(darkTheme = false)
-}
+    @Composable
+    fun DocumentListToolbarUiPreview(darkTheme: Boolean) {
+        AppTheme(darkTheme = darkTheme) {
+            DocumentListToolbarUi(FakeDocumentListToolbarComponent())
+        }
+    }
 
-@Preview(name = "dark")
-@Composable
-fun DocumentListToolbarUiPreviewDark() {
-    DocumentListToolbarUiPreview(darkTheme = true)
-}
+    @Preview(name = "light")
+    @Composable
+    fun DocumentListToolbarUiPreviewLight() {
+        DocumentListToolbarUiPreview(darkTheme = false)
+    }
+
+    @Preview(name = "dark")
+    @Composable
+    fun DocumentListToolbarUiPreviewDark() {
+        DocumentListToolbarUiPreview(darkTheme = true)
+    }

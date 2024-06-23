@@ -28,6 +28,7 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
 
     val connected = component.barcodeReaderConnected.collectAsState()
     val camera = component.camera.collectAsState()
+    val flashlight = component.flashlight.collectAsState()
 
     TopAppBar(
         title = {
@@ -49,26 +50,18 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
             }
         },
         actions = {
-            /*
-            IconButton(onClick = component::onTestClick) {
-                Icon(
-                    painter = painterResource(
-                        R.drawable.ic_qr_code
-                    ),
-                    contentDescription = "usb_device_connection",
-                    modifier = Modifier.size(ICON_SIZE)
-                )
-            }
-            */
-            IconButton(onClick = component::onUsbDeviceConnectionClick) {
-                Icon(
-                    painter = painterResource(
-                        id = if (connected.value) R.drawable.ic_usb_on
-                        else R.drawable.ic_usb_off
-                    ),
-                    contentDescription = "usb_device_connection",
-                    modifier = Modifier.size(ICON_SIZE)
-                )
+
+            if (camera.value) {
+                IconButton(onClick = component::onFlashlightClick) {
+                    Icon(
+                        painter = painterResource(
+                            id = if (flashlight.value) R.drawable.ic_flashlight_on
+                            else R.drawable.ic_flashlight_off
+                        ),
+                        contentDescription = "flashlight",
+                        modifier = Modifier.size(ICON_SIZE)
+                    )
+                }
             }
 
             IconButton(onClick = component::onCameraClick) {
@@ -78,6 +71,17 @@ fun DocumentDetailsToolbarUi(component: DocumentDetailsToolbarComponent) {
                         else R.drawable.ic_camera_off
                     ),
                     contentDescription = "camera",
+                    modifier = Modifier.size(ICON_SIZE)
+                )
+            }
+
+            IconButton(onClick = component::onUsbDeviceConnectionClick) {
+                Icon(
+                    painter = painterResource(
+                        id = if (connected.value) R.drawable.ic_usb_on
+                        else R.drawable.ic_usb_off
+                    ),
+                    contentDescription = "usb_device_connection",
                     modifier = Modifier.size(ICON_SIZE)
                 )
             }

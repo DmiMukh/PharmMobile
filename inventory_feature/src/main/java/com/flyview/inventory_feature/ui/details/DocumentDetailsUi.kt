@@ -49,6 +49,7 @@ fun DocumentDetailsUi(component: DocumentDetailsComponent) {
     val productsData = component.productsPager.collectAsLazyPagingItems()
     val showCamera = component.toolbarComponent.camera.collectAsState()
     val handleScanCode = component.idleHandleScanCode.collectAsState()
+    val flashlight = component.toolbarComponent.flashlight.collectAsState()
 
     val context = LocalContext.current
 
@@ -56,12 +57,24 @@ fun DocumentDetailsUi(component: DocumentDetailsComponent) {
         CompoundBarcodeView(context).apply {
             val capture = CaptureManager(context as Activity, this)
             capture.initializeFromIntent(context.intent, null)
+
+            /*
+            this.setTorchOn()
+            if (flashlight.value) this.setTorchOn()
+            else this.setTorchOff()*/
+
             this.setStatusText("")
             capture.decode()
             this.decodeContinuous { result ->
+
+                if (flashlight.value) this.setTorchOn()
+                else this.setTorchOff()
+
                 if (handleScanCode.value) {
                     return@decodeContinuous
                 }
+
+                //this.setTorchOn()
                 //component.setScanFlag(true)
                 result.text?.let { barCodeOrQr ->
                     component.onHandleReadBarcode(barCodeOrQr)
@@ -86,6 +99,9 @@ fun DocumentDetailsUi(component: DocumentDetailsComponent) {
                 .height(200.dp)*/
         ) {
             if (showCamera.value) {
+                if (flashlight.value) compoundBarcodeView.setTorchOn()
+                else compoundBarcodeView.setTorchOff()
+
                 AndroidView(
                     modifier = Modifier
                         .height(200.dp),

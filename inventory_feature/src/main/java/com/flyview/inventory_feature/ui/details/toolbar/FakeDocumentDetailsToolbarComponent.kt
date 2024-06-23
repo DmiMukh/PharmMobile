@@ -8,9 +8,11 @@ class FakeDocumentDetailsToolbarComponent: DocumentDetailsToolbarComponent {
 
     override val barcodeReaderConnected = MutableStateFlow(false)
     override val camera = MutableStateFlow(false)
+    override val flashlight = MutableStateFlow(false)
     override val model = Document()
     override fun onBackClick() = Unit
     override fun onCameraClick() = Unit
+    override fun onFlashlightClick() = Unit
 
     override fun onTestClick() = Unit
 

@@ -1,5 +1,7 @@
 package com.flyview.inventory_feature.ui.details
 
+import android.app.Activity
+import androidx.compose.runtime.remember
 import com.arkivanov.decompose.ComponentContext
 import com.flyview.core.barcode.data.BarcodeReaderData
 import com.flyview.core.barcode.data.code.EAN13
@@ -17,6 +19,8 @@ import com.flyview.inventory_feature.domain.model.Document
 import com.flyview.inventory_feature.domain.model.Product
 import com.flyview.inventory_feature.domain.model.isValid
 import com.flyview.inventory_feature.ui.details.toolbar.RealDocumentDetailsToolbarComponent
+import com.journeyapps.barcodescanner.CaptureManager
+import com.journeyapps.barcodescanner.CompoundBarcodeView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -119,6 +123,46 @@ class RealDocumentDetailsComponent(
     override fun setHandleState(idle: Boolean) {
         this.idleHandleScanCode.update { idle }
     }
+
+    /*
+    val cbv = MutableStateFlow<CompoundBarcodeView>(
+        CompoundBarcodeView(context).apply {
+            val capture = CaptureManager(context as Activity, this)
+            //capture.initializeFromIntent(context.intent, null)
+
+
+            this.setStatusText("")
+            capture.decode()
+            this.decodeContinuous { result ->
+
+                /*
+                if (flashlight.value) this.setTorchOn()
+                else this.setTorchOff()
+                */
+
+                /*
+                if (handleScanCode.value) {
+                    return@decodeContinuous
+                }
+                */
+
+                //this.setTorchOn()
+                //component.setScanFlag(true)
+                /*
+                result.text?.let { barCodeOrQr ->
+                    component.onHandleReadBarcode(barCodeOrQr)
+                    //Do something and when you finish this something
+                    //put scanFlag = false to scan another item
+                    //component.setScanFlag(false)
+                }
+                //If you don't put this scanFlag = false, it will never work again.
+                //you can put a delay over 2 seconds and then scanFlag = false to prevent multiple scanning
+                */
+
+            }
+        }
+    )
+    */
 
     init {
         BarcodeReaderData.data.onEach {
